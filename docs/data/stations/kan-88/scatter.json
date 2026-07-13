@@ -197,9 +197,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Paul Simon",
+      "title": "Still Crazy After All These Years",
+      "text": "Paul Simon — Still Crazy After All These Years",
+      "recognized_at": "2026-07-13T14:48:19Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 18,
-  "returned": 18,
-  "updated_at": "2026-07-13T14:48:15Z"
+  "total": 19,
+  "returned": 19,
+  "updated_at": "2026-07-13T14:48:45Z"
 }
