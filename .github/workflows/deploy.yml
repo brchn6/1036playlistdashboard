@@ -1,15 +1,20 @@
 name: Deploy to Pages
+
 on:
-  workflow_dispatch:  # manual only — no auto-trigger
+  push:
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# Queue instead of cancel: GitHub keeps only the newest pending run per group,
+# so the latest data always deploys and no build dies mid-flight.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:

@@ -34,7 +34,7 @@ DEFAULT_INTERVAL = 20
 DEFAULT_GIT_AUTO_PUSH = os.environ.get("GIT_AUTO_PUSH", "").lower() in ("1", "true", "yes")
 RETENTION_DAYS = int(os.environ.get("RETENTION_DAYS", "45"))
 CLEANUP_INTERVAL = int(os.environ.get("CLEANUP_INTERVAL", "720"))  # every 6h at 30s poll
-DEPLOY_INTERVAL = int(os.environ.get("DEPLOY_INTERVAL", "30"))  # every 15 min at 30s poll (30 cycles)
+PUSH_INTERVAL = int(os.environ.get("PUSH_INTERVAL", "4"))  # push every 2 min at 30s poll
 
 running = True
 
@@ -80,7 +80,7 @@ def git_commit_and_push(message: str) -> None:
 
         subprocess.run(["git", "add", "-A"], check=True, capture_output=True, timeout=15)
         subprocess.run(
-            ["git", "commit", "-m", f"{message} [skip ci]"],
+            ["git", "commit", "-m", message],
             check=True, capture_output=True, timeout=15,
         )
         subprocess.run(["git", "pull", "--rebase"], check=True, capture_output=True, timeout=30)
@@ -96,27 +96,11 @@ def git_commit_and_push(message: str) -> None:
         else:
             subprocess.run(["git", "push"], check=True, capture_output=True, timeout=60)
 
-        print(f"[updater] Git push: {message} [skip ci]", flush=True)
+        print(f"[updater] Git push: {message}", flush=True)
     except subprocess.TimeoutExpired:
         print("[updater] Git push timed out", flush=True)
     except subprocess.CalledProcessError as exc:
         print(f"[updater] Git error: {exc}", flush=True)
-
-
-# ── pages deployment ──────────────────────────────────────────────────
-
-DEPLOY_CMD = ["gh", "api", "-X", "POST", "/repos/brchn6/radio-playlist-dashboard/pages/builds"]
-
-def deploy_pages() -> None:
-    """Trigger a GitHub Pages build via the API (no Actions minutes used)."""
-    try:
-        result = subprocess.run(DEPLOY_CMD, capture_output=True, text=True, timeout=30)
-        if result.returncode == 0:
-            print(f"[updater] Pages deploy triggered: {result.stdout.strip()}", flush=True)
-        else:
-            print(f"[updater] Pages deploy failed: {result.stderr.strip()}", flush=True)
-    except Exception as e:
-        print(f"[updater] Pages deploy error: {e}", flush=True)
 
 
 # ── data generation ────────────────────────────────────────────────────
@@ -195,8 +179,6 @@ def main() -> None:
 
     iteration = 0
     new_track_occurred = False
-    last_push_time = 0.0
-    MIN_PUSH_INTERVAL = 0  # push every cycle (30s)
 
     while running:
         iteration += 1
@@ -255,12 +237,11 @@ def main() -> None:
             )
             new_track_occurred = True
 
-        # ── Generate data every cycle, push every 30s ──
+        # ── Generate data every cycle, push every PUSH_INTERVAL cycles ──
         generate_static_data()
 
-        if DEFAULT_GIT_AUTO_PUSH:
+        if DEFAULT_GIT_AUTO_PUSH and (iteration % PUSH_INTERVAL == 0 or args.once):
             git_commit_and_push(f"auto: multi-station update [{now_iso()}]")
-            last_push_time = time.time()
 
         # ── Periodic cleanup ──
         if iteration % CLEANUP_INTERVAL == 0:
@@ -270,10 +251,6 @@ def main() -> None:
                 generate_static_data()
                 if DEFAULT_GIT_AUTO_PUSH:
                     git_commit_and_push(f"auto: cleanup {deleted} old tracks [{now_iso()}]")
-
-        # ── Periodic Pages deploy ──
-        if iteration % DEPLOY_INTERVAL == 0:
-            deploy_pages()
 
         if args.once:
             break

@@ -479,6 +479,23 @@ class PlaylistDB:
             )
         return [dict(r) for r in cur.fetchall()]
 
+    def get_non_music_intervals(self, days: int = 7) -> list[dict[str, Any]]:
+        """Talk/commercial/unrecognized intervals logged by the non-music agent.
+        Returns [] if the table doesn't exist yet (owned by a separate process)."""
+        try:
+            cur = self.conn.execute(
+                """SELECT n.station_id, n.started_at, n.ended_at, n.reason,
+                          s.slug as station_slug
+                   FROM non_music_log n
+                   JOIN stations s ON s.id = n.station_id
+                   WHERE n.started_at >= datetime('now', ?)
+                   ORDER BY n.started_at ASC""",
+                (f'-{days} days',),
+            )
+            return [dict(r) for r in cur.fetchall()]
+        except sqlite3.OperationalError:
+            return []
+
     def cleanup_old_tracks(self, days: int = 45) -> int:
         """Delete tracks older than N days across all stations."""
         cur = self.conn.execute(
