@@ -144,6 +144,17 @@
       "station_color": "#e3c86a"
     },
     {
+      "artist": "Roie Shpigler",
+      "title": "Blooz Mojo",
+      "text": "Roie Shpigler — Blooz Mojo",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:04:16Z",
+      "last_seen": "2026-07-13T17:04:16Z",
+      "station_slug": "radio-tlv",
+      "station_name": "רדיו תל אביב 102FM",
+      "station_color": "#e3c86a"
+    },
+    {
       "artist": "Shuli Rand",
       "title": "לב לבן",
       "text": "Shuli Rand — לב לבן",
@@ -177,5 +188,5 @@
       "station_color": "#e3c86a"
     }
   ],
-  "updated_at": "2026-07-13T17:04:11Z"
+  "updated_at": "2026-07-13T17:04:41Z"
 }
