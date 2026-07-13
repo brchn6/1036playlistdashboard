@@ -57,6 +57,14 @@
       "last_seen": "2026-07-13T13:38:32Z"
     },
     {
+      "artist": "Calvin Harris",
+      "title": "Feels (feat. Pharrell Williams, Katy Perry & Big Sean)",
+      "text": "Calvin Harris — Feels (feat. Pharrell Williams, Katy Perry & Big Sean)",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:44:35Z",
+      "last_seen": "2026-07-13T13:44:35Z"
+    },
+    {
       "artist": "Carakukly & Liad Meir",
       "title": "פבלו אסקובר",
       "text": "Carakukly & Liad Meir — פבלו אסקובר",
@@ -137,6 +145,14 @@
       "last_seen": "2026-07-13T13:43:39Z"
     },
     {
+      "artist": "Taylor Swift",
+      "title": "Fortnight (feat. Post Malone)",
+      "text": "Taylor Swift — Fortnight (feat. Post Malone)",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:44:41Z",
+      "last_seen": "2026-07-13T13:44:41Z"
+    },
+    {
       "artist": "The Corrs",
       "title": "Radio ( MTV Unplugged Version )",
       "text": "The Corrs — Radio ( MTV Unplugged Version )",
@@ -161,5 +177,5 @@
       "last_seen": "2026-07-13T13:34:27Z"
     }
   ],
-  "updated_at": "2026-07-13T13:43:55Z"
+  "updated_at": "2026-07-13T13:44:55Z"
 }

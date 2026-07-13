@@ -252,9 +252,31 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Calvin Harris",
+      "title": "Feels (feat. Pharrell Williams, Katy Perry & Big Sean)",
+      "text": "Calvin Harris — Feels (feat. Pharrell Williams, Katy Perry & Big Sean)",
+      "recognized_at": "2026-07-13T13:44:35Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Taylor Swift",
+      "title": "Fortnight (feat. Post Malone)",
+      "text": "Taylor Swift — Fortnight (feat. Post Malone)",
+      "recognized_at": "2026-07-13T13:44:41Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 23,
-  "returned": 23,
-  "updated_at": "2026-07-13T13:43:55Z"
+  "total": 25,
+  "returned": 25,
+  "updated_at": "2026-07-13T13:44:55Z"
 }
