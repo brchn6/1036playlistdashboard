@@ -2738,9 +2738,20 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Sarit Hadad",
+      "title": "בחום של תל אביב",
+      "text": "Sarit Hadad — בחום של תל אביב",
+      "recognized_at": "2026-07-13T17:28:56Z",
+      "station_slug": "radio-darom",
+      "station_color": "#e36ac8",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 249,
-  "returned": 249,
-  "updated_at": "2026-07-13T17:28:39Z"
+  "total": 250,
+  "returned": 250,
+  "updated_at": "2026-07-13T17:29:09Z"
 }

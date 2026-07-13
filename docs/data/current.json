@@ -98,15 +98,15 @@
     "station_color": "#a06ae3"
   },
   {
-    "id": 322,
+    "id": 327,
     "station_id": 8,
-    "artist": "Osher Cohen",
-    "title": "מקבל על עצמי",
-    "text": "Osher Cohen — מקבל על עצמי",
-    "url": "https://www.shazam.com/track/604504483/%D7%9E%D7%A7%D7%91%D7%9C-%D7%A2%D7%9C-%D7%A2%D7%A6%D7%9E%D7%99",
-    "shazam_key": "604504483",
-    "recognized_at": "2026-07-13T17:25:51Z",
-    "created_at": "2026-07-13 17:26:09",
+    "artist": "Sarit Hadad",
+    "title": "בחום של תל אביב",
+    "text": "Sarit Hadad — בחום של תל אביב",
+    "url": "https://www.shazam.com/track/264129363/%D7%91%D7%97%D7%95%D7%9D-%D7%A9%D7%9C-%D7%AA%D7%9C-%D7%90%D7%91%D7%99%D7%91",
+    "shazam_key": "264129363",
+    "recognized_at": "2026-07-13T17:28:56Z",
+    "created_at": "2026-07-13 17:29:09",
     "station_slug": "radio-darom",
     "station_name": "רדיו דרום 97FM",
     "station_color": "#e36ac8"
