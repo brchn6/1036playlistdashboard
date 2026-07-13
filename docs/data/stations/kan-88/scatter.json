@@ -98,9 +98,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Soundgarden",
+      "title": "Black Hole Sun",
+      "text": "Soundgarden — Black Hole Sun",
+      "recognized_at": "2026-07-13T14:02:24Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 9,
-  "returned": 9,
-  "updated_at": "2026-07-13T14:02:15Z"
+  "total": 10,
+  "returned": 10,
+  "updated_at": "2026-07-13T14:02:45Z"
 }
