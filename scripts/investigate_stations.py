@@ -52,7 +52,7 @@ class StationCandidate:
 # Sources: radio.net, streema.com, wikipedia
 CANDIDATES: list[StationCandidate] = [
     # Already have
-    StationCandidate("קול השפלה 103FM", "kol-hashfela",
+    StationCandidate("קול השפלה 103.6FM", "kol-hashfela",
                      "https://radio.streamgates.net/stream/1036kh",
                      website="https://1036kh.com",
                      genres=["פופ", "עברי", "לייף סטייל"],

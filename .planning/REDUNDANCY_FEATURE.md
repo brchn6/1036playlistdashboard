@@ -72,7 +72,7 @@ Add `redundancy.json` to `generate_data.py`:
   "stations": [
     {
       "station_id": 1,
-      "station_name": "קול השפלה 103FM",
+      "station_name": "קול השפלה 103.6FM",
       "station_slug": "kol-hashfela",
       "total_tracks": 200,
       "unique_tracks": 180,

@@ -117,7 +117,7 @@ bash scripts/manage.sh logs        # View logs
 
 | Station | Stream | Port |
 |---------|--------|------|
-| 🟢 קול השפלה 103FM | `radio.streamgates.net/stream/1036kh` | 8761 |
+| 🟢 קול השפלה 103.6FM | `radio.streamgates.net/stream/1036kh` | 8761 |
 | 🔴 גלגלצ | `glzwizzlv.bynetcdn.com/glglz_mp3` | 8762 |
 | 🔵 99FM | `99.livecdn.biz/99fm_aac` | 8763 |
 | 🟡 רדיו תל אביב 102FM | `102.livecdn.biz/102fm_aac` | 8764 |

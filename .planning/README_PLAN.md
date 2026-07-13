@@ -61,7 +61,7 @@ on loop — and I wanted to prove it with data.
 
 | Station | Listen live |
 |---------|-------------|
-| 🟢 קול השפלה 103FM | [1036kh.com](https://1036kh.com) |
+| 🟢 קול השפלה 103.6FM | [1036kh.com](https://1036kh.com) |
 | 🔴 גלגלצ | [glglz.co.il](https://glglz.co.il) |
 | 🔵 99FM | [99fm.co.il](https://99fm.co.il) |
 | 🟡 רדיו תל אביב 102FM | [102fm.co.il](https://102fm.co.il) |

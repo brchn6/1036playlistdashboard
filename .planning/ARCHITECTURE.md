@@ -46,7 +46,7 @@ CREATE TABLE stations (
 );
 
 INSERT INTO stations (slug, name, stream_url, proxy_port, color) VALUES
-  ('kol-hashfela', 'קול השפלה 103FM',  'https://radio.streamgates.net/stream/1036kh',   8761, '#6ae3c1'),
+  ('kol-hashfela', 'קול השפלה 103.6FM',  'https://radio.streamgates.net/stream/1036kh',   8761, '#6ae3c1'),
   ('galgalatz',    'גלגלצ',            'https://glzwizzlv.bynetcdn.com/glglz_mp3',       8762, '#e36a6a'),
   ('99fm',         '99FM',             'https://99.livecdn.biz/99fm_aac',                8763, '#6ab8e3'),
   ('radio-tlv',    'רדיו תל אביב 102FM','https://102.livecdn.biz/102fm_aac',             8764, '#e3c86a'),
@@ -113,7 +113,7 @@ async def poll_all():
 
 | Station | Port |
 |---------|------|
-| קול השפלה 103FM | 8761 |
+| קול השפלה 103.6FM | 8761 |
 | גלגלצ | 8762 |
 | 99FM | 8763 |
 | רדיו תל אביב 102FM | 8764 |
