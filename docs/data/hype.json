@@ -641,6 +641,14 @@
       "last_seen": "2026-07-13T14:04:59Z"
     },
     {
+      "artist": "Red Hot Chili Peppers",
+      "title": "Give It Away",
+      "text": "Red Hot Chili Peppers — Give It Away",
+      "play_count": 1,
+      "first_seen": "2026-07-13T15:03:44Z",
+      "last_seen": "2026-07-13T15:03:44Z"
+    },
+    {
       "artist": "Rihanna",
       "title": "Where Have You Been",
       "text": "Rihanna — Where Have You Been",
@@ -791,15 +799,7 @@
       "play_count": 1,
       "first_seen": "2026-07-13T14:46:50Z",
       "last_seen": "2026-07-13T14:46:50Z"
-    },
-    {
-      "artist": "The Beatles",
-      "title": "Eight Days a Week",
-      "text": "The Beatles — Eight Days a Week",
-      "play_count": 1,
-      "first_seen": "2026-07-13T14:32:00Z",
-      "last_seen": "2026-07-13T14:32:00Z"
     }
   ],
-  "updated_at": "2026-07-13T15:02:49Z"
+  "updated_at": "2026-07-13T15:03:45Z"
 }

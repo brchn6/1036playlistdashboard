@@ -100,6 +100,17 @@
       "station_color": "#6ab8e3"
     },
     {
+      "artist": "Red Hot Chili Peppers",
+      "title": "Give It Away",
+      "text": "Red Hot Chili Peppers — Give It Away",
+      "play_count": 1,
+      "first_seen": "2026-07-13T15:03:44Z",
+      "last_seen": "2026-07-13T15:03:44Z",
+      "station_slug": "99fm",
+      "station_name": "99FM",
+      "station_color": "#6ab8e3"
+    },
+    {
       "artist": "Shalom Hanoch",
       "title": "ככה וככה",
       "text": "Shalom Hanoch — ככה וככה",
@@ -177,5 +188,5 @@
       "station_color": "#6ab8e3"
     }
   ],
-  "updated_at": "2026-07-13T15:02:49Z"
+  "updated_at": "2026-07-13T15:03:45Z"
 }
