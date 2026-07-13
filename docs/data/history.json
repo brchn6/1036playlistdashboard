@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 23,
+      "station_id": 6,
+      "artist": "Stamatis Spanoudakis",
+      "title": "Zi Ke Vasilevi",
+      "text": "Stamatis Spanoudakis — Zi Ke Vasilevi",
+      "url": "https://www.shazam.com/track/59677011/zi-ke-vasilevi",
+      "shazam_key": "59677011",
+      "recognized_at": "2026-07-13T12:56:01Z",
+      "created_at": "2026-07-13 12:56:12",
+      "station_slug": "kan-bet",
+      "station_name": "כאן ב",
+      "station_color": "#e38a6a"
+    },
+    {
       "id": 21,
       "station_id": 2,
       "artist": "Shlomo Artzi & Rita",
@@ -309,7 +323,7 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "total": 22,
-  "returned": 22,
-  "updated_at": "2026-07-13T12:55:42Z"
+  "total": 23,
+  "returned": 23,
+  "updated_at": "2026-07-13T12:56:12Z"
 }
