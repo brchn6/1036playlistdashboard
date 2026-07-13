@@ -186,9 +186,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Peleg Kraft",
+      "title": "הרימון",
+      "text": "Peleg Kraft — הרימון",
+      "recognized_at": "2026-07-13T14:44:59Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 17,
-  "returned": 17,
-  "updated_at": "2026-07-13T14:43:49Z"
+  "total": 18,
+  "returned": 18,
+  "updated_at": "2026-07-13T14:45:15Z"
 }

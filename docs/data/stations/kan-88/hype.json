@@ -144,6 +144,17 @@
       "station_color": "#c86ae3"
     },
     {
+      "artist": "Peleg Kraft",
+      "title": "הרימון",
+      "text": "Peleg Kraft — הרימון",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:44:59Z",
+      "last_seen": "2026-07-13T14:44:59Z",
+      "station_slug": "kan-88",
+      "station_name": "כאן 88",
+      "station_color": "#c86ae3"
+    },
+    {
       "artist": "Robin Thicke",
       "title": "Blurred Lines (feat. T.I. & Pharrell)",
       "text": "Robin Thicke — Blurred Lines (feat. T.I. & Pharrell)",
@@ -188,5 +199,5 @@
       "station_color": "#c86ae3"
     }
   ],
-  "updated_at": "2026-07-13T14:43:49Z"
+  "updated_at": "2026-07-13T14:45:15Z"
 }

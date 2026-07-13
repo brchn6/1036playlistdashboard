@@ -489,6 +489,14 @@
       "last_seen": "2026-07-13T14:11:23Z"
     },
     {
+      "artist": "Peleg Kraft",
+      "title": "הרימון",
+      "text": "Peleg Kraft — הרימון",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:44:59Z",
+      "last_seen": "2026-07-13T14:44:59Z"
+    },
+    {
       "artist": "Phil Collins",
       "title": "Two Hearts",
       "text": "Phil Collins — Two Hearts",
@@ -543,6 +551,14 @@
       "play_count": 1,
       "first_seen": "2026-07-13T14:11:12Z",
       "last_seen": "2026-07-13T14:11:12Z"
+    },
+    {
+      "artist": "Shalom Hanoch",
+      "title": "ככה וככה",
+      "text": "Shalom Hanoch — ככה וככה",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:44:59Z",
+      "last_seen": "2026-07-13T14:44:59Z"
     },
     {
       "artist": "Sharon Roter",
@@ -713,5 +729,5 @@
       "last_seen": "2026-07-13T14:05:04Z"
     }
   ],
-  "updated_at": "2026-07-13T14:43:49Z"
+  "updated_at": "2026-07-13T14:45:15Z"
 }

@@ -1022,9 +1022,31 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Shalom Hanoch",
+      "title": "ככה וככה",
+      "text": "Shalom Hanoch — ככה וככה",
+      "recognized_at": "2026-07-13T14:44:59Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Peleg Kraft",
+      "title": "הרימון",
+      "text": "Peleg Kraft — הרימון",
+      "recognized_at": "2026-07-13T14:44:59Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 93,
-  "returned": 93,
-  "updated_at": "2026-07-13T14:43:49Z"
+  "total": 95,
+  "returned": 95,
+  "updated_at": "2026-07-13T14:45:15Z"
 }

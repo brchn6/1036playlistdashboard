@@ -142,9 +142,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Shalom Hanoch",
+      "title": "ככה וככה",
+      "text": "Shalom Hanoch — ככה וככה",
+      "recognized_at": "2026-07-13T14:44:59Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 13,
-  "returned": 13,
-  "updated_at": "2026-07-13T14:43:49Z"
+  "total": 14,
+  "returned": 14,
+  "updated_at": "2026-07-13T14:45:15Z"
 }

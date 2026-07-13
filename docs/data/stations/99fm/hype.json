@@ -89,6 +89,17 @@
       "station_color": "#6ab8e3"
     },
     {
+      "artist": "Shalom Hanoch",
+      "title": "ככה וככה",
+      "text": "Shalom Hanoch — ככה וככה",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:44:59Z",
+      "last_seen": "2026-07-13T14:44:59Z",
+      "station_slug": "99fm",
+      "station_name": "99FM",
+      "station_color": "#6ab8e3"
+    },
+    {
       "artist": "The Beatles",
       "title": "Eight Days a Week",
       "text": "The Beatles — Eight Days a Week",
@@ -144,5 +155,5 @@
       "station_color": "#6ab8e3"
     }
   ],
-  "updated_at": "2026-07-13T14:43:49Z"
+  "updated_at": "2026-07-13T14:45:15Z"
 }
