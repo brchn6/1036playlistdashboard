@@ -9,6 +9,14 @@
       "last_seen": "2026-07-13T12:50:26Z"
     },
     {
+      "artist": "Blondie",
+      "title": "The Tide Is High",
+      "text": "Blondie — The Tide Is High",
+      "play_count": 1,
+      "first_seen": "2026-07-13T12:54:53Z",
+      "last_seen": "2026-07-13T12:54:53Z"
+    },
+    {
       "artist": "SZA",
       "title": "Kill Bill",
       "text": "SZA — Kill Bill",
@@ -17,5 +25,5 @@
       "last_seen": "2026-07-13T12:53:46Z"
     }
   ],
-  "updated_at": "2026-07-13T12:54:12Z"
+  "updated_at": "2026-07-13T12:55:12Z"
 }

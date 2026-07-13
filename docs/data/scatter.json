@@ -208,9 +208,20 @@
       "day_of_week": "1",
       "hour": "12",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Blondie",
+      "title": "The Tide Is High",
+      "text": "Blondie — The Tide Is High",
+      "recognized_at": "2026-07-13T12:54:53Z",
+      "station_slug": "kan-bet",
+      "station_color": "#e38a6a",
+      "day_of_week": "1",
+      "hour": "12",
+      "date": "2026-07-13"
     }
   ],
-  "total": 19,
-  "returned": 19,
-  "updated_at": "2026-07-13T12:54:12Z"
+  "total": 20,
+  "returned": 20,
+  "updated_at": "2026-07-13T12:55:12Z"
 }
