@@ -20,7 +20,9 @@ from typing import Any
 DEFAULT_DB_PATH = Path(__file__).resolve().parent.parent / "data" / "playlist.db"
 
 # ── Station registry ───────────────────────────────────────────────────
-STATIONS_CONFIG: list[dict[str, Any]] = [
+STATIONS_CONFIG: list[dict[str, Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+] = [
     {"slug": "kol-hashfela", "name": "קול השפלה 103FM",  "stream_url": "https://radio.streamgates.net/stream/1036kh",   "proxy_port": 8761, "color": "#6ae3c1"},
     {"slug": "galgalatz",    "name": "גלגלצ",             "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_mp3",       "proxy_port": 8762, "color": "#e36a6a"},
     {"slug": "99fm",         "name": "99FM",              "stream_url": "https://99.livecdn.biz/99fm_aac",                "proxy_port": 8763, "color": "#6ab8e3"},
@@ -28,10 +30,13 @@ STATIONS_CONFIG: list[dict[str, Any]] = [
     {"slug": "kan-88",       "name": "כאן 88",            "stream_url": "https://27953.live.streamtheworld.com/KAN_88.mp3", "proxy_port": 8765, "color": "#c86ae3"},
     {"slug": "kan-bet",      "name": "כאן ב",             "stream_url": "https://27913.live.streamtheworld.com/KAN_BET.mp3", "proxy_port": 8766, "color": "#e38a6a"},
     {"slug": "galil",        "name": "קול הגליל העליון",   "stream_url": "https://radio.streamgates.net/stream/galil",    "proxy_port": 8767, "color": "#a06ae3"},
+      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
 ]
 
-STATIONS_BY_SLUG = {s["slug"]: s for s in STATIONS_CONFIG}
-STATIONS_BY_PORT = {s["proxy_port"]: s for s in STATIONS_CONFIG}
+STATIONS_BY_SLUG = {s["slug"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]: s for s in STATIONS_CONFIG}
+STATIONS_BY_PORT = {s["proxy_port"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]: s for s in STATIONS_CONFIG}
 
 
 class PlaylistDB:
@@ -94,15 +99,18 @@ class PlaylistDB:
 
         # Migration: add station_id + indexes if this is an old single-station DB
         cur = self.conn.execute("PRAGMA table_info(tracks)")
-        cols = {r["name"] for r in cur.fetchall()}
+        cols = {r["name"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+] for r in cur.fetchall()}
         if "station_id" not in cols:
             self.conn.execute("ALTER TABLE tracks ADD COLUMN station_id INTEGER REFERENCES stations(id)")
         # Create indexes safely (IF NOT EXISTS on indexes requires separate ALTER TABLE check)
-        existing_idx = {r["name"] for r in self.conn.execute("SELECT name FROM sqlite_master WHERE type='index'").fetchall()}
+        existing_idx = {r["name"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+] for r in self.conn.execute("SELECT name FROM sqlite_master WHERE type='index'").fetchall()}
         for idx_sql in [
             "CREATE INDEX IF NOT EXISTS idx_tracks_station_id ON tracks(station_id)",
             "CREATE INDEX IF NOT EXISTS idx_tracks_station_recog ON tracks(station_id, recognized_at)",
-        ]:
+              {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]:
             try:
                 self.conn.execute(idx_sql)
             except sqlite3.OperationalError:
@@ -114,34 +122,47 @@ class PlaylistDB:
     def _seed_stations(self) -> None:
         """Ensure all configured stations exist in the DB."""
         cur = self.conn.execute("SELECT COUNT(*) as cnt FROM stations")
-        if cur.fetchone()["cnt"] == 0:
+        if cur.fetchone()["cnt"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+] == 0:
             for s in STATIONS_CONFIG:
                 self.conn.execute(
                     """INSERT INTO stations (slug, name, stream_url, proxy_port, color)
                        VALUES (?, ?, ?, ?, ?)""",
-                    (s["slug"], s["name"], s["stream_url"], s["proxy_port"], s["color"]),
+                    (s["slug"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+], s["name"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+], s["stream_url"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+], s["proxy_port"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+], s["color"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]),
                 )
             self.conn.commit()
 
     # ── Stations ───────────────────────────────────────────────────────
 
-    def get_stations(self, only_enabled: bool = True) -> list[dict[str, Any]]:
+    def get_stations(self, only_enabled: bool = True) -> list[dict[str, Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]:
         """Get all stations."""
         sql = "SELECT * FROM stations"
-        params: list[Any] = []
+        params: list[Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+] = [      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
         if only_enabled:
             sql += " WHERE enabled = 1"
         sql += " ORDER BY id ASC"
         cur = self.conn.execute(sql, params)
-        return [dict(r) for r in cur.fetchall()]
+        return [dict(r) for r in cur.fetchall()      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
 
-    def get_station_by_slug(self, slug: str) -> dict[str, Any] | None:
+    def get_station_by_slug(self, slug: str) -> dict[str, Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+] | None:
         """Get a single station by slug."""
         cur = self.conn.execute("SELECT * FROM stations WHERE slug = ?", (slug,))
         row = cur.fetchone()
         return dict(row) if row else None
 
-    def get_station_by_port(self, port: int) -> dict[str, Any] | None:
+    def get_station_by_port(self, port: int) -> dict[str, Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+] | None:
         """Get a single station by proxy port."""
         cur = self.conn.execute("SELECT * FROM stations WHERE proxy_port = ?", (port,))
         row = cur.fetchone()
@@ -151,7 +172,8 @@ class PlaylistDB:
         """Resolve station ID from proxy port."""
         cur = self.conn.execute("SELECT id FROM stations WHERE proxy_port = ?", (port,))
         row = cur.fetchone()
-        return row["id"] if row else None
+        return row["id"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+] if row else None
 
     # ── Tracks ─────────────────────────────────────────────────────────
 
@@ -187,7 +209,8 @@ class PlaylistDB:
         return cur.fetchone() is not None
 
     def get_latest_track(self, station_id: int | None = None
-                         ) -> dict[str, Any] | None:
+                         ) -> dict[str, Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+] | None:
         """Get the most recently recognized track, optionally by station."""
         if station_id:
             cur = self.conn.execute(
@@ -208,7 +231,9 @@ class PlaylistDB:
         row = cur.fetchone()
         return dict(row) if row else None
 
-    def get_all_current_tracks(self) -> list[dict[str, Any]]:
+    def get_all_current_tracks(self) -> list[dict[str, Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]:
         """Get the latest track for EACH station (for multi-station display)."""
         cur = self.conn.execute(
             """SELECT t.*, s.slug as station_slug, s.name as station_name, s.color as station_color
@@ -219,11 +244,14 @@ class PlaylistDB:
                )
                ORDER BY s.id ASC"""
         )
-        return [dict(r) for r in cur.fetchall()]
+        return [dict(r) for r in cur.fetchall()      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
 
     def get_history(self, station_id: int | None = None,
                     limit: int = 200, offset: int = 0
-                    ) -> list[dict[str, Any]]:
+                    ) -> list[dict[str, Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]:
         """Get track history, newest first. Optionally filtered by station."""
         if station_id:
             cur = self.conn.execute(
@@ -242,11 +270,14 @@ class PlaylistDB:
                    ORDER BY t.recognized_at DESC LIMIT ? OFFSET ?""",
                 (limit, offset),
             )
-        return [dict(r) for r in cur.fetchall()]
+        return [dict(r) for r in cur.fetchall()      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
 
     def get_hype_tracks(self, station_id: int | None = None,
                         min_count: int = 1, limit: int = 50
-                        ) -> list[dict[str, Any]]:
+                        ) -> list[dict[str, Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]:
         """Most frequently played tracks, optionally by station."""
         if station_id:
             cur = self.conn.execute(
@@ -273,10 +304,13 @@ class PlaylistDB:
                    ORDER BY play_count DESC LIMIT ?""",
                 (min_count, limit),
             )
-        return [dict(r) for r in cur.fetchall()]
+        return [dict(r) for r in cur.fetchall()      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
 
     def get_cross_station_tracks(self, min_stations: int = 2, limit: int = 30
-                                  ) -> list[dict[str, Any]]:
+                                  ) -> list[dict[str, Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]:
         """Tracks that played on multiple stations (correlation)."""
         cur = self.conn.execute(
             """SELECT t.artist, t.title, t.text,
@@ -294,10 +328,13 @@ class PlaylistDB:
                LIMIT ?""",
             (min_stations, limit),
         )
-        return [dict(r) for r in cur.fetchall()]
+        return [dict(r) for r in cur.fetchall()      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
 
     def get_scatter_data(self, station_id: int | None = None
-                          ) -> list[dict[str, Any]]:
+                          ) -> list[dict[str, Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]:
         """Time-based data for scatterplot."""
         if station_id:
             cur = self.conn.execute(
@@ -323,36 +360,54 @@ class PlaylistDB:
                    JOIN stations s ON s.id = t.station_id
                    ORDER BY t.recognized_at ASC""",
             )
-        return [dict(r) for r in cur.fetchall()]
+        return [dict(r) for r in cur.fetchall()      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
 
-    def get_stats(self, station_id: int | None = None) -> dict[str, Any]:
+    def get_stats(self, station_id: int | None = None) -> dict[str, Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]:
         """Aggregate statistics, optionally by station."""
-        def _q(sql: str, params: list[Any] | None = None) -> Any:
-            cur = self.conn.execute(sql, params or [])
+        def _q(sql: str, params: list[Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+] | None = None) -> Any:
+            cur = self.conn.execute(sql, params or [      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+])
             return cur.fetchone()
 
         if station_id:
-            total = _q("SELECT COUNT(*) as c FROM tracks WHERE station_id = ?", [station_id])["c"]
-            artists = _q("SELECT COUNT(DISTINCT LOWER(artist)) as c FROM tracks WHERE station_id = ?", [station_id])["c"]
+            total = _q("SELECT COUNT(*) as c FROM tracks WHERE station_id = ?", [station_id      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+])["c"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
+            artists = _q("SELECT COUNT(DISTINCT LOWER(artist)) as c FROM tracks WHERE station_id = ?", [station_id      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+])["c"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
             unique = _q("""SELECT COUNT(DISTINCT LOWER(artist) || '|' || LOWER(title)) as c
-                          FROM tracks WHERE station_id = ?""", [station_id])["c"]
-            row = _q("SELECT MIN(recognized_at) as first, MAX(recognized_at) as last FROM tracks WHERE station_id = ?", [station_id])
+                          FROM tracks WHERE station_id = ?""", [station_id      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+])["c"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
+            row = _q("SELECT MIN(recognized_at) as first, MAX(recognized_at) as last FROM tracks WHERE station_id = ?", [station_id      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+])
         else:
-            total = _q("SELECT COUNT(*) as c FROM tracks")["c"]
-            artists = _q("SELECT COUNT(DISTINCT LOWER(artist)) as c FROM tracks")["c"]
-            unique = _q("SELECT COUNT(DISTINCT LOWER(artist) || '|' || LOWER(title)) as c FROM tracks")["c"]
+            total = _q("SELECT COUNT(*) as c FROM tracks")["c"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
+            artists = _q("SELECT COUNT(DISTINCT LOWER(artist)) as c FROM tracks")["c"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
+            unique = _q("SELECT COUNT(DISTINCT LOWER(artist) || '|' || LOWER(title)) as c FROM tracks")["c"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
             row = _q("SELECT MIN(recognized_at) as first, MAX(recognized_at) as last FROM tracks")
 
         return {
             "total_tracks": total,
             "unique_tracks": unique,
             "unique_artists": artists,
-            "first_track_at": row["first"],
-            "last_track_at": row["last"],
+            "first_track_at": row["first"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+],
+            "last_track_at": row["last"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+],
         }
 
     def get_track_count_by_date(self, station_id: int | None = None,
-                                 days: int = 45) -> list[dict[str, Any]]:
+                                 days: int = 45) -> list[dict[str, Any      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]:
         """Tracks grouped by date."""
         if station_id:
             cur = self.conn.execute(
@@ -370,7 +425,8 @@ class PlaylistDB:
                    FROM tracks
                    GROUP BY date ORDER BY date ASC"""
             )
-        return [dict(r) for r in cur.fetchall()]
+        return [dict(r) for r in cur.fetchall()      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
 
     def cleanup_old_tracks(self, days: int = 45) -> int:
         """Delete tracks older than N days across all stations."""
@@ -386,7 +442,8 @@ class PlaylistDB:
 
     def get_all_tracks_count(self) -> int:
         cur = self.conn.execute("SELECT COUNT(*) as cnt FROM tracks")
-        return cur.fetchone()["cnt"]
+        return cur.fetchone()["cnt"      {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "proxy_port": 8768, "color": "#e36ac8"},
+]
 
     # ── Lifecycle ──────────────────────────────────────────────────────
 
