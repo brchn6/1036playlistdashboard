@@ -417,9 +417,20 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Bryan Adams",
+      "title": "Heaven",
+      "text": "Bryan Adams — Heaven",
+      "recognized_at": "2026-07-13T17:36:02Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 38,
-  "returned": 38,
-  "updated_at": "2026-07-13T17:35:39Z"
+  "total": 39,
+  "returned": 39,
+  "updated_at": "2026-07-13T17:36:09Z"
 }

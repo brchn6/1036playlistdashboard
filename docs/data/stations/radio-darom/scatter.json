@@ -131,9 +131,20 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Shlomi Shabat",
+      "title": "בגלל הרוח",
+      "text": "Shlomi Shabat — בגלל הרוח",
+      "recognized_at": "2026-07-13T17:36:08Z",
+      "station_slug": "radio-darom",
+      "station_color": "#e36ac8",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 12,
-  "returned": 12,
-  "updated_at": "2026-07-13T17:35:39Z"
+  "total": 13,
+  "returned": 13,
+  "updated_at": "2026-07-13T17:36:09Z"
 }

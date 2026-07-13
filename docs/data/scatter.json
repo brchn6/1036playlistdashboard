@@ -2837,9 +2837,42 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Billy Joel",
+      "title": "My Life",
+      "text": "Billy Joel — My Life",
+      "recognized_at": "2026-07-13T17:35:48Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Bryan Adams",
+      "title": "Heaven",
+      "text": "Bryan Adams — Heaven",
+      "recognized_at": "2026-07-13T17:36:02Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Shlomi Shabat",
+      "title": "בגלל הרוח",
+      "text": "Shlomi Shabat — בגלל הרוח",
+      "recognized_at": "2026-07-13T17:36:08Z",
+      "station_slug": "radio-darom",
+      "station_color": "#e36ac8",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 258,
-  "returned": 258,
-  "updated_at": "2026-07-13T17:35:39Z"
+  "total": 261,
+  "returned": 261,
+  "updated_at": "2026-07-13T17:36:09Z"
 }

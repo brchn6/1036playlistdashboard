@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 338,
+      "station_id": 8,
+      "artist": "Shlomi Shabat",
+      "title": "בגלל הרוח",
+      "text": "Shlomi Shabat — בגלל הרוח",
+      "url": "https://www.shazam.com/track/127768726/%D7%91%D7%92%D7%9C%D7%9C-%D7%94%D7%A8%D7%95%D7%97",
+      "shazam_key": "127768726",
+      "recognized_at": "2026-07-13T17:36:08Z",
+      "created_at": "2026-07-13 17:36:09",
+      "station_slug": "radio-darom",
+      "station_name": "רדיו דרום 97FM",
+      "station_color": "#e36ac8"
+    },
+    {
       "id": 330,
       "station_id": 8,
       "artist": "Portrait",
@@ -169,6 +183,6 @@
       "station_color": "#e36ac8"
     }
   ],
-  "total": 12,
-  "updated_at": "2026-07-13T17:35:39Z"
+  "total": 13,
+  "updated_at": "2026-07-13T17:36:09Z"
 }

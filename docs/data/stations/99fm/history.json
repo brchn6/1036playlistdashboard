@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 336,
+      "station_id": 3,
+      "artist": "Bryan Adams",
+      "title": "Heaven",
+      "text": "Bryan Adams — Heaven",
+      "url": "https://www.shazam.com/track/217717/heaven",
+      "shazam_key": "217717",
+      "recognized_at": "2026-07-13T17:36:02Z",
+      "created_at": "2026-07-13 17:36:09",
+      "station_slug": "99fm",
+      "station_name": "99FM",
+      "station_color": "#6ab8e3"
+    },
+    {
       "id": 331,
       "station_id": 3,
       "artist": "GÅEL",
@@ -533,6 +547,6 @@
       "station_color": "#6ab8e3"
     }
   ],
-  "total": 38,
-  "updated_at": "2026-07-13T17:35:39Z"
+  "total": 39,
+  "updated_at": "2026-07-13T17:36:09Z"
 }

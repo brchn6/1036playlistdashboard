@@ -34,6 +34,17 @@
       "station_color": "#a06ae3"
     },
     {
+      "artist": "Billy Joel",
+      "title": "My Life",
+      "text": "Billy Joel — My Life",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:35:48Z",
+      "last_seen": "2026-07-13T17:35:48Z",
+      "station_slug": "galil",
+      "station_name": "קול הגליל העליון",
+      "station_color": "#a06ae3"
+    },
+    {
       "artist": "Bob Dylan",
       "title": "Knockin' On Heaven's Door",
       "text": "Bob Dylan — Knockin' On Heaven's Door",
@@ -496,5 +507,5 @@
       "station_color": "#a06ae3"
     }
   ],
-  "updated_at": "2026-07-13T17:35:39Z"
+  "updated_at": "2026-07-13T17:36:09Z"
 }

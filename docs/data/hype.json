@@ -241,6 +241,14 @@
       "last_seen": "2026-07-13T16:52:37Z"
     },
     {
+      "artist": "Billy Joel",
+      "title": "My Life",
+      "text": "Billy Joel — My Life",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:35:48Z",
+      "last_seen": "2026-07-13T17:35:48Z"
+    },
+    {
       "artist": "Billy Ocean",
       "title": "Get Outta My Dreams, Get Into My Car",
       "text": "Billy Ocean — Get Outta My Dreams, Get Into My Car",
@@ -295,6 +303,14 @@
       "play_count": 1,
       "first_seen": "2026-07-13T15:45:29Z",
       "last_seen": "2026-07-13T15:45:29Z"
+    },
+    {
+      "artist": "Bryan Adams",
+      "title": "Heaven",
+      "text": "Bryan Adams — Heaven",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:36:02Z",
+      "last_seen": "2026-07-13T17:36:02Z"
     },
     {
       "artist": "Bryan Adams",
@@ -783,23 +799,7 @@
       "play_count": 1,
       "first_seen": "2026-07-13T17:22:30Z",
       "last_seen": "2026-07-13T17:22:30Z"
-    },
-    {
-      "artist": "Jamie xx",
-      "title": "Loud Places (feat. Romy)",
-      "text": "Jamie xx — Loud Places (feat. Romy)",
-      "play_count": 1,
-      "first_seen": "2026-07-13T16:38:01Z",
-      "last_seen": "2026-07-13T16:38:01Z"
-    },
-    {
-      "artist": "Jasmin Moallem",
-      "title": "יהיה טוב",
-      "text": "Jasmin Moallem — יהיה טוב",
-      "play_count": 1,
-      "first_seen": "2026-07-13T15:34:11Z",
-      "last_seen": "2026-07-13T15:34:11Z"
     }
   ],
-  "updated_at": "2026-07-13T17:35:39Z"
+  "updated_at": "2026-07-13T17:36:09Z"
 }

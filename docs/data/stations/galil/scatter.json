@@ -494,9 +494,20 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Billy Joel",
+      "title": "My Life",
+      "text": "Billy Joel — My Life",
+      "recognized_at": "2026-07-13T17:35:48Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 45,
-  "returned": 45,
-  "updated_at": "2026-07-13T17:35:39Z"
+  "total": 46,
+  "returned": 46,
+  "updated_at": "2026-07-13T17:36:09Z"
 }
