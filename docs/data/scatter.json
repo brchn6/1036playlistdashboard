@@ -362,9 +362,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Hard-Fi",
+      "title": "Move On Now",
+      "text": "Hard-Fi — Move On Now",
+      "recognized_at": "2026-07-13T13:02:31Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 33,
-  "returned": 33,
-  "updated_at": "2026-07-13T13:02:12Z"
+  "total": 34,
+  "returned": 34,
+  "updated_at": "2026-07-13T13:02:42Z"
 }

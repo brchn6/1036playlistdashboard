@@ -113,6 +113,14 @@
       "last_seen": "2026-07-13T12:57:32Z"
     },
     {
+      "artist": "Hard-Fi",
+      "title": "Move On Now",
+      "text": "Hard-Fi — Move On Now",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:02:31Z",
+      "last_seen": "2026-07-13T13:02:31Z"
+    },
+    {
       "artist": "JAŸ-Z",
       "title": "Empire State Of Mind (feat. Alicia Keys)",
       "text": "JAŸ-Z — Empire State Of Mind (feat. Alicia Keys)",
@@ -185,5 +193,5 @@
       "last_seen": "2026-07-13T12:50:12Z"
     }
   ],
-  "updated_at": "2026-07-13T13:02:12Z"
+  "updated_at": "2026-07-13T13:02:42Z"
 }
