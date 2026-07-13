@@ -1055,9 +1055,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Ninet Tayeb",
+      "title": "בינתיים לך איתה",
+      "text": "Ninet Tayeb — בינתיים לך איתה",
+      "recognized_at": "2026-07-13T14:48:09Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 96,
-  "returned": 96,
-  "updated_at": "2026-07-13T14:47:15Z"
+  "total": 97,
+  "returned": 97,
+  "updated_at": "2026-07-13T14:48:15Z"
 }

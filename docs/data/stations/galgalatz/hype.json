@@ -111,6 +111,17 @@
       "station_color": "#e36a6a"
     },
     {
+      "artist": "Ninet Tayeb",
+      "title": "בינתיים לך איתה",
+      "text": "Ninet Tayeb — בינתיים לך איתה",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:48:09Z",
+      "last_seen": "2026-07-13T14:48:09Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "artist": "Olivia Rodrigo",
       "title": "stupid song",
       "text": "Olivia Rodrigo — stupid song",
@@ -210,5 +221,5 @@
       "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T14:47:15Z"
+  "updated_at": "2026-07-13T14:48:15Z"
 }
