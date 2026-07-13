@@ -73,6 +73,14 @@
       "last_seen": "2026-07-13T12:53:46Z"
     },
     {
+      "artist": "Berry Sakharof",
+      "title": "Kama Yossi",
+      "text": "Berry Sakharof — Kama Yossi",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:08:07Z",
+      "last_seen": "2026-07-13T13:08:07Z"
+    },
+    {
       "artist": "Björk",
       "title": "It's Oh so Quiet",
       "text": "Björk — It's Oh so Quiet",
@@ -241,5 +249,5 @@
       "last_seen": "2026-07-13T12:50:12Z"
     }
   ],
-  "updated_at": "2026-07-13T13:07:42Z"
+  "updated_at": "2026-07-13T13:08:12Z"
 }
