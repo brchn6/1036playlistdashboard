@@ -594,12 +594,12 @@ async function fetchAll(){
     if(stationsJSON)stations=stationsJSON;
     document.getElementById('stationCount').textContent=stations.length;
     renderPills(cur);renderNowPlaying(cur);renderStats(stat);
-    renderScatter(scatter);renderHourChart(scatter);renderDateChart(stat);renderCrossStation(cross);
+    renderTimeline(scatter);renderHeatmap(scatter);renderHourChart(scatter);renderCrossStation(cross);
 
-    let histUrl=BASE+'history.json',hypeUrl=BASE+'hype.json';
-    if(activeStation){histUrl=BASE+'stations/'+activeStation+'/history.json';hypeUrl=BASE+'stations/'+activeStation+'/hype.json';}
-    const[hist,hype]=await Promise.all([loadJSON(histUrl),loadJSON(hypeUrl)]);
-    renderHistory(hist);renderHype(hype);renderTopArtists(hist||{history:[]});
+    let histUrl=BASE+'history.json';
+    if(activeStation){histUrl=BASE+'stations/'+activeStation+'/history.json';}
+    const hist=await loadJSON(histUrl);
+    renderHistory(hist);renderTopArtists(hist||{history:[]});
 
     document.getElementById('statusDot').className='dot on';
     document.getElementById('statusText').textContent='מחובר';
