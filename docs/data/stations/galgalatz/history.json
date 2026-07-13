@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 301,
+      "station_id": 2,
+      "artist": "Labrinth",
+      "title": "THE LIVING",
+      "text": "Labrinth — THE LIVING",
+      "url": "https://www.shazam.com/track/873710420/the-living",
+      "shazam_key": "873710420",
+      "recognized_at": "2026-07-13T17:10:17Z",
+      "created_at": "2026-07-13 17:10:39",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "id": 293,
       "station_id": 2,
       "artist": "Lauryn Hill",
@@ -561,6 +575,6 @@
       "station_color": "#e36a6a"
     }
   ],
-  "total": 40,
-  "updated_at": "2026-07-13T17:10:09Z"
+  "total": 41,
+  "updated_at": "2026-07-13T17:10:39Z"
 }

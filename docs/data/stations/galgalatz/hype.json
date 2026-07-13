@@ -177,6 +177,17 @@
       "station_color": "#e36a6a"
     },
     {
+      "artist": "Labrinth",
+      "title": "THE LIVING",
+      "text": "Labrinth — THE LIVING",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:10:17Z",
+      "last_seen": "2026-07-13T17:10:17Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "artist": "Lauryn Hill",
       "title": "To Zion (feat. Carlos Santana)",
       "text": "Lauryn Hill — To Zion (feat. Carlos Santana)",
@@ -441,5 +452,5 @@
       "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T17:10:09Z"
+  "updated_at": "2026-07-13T17:10:39Z"
 }
