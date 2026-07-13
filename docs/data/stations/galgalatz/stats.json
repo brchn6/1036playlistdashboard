@@ -10,6 +10,15 @@
       "count": 47
     }
   ],
-  "non_music": [],
-  "updated_at": "2026-07-13T17:40:22Z"
+  "non_music": [
+    {
+      "station_id": 2,
+      "station_name": "גלגלצ",
+      "station_slug": "galgalatz",
+      "event_count": 1,
+      "total_seconds": 0,
+      "last_event_at": null
+    }
+  ],
+  "updated_at": "2026-07-13T17:40:42Z"
 }

@@ -2903,9 +2903,20 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Imagination",
+      "title": "Music and Lights",
+      "text": "Imagination — Music and Lights",
+      "recognized_at": "2026-07-13T17:40:38Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 264,
-  "returned": 264,
-  "updated_at": "2026-07-13T17:40:22Z"
+  "total": 265,
+  "returned": 265,
+  "updated_at": "2026-07-13T17:40:42Z"
 }
