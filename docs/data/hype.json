@@ -17,6 +17,22 @@
       "last_seen": "2026-07-13T12:48:38Z"
     },
     {
+      "artist": "SZA",
+      "title": "Kill Bill",
+      "text": "SZA — Kill Bill",
+      "play_count": 2,
+      "first_seen": "2026-07-13T12:52:43Z",
+      "last_seen": "2026-07-13T12:53:46Z"
+    },
+    {
+      "artist": "Blondie",
+      "title": "The Tide Is High",
+      "text": "Blondie — The Tide Is High",
+      "play_count": 1,
+      "first_seen": "2026-07-13T12:53:49Z",
+      "last_seen": "2026-07-13T12:53:49Z"
+    },
+    {
       "artist": "Bruno Mars",
       "title": "Cha Cha Cha",
       "text": "Bruno Mars — Cha Cha Cha",
@@ -81,14 +97,6 @@
       "last_seen": "2026-07-13T12:51:56Z"
     },
     {
-      "artist": "SZA",
-      "title": "Kill Bill",
-      "text": "SZA — Kill Bill",
-      "play_count": 1,
-      "first_seen": "2026-07-13T12:52:43Z",
-      "last_seen": "2026-07-13T12:52:43Z"
-    },
-    {
       "artist": "Test Artist",
       "title": "Test Song",
       "text": "Test Artist — Test Song",
@@ -113,5 +121,5 @@
       "last_seen": "2026-07-13T12:50:12Z"
     }
   ],
-  "updated_at": "2026-07-13T12:53:42Z"
+  "updated_at": "2026-07-13T12:54:12Z"
 }

@@ -186,9 +186,31 @@
       "day_of_week": "1",
       "hour": "12",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "SZA",
+      "title": "Kill Bill",
+      "text": "SZA — Kill Bill",
+      "recognized_at": "2026-07-13T12:53:46Z",
+      "station_slug": "kan-bet",
+      "station_color": "#e38a6a",
+      "day_of_week": "1",
+      "hour": "12",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Blondie",
+      "title": "The Tide Is High",
+      "text": "Blondie — The Tide Is High",
+      "recognized_at": "2026-07-13T12:53:49Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "12",
+      "date": "2026-07-13"
     }
   ],
-  "total": 17,
-  "returned": 17,
-  "updated_at": "2026-07-13T12:53:42Z"
+  "total": 19,
+  "returned": 19,
+  "updated_at": "2026-07-13T12:54:12Z"
 }
