@@ -70,15 +70,15 @@
     "station_color": "#c86ae3"
   },
   {
-    "id": 118,
+    "id": 120,
     "station_id": 7,
-    "artist": "The New Mastersounds",
-    "title": "Your Love Is Mine",
-    "text": "The New Mastersounds — Your Love Is Mine",
-    "url": "https://www.shazam.com/track/20141143/your-love-is-mine",
-    "shazam_key": "20141143",
-    "recognized_at": "2026-07-13T13:57:54Z",
-    "created_at": "2026-07-13 13:58:15",
+    "artist": "Whitesnake",
+    "title": "Here I Go Again ('87)",
+    "text": "Whitesnake — Here I Go Again ('87)",
+    "url": "https://www.shazam.com/track/11118178/here-i-go-again-live",
+    "shazam_key": "11118178",
+    "recognized_at": "2026-07-13T14:01:59Z",
+    "created_at": "2026-07-13 14:02:15",
     "station_slug": "galil",
     "station_name": "קול הגליל העליון",
     "station_color": "#a06ae3"

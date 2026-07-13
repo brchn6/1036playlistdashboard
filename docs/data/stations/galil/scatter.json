@@ -98,9 +98,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Whitesnake",
+      "title": "Here I Go Again ('87)",
+      "text": "Whitesnake — Here I Go Again ('87)",
+      "recognized_at": "2026-07-13T14:01:59Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 9,
-  "returned": 9,
-  "updated_at": "2026-07-13T14:01:15Z"
+  "total": 10,
+  "returned": 10,
+  "updated_at": "2026-07-13T14:02:15Z"
 }
