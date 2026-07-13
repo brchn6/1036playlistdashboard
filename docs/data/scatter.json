@@ -44,9 +44,18 @@
       "day_of_week": "1",
       "hour": "12",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Ace of Base",
+      "title": "Beautiful Life",
+      "text": "Ace of Base — Beautiful Life",
+      "recognized_at": "2026-07-13T12:18:07Z",
+      "day_of_week": "1",
+      "hour": "12",
+      "date": "2026-07-13"
     }
   ],
-  "total": 5,
-  "returned": 5,
-  "updated_at": "2026-07-13T12:15:10Z"
+  "total": 6,
+  "returned": 6,
+  "updated_at": "2026-07-13T12:18:10Z"
 }

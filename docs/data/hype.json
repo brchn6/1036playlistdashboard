@@ -1,6 +1,14 @@
 {
   "tracks": [
     {
+      "artist": "Ace of Base",
+      "title": "Beautiful Life",
+      "text": "Ace of Base — Beautiful Life",
+      "play_count": 1,
+      "first_seen": "2026-07-13T12:18:07Z",
+      "last_seen": "2026-07-13T12:18:07Z"
+    },
+    {
       "artist": "Bob Sinclar & Cutee B.",
       "title": "Rock This Party (Everybody Dance Now) [feat. Dollarman, Big Ali & Makedah]",
       "text": "Bob Sinclar & Cutee B. — Rock This Party (Everybody Dance Now) [feat. Dollarman, Big Ali & Makedah]",
@@ -41,5 +49,5 @@
       "last_seen": "2026-07-13T12:05:00Z"
     }
   ],
-  "updated_at": "2026-07-13T12:15:10Z"
+  "updated_at": "2026-07-13T12:18:10Z"
 }
