@@ -78,6 +78,17 @@
       "station_color": "#e36a6a"
     },
     {
+      "artist": "Michael Kiwanuka",
+      "title": "Black Man in a White World",
+      "text": "Michael Kiwanuka — Black Man in a White World",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:35:49Z",
+      "last_seen": "2026-07-13T14:35:49Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "artist": "Olivia Rodrigo",
       "title": "stupid song",
       "text": "Olivia Rodrigo — stupid song",
@@ -177,5 +188,5 @@
       "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T14:35:15Z"
+  "updated_at": "2026-07-13T14:36:15Z"
 }

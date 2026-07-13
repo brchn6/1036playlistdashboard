@@ -912,9 +912,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Michael Kiwanuka",
+      "title": "Black Man in a White World",
+      "text": "Michael Kiwanuka — Black Man in a White World",
+      "recognized_at": "2026-07-13T14:35:49Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 83,
-  "returned": 83,
-  "updated_at": "2026-07-13T14:35:15Z"
+  "total": 84,
+  "returned": 84,
+  "updated_at": "2026-07-13T14:36:15Z"
 }
