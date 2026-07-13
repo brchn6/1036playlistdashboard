@@ -494,9 +494,31 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Ran Danker",
+      "title": "בית משוגעים",
+      "text": "Ran Danker — בית משוגעים",
+      "recognized_at": "2026-07-13T14:04:59Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Youssou N'Dour",
+      "title": "7 Seconds (feat. Neneh Cherry)",
+      "text": "Youssou N'Dour — 7 Seconds (feat. Neneh Cherry)",
+      "recognized_at": "2026-07-13T14:05:04Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 45,
-  "returned": 45,
-  "updated_at": "2026-07-13T14:02:49Z"
+  "total": 47,
+  "returned": 47,
+  "updated_at": "2026-07-13T14:05:15Z"
 }

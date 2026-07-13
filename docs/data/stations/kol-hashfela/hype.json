@@ -78,6 +78,17 @@
       "station_color": "#6ae3c1"
     },
     {
+      "artist": "Ran Danker",
+      "title": "בית משוגעים",
+      "text": "Ran Danker — בית משוגעים",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:04:59Z",
+      "last_seen": "2026-07-13T14:04:59Z",
+      "station_slug": "kol-hashfela",
+      "station_name": "קול השפלה 103FM",
+      "station_color": "#6ae3c1"
+    },
+    {
       "artist": "Robin Thicke",
       "title": "Blurred Lines (feat. T.I. & Pharrell)",
       "text": "Robin Thicke — Blurred Lines (feat. T.I. & Pharrell)",
@@ -100,5 +111,5 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "updated_at": "2026-07-13T14:02:49Z"
+  "updated_at": "2026-07-13T14:05:15Z"
 }

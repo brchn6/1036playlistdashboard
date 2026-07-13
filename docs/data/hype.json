@@ -241,6 +241,14 @@
       "last_seen": "2026-07-13T13:43:39Z"
     },
     {
+      "artist": "Ran Danker",
+      "title": "בית משוגעים",
+      "text": "Ran Danker — בית משוגעים",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:04:59Z",
+      "last_seen": "2026-07-13T14:04:59Z"
+    },
+    {
       "artist": "Rihanna",
       "title": "Where Have You Been",
       "text": "Rihanna — Where Have You Been",
@@ -327,7 +335,15 @@
       "play_count": 1,
       "first_seen": "2026-07-13T13:52:52Z",
       "last_seen": "2026-07-13T13:52:52Z"
+    },
+    {
+      "artist": "Youssou N'Dour",
+      "title": "7 Seconds (feat. Neneh Cherry)",
+      "text": "Youssou N'Dour — 7 Seconds (feat. Neneh Cherry)",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:05:04Z",
+      "last_seen": "2026-07-13T14:05:04Z"
     }
   ],
-  "updated_at": "2026-07-13T14:02:49Z"
+  "updated_at": "2026-07-13T14:05:15Z"
 }

@@ -98,9 +98,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Youssou N'Dour",
+      "title": "7 Seconds (feat. Neneh Cherry)",
+      "text": "Youssou N'Dour — 7 Seconds (feat. Neneh Cherry)",
+      "recognized_at": "2026-07-13T14:05:04Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 9,
-  "returned": 9,
-  "updated_at": "2026-07-13T14:02:49Z"
+  "total": 10,
+  "returned": 10,
+  "updated_at": "2026-07-13T14:05:15Z"
 }

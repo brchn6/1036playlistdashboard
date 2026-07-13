@@ -1,6 +1,34 @@
 {
   "history": [
     {
+      "id": 124,
+      "station_id": 2,
+      "artist": "Youssou N'Dour",
+      "title": "7 Seconds (feat. Neneh Cherry)",
+      "text": "Youssou N'Dour — 7 Seconds (feat. Neneh Cherry)",
+      "url": "https://www.shazam.com/track/310953/7-seconds-feat-neneh-cherry",
+      "shazam_key": "310953",
+      "recognized_at": "2026-07-13T14:05:04Z",
+      "created_at": "2026-07-13 14:05:15",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
+      "id": 123,
+      "station_id": 1,
+      "artist": "Ran Danker",
+      "title": "בית משוגעים",
+      "text": "Ran Danker — בית משוגעים",
+      "url": "https://www.shazam.com/track/559101577/%D7%91%D7%99%D7%AA-%D7%9E%D7%A9%D7%95%D7%92%D7%A2%D7%99%D7%9D",
+      "shazam_key": "559101577",
+      "recognized_at": "2026-07-13T14:04:59Z",
+      "created_at": "2026-07-13 14:05:15",
+      "station_slug": "kol-hashfela",
+      "station_name": "קול השפלה 103FM",
+      "station_color": "#6ae3c1"
+    },
+    {
       "id": 121,
       "station_id": 3,
       "artist": "Crowded House",
@@ -631,7 +659,7 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "total": 45,
-  "returned": 45,
-  "updated_at": "2026-07-13T14:02:49Z"
+  "total": 47,
+  "returned": 47,
+  "updated_at": "2026-07-13T14:05:15Z"
 }

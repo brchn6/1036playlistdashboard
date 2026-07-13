@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 124,
+      "station_id": 2,
+      "artist": "Youssou N'Dour",
+      "title": "7 Seconds (feat. Neneh Cherry)",
+      "text": "Youssou N'Dour — 7 Seconds (feat. Neneh Cherry)",
+      "url": "https://www.shazam.com/track/310953/7-seconds-feat-neneh-cherry",
+      "shazam_key": "310953",
+      "recognized_at": "2026-07-13T14:05:04Z",
+      "created_at": "2026-07-13 14:05:15",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "id": 116,
       "station_id": 2,
       "artist": "Sheygets",
@@ -127,6 +141,6 @@
       "station_color": "#e36a6a"
     }
   ],
-  "total": 9,
-  "updated_at": "2026-07-13T14:02:49Z"
+  "total": 10,
+  "updated_at": "2026-07-13T14:05:15Z"
 }

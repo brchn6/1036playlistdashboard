@@ -98,9 +98,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Ran Danker",
+      "title": "בית משוגעים",
+      "text": "Ran Danker — בית משוגעים",
+      "recognized_at": "2026-07-13T14:04:59Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 9,
-  "returned": 9,
-  "updated_at": "2026-07-13T14:02:49Z"
+  "total": 10,
+  "returned": 10,
+  "updated_at": "2026-07-13T14:05:15Z"
 }
