@@ -582,9 +582,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Lucy Dacus & Hozier",
+      "title": "Bullseye",
+      "text": "Lucy Dacus & Hozier — Bullseye",
+      "recognized_at": "2026-07-13T13:14:47Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 53,
-  "returned": 53,
-  "updated_at": "2026-07-13T13:14:12Z"
+  "total": 54,
+  "returned": 54,
+  "updated_at": "2026-07-13T13:15:12Z"
 }

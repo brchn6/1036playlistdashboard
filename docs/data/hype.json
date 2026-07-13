@@ -193,6 +193,14 @@
       "last_seen": "2026-07-13T12:58:39Z"
     },
     {
+      "artist": "Lucy Dacus & Hozier",
+      "title": "Bullseye",
+      "text": "Lucy Dacus & Hozier — Bullseye",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:14:47Z",
+      "last_seen": "2026-07-13T13:14:47Z"
+    },
+    {
       "artist": "Madcon",
       "title": "Beggin (Uscar Version)",
       "text": "Madcon — Beggin (Uscar Version)",
@@ -297,5 +305,5 @@
       "last_seen": "2026-07-13T12:50:12Z"
     }
   ],
-  "updated_at": "2026-07-13T13:14:12Z"
+  "updated_at": "2026-07-13T13:15:12Z"
 }

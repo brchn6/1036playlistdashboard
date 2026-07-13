@@ -12,6 +12,17 @@
       "station_color": "#a06ae3"
     },
     {
+      "artist": "Lucy Dacus & Hozier",
+      "title": "Bullseye",
+      "text": "Lucy Dacus & Hozier — Bullseye",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:14:47Z",
+      "last_seen": "2026-07-13T13:14:47Z",
+      "station_slug": "galil",
+      "station_name": "קול הגליל העליון",
+      "station_color": "#a06ae3"
+    },
+    {
       "artist": "The Allman Brothers Band",
       "title": "In Memory of Elizabeth Reed",
       "text": "The Allman Brothers Band — In Memory of Elizabeth Reed",
@@ -56,5 +67,5 @@
       "station_color": "#a06ae3"
     }
   ],
-  "updated_at": "2026-07-13T13:14:12Z"
+  "updated_at": "2026-07-13T13:15:12Z"
 }
