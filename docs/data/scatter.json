@@ -648,9 +648,31 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Sono",
+      "title": "Twist in My Sobriety (Sans Souci Remix Edit)",
+      "text": "Sono — Twist in My Sobriety (Sans Souci Remix Edit)",
+      "recognized_at": "2026-07-13T14:15:11Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Fun Boy Three",
+      "title": "Our Lips Are Sealed",
+      "text": "Fun Boy Three — Our Lips Are Sealed",
+      "recognized_at": "2026-07-13T14:16:15Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 59,
-  "returned": 59,
-  "updated_at": "2026-07-13T14:14:45Z"
+  "total": 61,
+  "returned": 61,
+  "updated_at": "2026-07-13T14:16:15Z"
 }

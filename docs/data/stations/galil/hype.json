@@ -56,6 +56,17 @@
       "station_color": "#a06ae3"
     },
     {
+      "artist": "Fun Boy Three",
+      "title": "Our Lips Are Sealed",
+      "text": "Fun Boy Three — Our Lips Are Sealed",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:16:15Z",
+      "last_seen": "2026-07-13T14:16:15Z",
+      "station_slug": "galil",
+      "station_name": "קול הגליל העליון",
+      "station_color": "#a06ae3"
+    },
+    {
       "artist": "Garbage",
       "title": "You Look so Fine (2018 Remaster)",
       "text": "Garbage — You Look so Fine (2018 Remaster)",
@@ -144,5 +155,5 @@
       "station_color": "#a06ae3"
     }
   ],
-  "updated_at": "2026-07-13T14:14:45Z"
+  "updated_at": "2026-07-13T14:16:15Z"
 }

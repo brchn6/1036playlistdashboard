@@ -142,9 +142,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Fun Boy Three",
+      "title": "Our Lips Are Sealed",
+      "text": "Fun Boy Three — Our Lips Are Sealed",
+      "recognized_at": "2026-07-13T14:16:15Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 13,
-  "returned": 13,
-  "updated_at": "2026-07-13T14:14:45Z"
+  "total": 14,
+  "returned": 14,
+  "updated_at": "2026-07-13T14:16:15Z"
 }

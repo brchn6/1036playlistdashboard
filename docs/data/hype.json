@@ -209,6 +209,14 @@
       "last_seen": "2026-07-13T13:27:37Z"
     },
     {
+      "artist": "Fun Boy Three",
+      "title": "Our Lips Are Sealed",
+      "text": "Fun Boy Three — Our Lips Are Sealed",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:16:15Z",
+      "last_seen": "2026-07-13T14:16:15Z"
+    },
+    {
       "artist": "Garbage",
       "title": "You Look so Fine (2018 Remaster)",
       "text": "Garbage — You Look so Fine (2018 Remaster)",
@@ -353,6 +361,14 @@
       "last_seen": "2026-07-13T13:56:51Z"
     },
     {
+      "artist": "Sono",
+      "title": "Twist in My Sobriety (Sans Souci Remix Edit)",
+      "text": "Sono — Twist in My Sobriety (Sans Souci Remix Edit)",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:15:11Z",
+      "last_seen": "2026-07-13T14:15:11Z"
+    },
+    {
       "artist": "Soundgarden",
       "title": "Black Hole Sun",
       "text": "Soundgarden — Black Hole Sun",
@@ -441,5 +457,5 @@
       "last_seen": "2026-07-13T14:05:04Z"
     }
   ],
-  "updated_at": "2026-07-13T14:14:45Z"
+  "updated_at": "2026-07-13T14:16:15Z"
 }
