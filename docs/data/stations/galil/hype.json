@@ -23,6 +23,17 @@
       "station_color": "#a06ae3"
     },
     {
+      "artist": "Dire Straits",
+      "title": "Walk Of Life",
+      "text": "Dire Straits — Walk Of Life",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:06:03Z",
+      "last_seen": "2026-07-13T14:06:03Z",
+      "station_slug": "galil",
+      "station_name": "קול הגליל העליון",
+      "station_color": "#a06ae3"
+    },
+    {
       "artist": "Ehud Banai",
       "title": "ממשיך לנסוע",
       "text": "Ehud Banai — ממשיך לנסוע",
@@ -111,5 +122,5 @@
       "station_color": "#a06ae3"
     }
   ],
-  "updated_at": "2026-07-13T14:05:15Z"
+  "updated_at": "2026-07-13T14:06:15Z"
 }

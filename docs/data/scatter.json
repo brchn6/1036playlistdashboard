@@ -516,9 +516,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Dire Straits",
+      "title": "Walk Of Life",
+      "text": "Dire Straits — Walk Of Life",
+      "recognized_at": "2026-07-13T14:06:03Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 47,
-  "returned": 47,
-  "updated_at": "2026-07-13T14:05:15Z"
+  "total": 48,
+  "returned": 48,
+  "updated_at": "2026-07-13T14:06:15Z"
 }
