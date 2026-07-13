@@ -67,6 +67,17 @@
       "station_color": "#e36a6a"
     },
     {
+      "artist": "Knesiyat Hasechel",
+      "title": "ידיים למעלה",
+      "text": "Knesiyat Hasechel — ידיים למעלה",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:43:00Z",
+      "last_seen": "2026-07-13T14:43:00Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "artist": "Lea Shabat",
       "title": "חתיכת שמיים",
       "text": "Lea Shabat — חתיכת שמיים",
@@ -199,5 +210,5 @@
       "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T14:42:49Z"
+  "updated_at": "2026-07-13T14:43:15Z"
 }

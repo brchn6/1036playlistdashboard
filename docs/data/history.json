@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 169,
+      "station_id": 2,
+      "artist": "Knesiyat Hasechel",
+      "title": "ידיים למעלה",
+      "text": "Knesiyat Hasechel — ידיים למעלה",
+      "url": "https://www.shazam.com/track/255243667/%D7%99%D7%93%D7%99%D7%99%D7%9D-%D7%9C%D7%9E%D7%A2%D7%9C%D7%94",
+      "shazam_key": "255243667",
+      "recognized_at": "2026-07-13T14:43:00Z",
+      "created_at": "2026-07-13 14:43:15",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "id": 168,
       "station_id": 1,
       "artist": "Ariel Zilber",
@@ -1275,7 +1289,7 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "total": 91,
-  "returned": 91,
-  "updated_at": "2026-07-13T14:42:49Z"
+  "total": 92,
+  "returned": 92,
+  "updated_at": "2026-07-13T14:43:15Z"
 }
