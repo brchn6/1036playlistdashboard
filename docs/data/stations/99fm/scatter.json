@@ -131,9 +131,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Ella Langley",
+      "title": "Choosin' Texas",
+      "text": "Ella Langley — Choosin' Texas",
+      "recognized_at": "2026-07-13T14:40:41Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 12,
-  "returned": 12,
-  "updated_at": "2026-07-13T14:40:43Z"
+  "total": 13,
+  "returned": 13,
+  "updated_at": "2026-07-13T14:40:45Z"
 }

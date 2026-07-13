@@ -177,6 +177,14 @@
       "last_seen": "2026-07-13T14:02:26Z"
     },
     {
+      "artist": "Dan Toren",
+      "title": "Imperiot Noflot (Live)",
+      "text": "Dan Toren — Imperiot Noflot (Live)",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:40:29Z",
+      "last_seen": "2026-07-13T14:40:29Z"
+    },
+    {
       "artist": "Dire Straits",
       "title": "Sultans Of Swing",
       "text": "Dire Straits — Sultans Of Swing",
@@ -231,6 +239,14 @@
       "play_count": 1,
       "first_seen": "2026-07-13T13:36:40Z",
       "last_seen": "2026-07-13T13:36:40Z"
+    },
+    {
+      "artist": "Ella Langley",
+      "title": "Choosin' Texas",
+      "text": "Ella Langley — Choosin' Texas",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:40:41Z",
+      "last_seen": "2026-07-13T14:40:41Z"
     },
     {
       "artist": "Ethnix",
@@ -673,5 +689,5 @@
       "last_seen": "2026-07-13T14:05:04Z"
     }
   ],
-  "updated_at": "2026-07-13T14:40:43Z"
+  "updated_at": "2026-07-13T14:40:45Z"
 }
