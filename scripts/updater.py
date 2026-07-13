@@ -169,7 +169,7 @@ def main() -> None:
         flush=True,
     )
 
-    RETENTION_DAYS = int(os.environ.get("RETENTION_DAYS", "30"))
+    RETENTION_DAYS = int(os.environ.get("RETENTION_DAYS", "45"))
     CLEANUP_INTERVAL = int(os.environ.get("CLEANUP_INTERVAL", "360"))  # every 6 hours
 
     iteration = 0
