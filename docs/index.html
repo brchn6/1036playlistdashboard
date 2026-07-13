@@ -316,24 +316,15 @@ function renderScatter(scatter){
   if(activeStation)pts=pts.filter(p=>p.station_slug===activeStation);
   if(!pts.length){el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>אין נתונים לתחנה זו</div>';return}
   const ds={};
-  // Build lookup: date -> index (day 0, 1, 2...)
-  const dateSet={},dateList=[];
-  pts.forEach(p=>{
-    const day=p.recognized_at.slice(0,10);
-    if(!dateSet[day]){dateSet[day]=true;dateList.push(day);}
-  });
-  dateList.sort();
-  const dateIndex={};dateList.forEach((d,i)=>{dateIndex[d]=i;});
-  
   pts.forEach(p=>{
     const d=new Date(p.recognized_at.endsWith('Z')?p.recognized_at:p.recognized_at+'Z');
     if(isNaN(d))return;
     const hour=parseInt(p.hour)+(parseInt(p.hour)<6?24:0);
+    // Y = minutes since midnight (0-1439) — spreads points vertically by exact time
+    const mins=d.getHours()*60+d.getMinutes();
     const key=p.station_slug||'unk';
     if(!ds[key])ds[key]={label:p.station_name||key,data:[],bg:p.station_color||'#5ddbb5',border:p.station_color||'#5ddbb5'};
-    const dayIdx=dateIndex[p.recognized_at.slice(0,10)]??0;
-    // X=hour of day, Y=day index (0,1,2...) so points spread vertically by date
-    ds[key].data.push({x:hour,y:dayIdx,title:p.title,artist:p.artist,time:d.toLocaleString('en-US'),date:dateList[dayIdx]||p.recognized_at.slice(0,10)});
+    ds[key].data.push({x:hour,y:mins,title:p.title,artist:p.artist,time:d.toLocaleString('en-US'),date:d.toLocaleDateString('en-US')});
   });
   if(scatterChart)scatterChart.destroy();
   const ctx=el.getContext('2d');
@@ -344,7 +335,7 @@ function renderScatter(scatter){
       plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=ctx.raw;return r.artist+' — '+r.title+' '+r.date+' '+r.time}}}},
       scales:{
         x:{min:0,max:30,ticks:{stepSize:2,color:'#9898b0',callback:v=>v>23?(v-24)+':00':v+':00'},grid:{color:'#252940'}},
-        y:{type:'linear',min:-0.5,ticks:{color:'#9898b0',stepSize:1,callback:v=>dateList[v]||''},grid:{color:'#252940'}}
+        y:{ticks:{color:'#9898b0',callback:v=>{const h=Math.floor(v/60);const m=v%60;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');}},grid:{color:'#252940'}}
       }
     }
   });
