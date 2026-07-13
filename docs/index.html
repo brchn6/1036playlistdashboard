@@ -181,7 +181,7 @@
     <a href=https://1036kh.com target=_blank>קול הגליל העליון</a>
     <a href=https://www.radiodarom.co.il/ target=_blank>רדיו דרום 97FM</a>
   </div>
-  <div style="font-size:.65rem;color:rgba(152,152,176,.35);margin-top:6px">Updates every 30 seconds · 45-day data retention</div>
+  <div style="font-size:.65rem;color:rgba(152,152,176,.35);margin-top:6px">Updates every 30 seconds · 45-day data retention · <span id=collectRangeFooter></span></div>
 </footer>
 </div>
 
@@ -414,6 +414,7 @@ async function fetchAll(){
       const l=new Date(stat.last_track_at.endsWith('Z')?stat.last_track_at:stat.last_track_at+'Z');
       const opts={day:'numeric',month:'short',year:'numeric'};
       document.getElementById('collectRange').textContent='Collecting since '+f.toLocaleDateString('en-US',opts);
+      document.getElementById('collectRangeFooter').textContent='since '+f.toLocaleDateString('en-US',opts);
     }
     document.getElementById('lastUpdate').textContent=timeAgo(stat?.updated_at)||'-';
   }catch(e){
