@@ -1,6 +1,6 @@
 # 🎧 1036 Playlist Dashboard
 
-> **Multi-station automatic playlist tracker for Israeli radio stations**  
+> **Live at → [brchn6.github.io/1036playlistdashboard](https://brchn6.github.io/1036playlistdashboard/)**  
 > מזהה שירים אוטומטית מתחנות רדיו ישראליות ושומר היסטוריית השמעה
 
 A live dashboard that tracks songs played on **7 Israeli radio stations** simultaneously using [ShazamIO](https://github.com/dotX12/shazamio). Each station gets its own recognition proxy. All data flows into a single SQLite database and gets published to **GitHub Pages** every 30 seconds.
