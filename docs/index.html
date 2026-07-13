@@ -314,17 +314,26 @@ function renderScatter(scatter){
   }
   let pts=scatter.points;
   if(activeStation)pts=pts.filter(p=>p.station_slug===activeStation);
-  if(!pts.length){el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>אין נתונים לתחנה זו</div>';return}
+  if(!pts.length){el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>אין נתונים לתחנה זו</div>';return;}
+  // Build station order for Y-axis categories
+  const stationOrder=[],stationSet={};
+  const stationColors={},stationNames={};
+  pts.forEach(p=>{
+    const s=p.station_slug||'unk';
+    if(!stationSet[s]){stationSet[s]=true;stationOrder.push(s);}
+    stationColors[s]=p.station_color||'#5ddbb5';
+    stationNames[s]=p.station_name||s;
+  });
   const ds={};
   pts.forEach(p=>{
     const d=new Date(p.recognized_at.endsWith('Z')?p.recognized_at:p.recognized_at+'Z');
     if(isNaN(d))return;
-    const hour=parseInt(p.hour)+(parseInt(p.hour)<6?24:0);
-    // Y = minutes since midnight (0-1439) — spreads points vertically by exact time
-    const mins=d.getHours()*60+d.getMinutes();
-    const key=p.station_slug||'unk';
-    if(!ds[key])ds[key]={label:p.station_name||key,data:[],bg:p.station_color||'#5ddbb5',border:p.station_color||'#5ddbb5'};
-    ds[key].data.push({x:hour,y:mins,title:p.title,artist:p.artist,time:d.toLocaleString('en-US'),date:d.toLocaleDateString('en-US')});
+    const s=p.station_slug||'unk';
+    const yIdx=stationOrder.indexOf(s);
+    // X = minutes since midnight (continuous 0-1439)
+    const xMins=d.getHours()*60+d.getMinutes();
+    if(!ds[s]){ds[s]={label:stationNames[s],data:[],bg:stationColors[s],border:stationColors[s],pointRadius:6};}
+    ds[s].data.push({x:xMins,y:yIdx,title:p.title,artist:p.artist,time:d.toLocaleString('en-US'),station:stationNames[s]});
   });
   if(scatterChart)scatterChart.destroy();
   const ctx=el.getContext('2d');
@@ -332,15 +341,32 @@ function renderScatter(scatter){
     type:'scatter',data:{datasets:Object.values(ds)},
     options:{
       responsive:true,maintainAspectRatio:false,animation:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=ctx.raw;return r.artist+' — '+r.title+' '+r.date+' '+r.time}}}},
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>{
+          const r=ctx.raw;
+          const mins=Math.floor(r.x);
+          const hh=String(Math.floor(mins/60)).padStart(2,'0');
+          const mm=String(mins%60).padStart(2,'0');
+          return r.station+': '+r.artist+' — '+r.title+' ('+hh+':'+mm+')';
+        }}}
+      },
       scales:{
-        x:{min:0,max:30,ticks:{stepSize:2,color:'#9898b0',callback:v=>v>23?(v-24)+':00':v+':00'},grid:{color:'#252940'}},
-        y:{ticks:{color:'#9898b0',callback:v=>{const h=Math.floor(v/60);const m=v%60;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');}},grid:{color:'#252940'}}
+        x:{
+          type:'linear',min:0,max:1440,
+          ticks:{stepSize:120,color:'#9898b0',callback:v=>{const h=Math.floor(v/60);const m=v%60;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');}},
+          title:{display:true,text:'שעה ביום',color:'#9898b0'}
+        },
+        y:{
+          type:'linear',min:-0.5,max:stationOrder.length-0.5,
+          ticks:{stepSize:1,color:'#9898b0',callback:v=>{const idx=Math.round(v);return idx>=0&&idx<stationOrder.length?(stationNames[stationOrder[idx]]||''):'';}},
+          title:{display:true,text:'תחנה',color:'#9898b0'}
+        }
       }
     }
   });
   const legend=document.getElementById('scatterLegend');
-  legend.innerHTML=Object.entries(ds).slice(0,15).map(([k,v])=>'<span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+v.bg+';margin-left:4px"></span>'+esc(v.label)+'</span>').join('');
+  legend.innerHTML=stationOrder.map(s=>'<span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+stationColors[s]+';margin-left:4px"></span>'+esc(stationNames[s])+'</span>').join('');
 }
 
 function renderDateChart(s){
