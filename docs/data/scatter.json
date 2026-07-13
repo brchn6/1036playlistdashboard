@@ -626,9 +626,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Led Zeppelin",
+      "title": "Black Dog",
+      "text": "Led Zeppelin — Black Dog",
+      "recognized_at": "2026-07-13T13:19:03Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 57,
-  "returned": 57,
-  "updated_at": "2026-07-13T13:18:42Z"
+  "total": 58,
+  "returned": 58,
+  "updated_at": "2026-07-13T13:19:12Z"
 }
