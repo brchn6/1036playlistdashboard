@@ -86,6 +86,7 @@ class PlaylistDB:
             CREATE INDEX IF NOT EXISTS idx_tracks_recognized_at ON tracks(recognized_at);
             CREATE INDEX IF NOT EXISTS idx_tracks_shazam_key ON tracks(shazam_key);
             CREATE INDEX IF NOT EXISTS idx_tracks_artist_title ON tracks(artist, title);
+            CREATE INDEX IF NOT EXISTS idx_tracks_isrc ON tracks(isrc);
 
             CREATE TABLE IF NOT EXISTS meta (
                 key   TEXT PRIMARY KEY,
@@ -110,6 +111,10 @@ class PlaylistDB:
         cols = {r["name"] for r in cur.fetchall()}
         if "station_id" not in cols:
             self.conn.execute("ALTER TABLE tracks ADD COLUMN station_id INTEGER REFERENCES stations(id)")
+        # Migration: ISRC (global recording id) — added 2026-07-13. Rows collected
+        # before then have NULL and cannot be backfilled without re-recognition.
+        if "isrc" not in cols:
+            self.conn.execute("ALTER TABLE tracks ADD COLUMN isrc TEXT")
         # Create indexes safely (IF NOT EXISTS on indexes requires separate ALTER TABLE check)
         existing_idx = {r["name"] for r in self.conn.execute("SELECT name FROM sqlite_master WHERE type='index'").fetchall()}
         for idx_sql in [
