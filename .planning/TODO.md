@@ -55,6 +55,35 @@
 - [ ] Stress test with all 7 stations running 24h
 - [ ] Resource monitoring
 
+## 🚀 Spotify Export — Take History to Spotify
+See full plan: `.planning/SPOTIFY-EXPORT.md`
+
+### Milestone 1: 🎧 "Open in Spotify" link (Phase 1)
+- [ ] Helper function `spotifySearchUrl()` in dashboard JS
+- [ ] Spotify button in History rows
+- [ ] Spotify button in Now Playing cards
+- [ ] Spotify button in Top Songs/Artists
+- [ ] CSS styling for `.spotify-btn`
+
+### Milestone 2: 📋 Bulk playlist builder (Phase 2)
+- [ ] Filter bar (station, date range, reverse toggle, dedup toggle)
+- [ ] Checkbox per history row + Select All / Deselect All
+- [ ] Copy selected tracks as formatted text to clipboard
+- [ ] "Open All in Spotify" button
+
+### Milestone 3: 🔌 Full Spotify API integration (Phase 3)
+- [ ] Create `scripts/spotify_api.py` (standalone service, port 8760)
+- [ ] Spotify Developer app → client ID + secret in `.env`
+- [ ] OAuth flow: auth → callback → token storage
+- [ ] Track search/resolve endpoint
+- [ ] Playlist create + populate endpoint
+- [ ] Dashboard JS connected to local API
+
+### Milestone 4: 🧠 Smart curation (Phase 4)
+- [ ] Cross-station mix option
+- [ ] Auto-playlist by time-of-day pattern
+- [ ] Scheduled export cron
+
 ## 🔲 Future Ideas
 - [ ] Kan Gimel (if stream becomes accessible)
 - [ ] Galei Tzahal (if stream becomes accessible)
