@@ -10,5 +10,15 @@
       "count": 42
     }
   ],
-  "updated_at": "2026-07-13T17:38:35Z"
+  "non_music": [
+    {
+      "station_id": 5,
+      "station_name": "כאן 88",
+      "station_slug": "kan-88",
+      "event_count": 1,
+      "total_seconds": 0,
+      "last_event_at": null
+    }
+  ],
+  "updated_at": "2026-07-13T17:39:02Z"
 }

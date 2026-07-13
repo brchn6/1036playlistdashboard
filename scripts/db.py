@@ -91,6 +91,17 @@ class PlaylistDB:
                 key   TEXT PRIMARY KEY,
                 value TEXT
             );
+
+            CREATE TABLE IF NOT EXISTS non_music_log (
+                id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                station_id  INTEGER REFERENCES stations(id),
+                started_at  TEXT NOT NULL,
+                ended_at    TEXT,
+                reason      TEXT DEFAULT 'unknown'
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_non_music_station ON non_music_log(station_id);
+            CREATE INDEX IF NOT EXISTS idx_non_music_started ON non_music_log(started_at);
         """)
         self.conn.commit()
 
@@ -371,6 +382,100 @@ class PlaylistDB:
                           COUNT(*) as count
                    FROM tracks
                    GROUP BY date ORDER BY date ASC"""
+            )
+        return [dict(r) for r in cur.fetchall()]
+
+    # ── Non-music logging ────────────────────────────────────────────
+
+    def start_non_music_event(self, station_id: int,
+                               reason: str = "unknown") -> int:
+        """Start a new non-music interval. Closes any open one first."""
+        self.end_non_music_event(station_id)
+        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        cur = self.conn.execute(
+            """INSERT INTO non_music_log (station_id, started_at, reason)
+               VALUES (?, ?, ?)""",
+            (station_id, now, reason),
+        )
+        self.conn.commit()
+        return cur.lastrowid
+
+    def end_non_music_event(self, station_id: int) -> None:
+        """Close the latest open non-music interval for a station."""
+        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        self.conn.execute(
+            """UPDATE non_music_log SET ended_at = ?
+               WHERE station_id = ? AND ended_at IS NULL""",
+            (now, station_id),
+        )
+        self.conn.commit()
+
+    def get_open_non_music_event(self, station_id: int
+                                  ) -> dict[str, Any] | None:
+        """Get the latest open (non-ended) non-music event."""
+        cur = self.conn.execute(
+            """SELECT * FROM non_music_log
+               WHERE station_id = ? AND ended_at IS NULL
+               ORDER BY started_at DESC LIMIT 1""",
+            (station_id,),
+        )
+        row = cur.fetchone()
+        return dict(row) if row else None
+
+    def get_non_music_stats(self, station_id: int | None = None
+                             ) -> list[dict[str, Any]]:
+        """Aggregate non-music intervals per station."""
+        if station_id:
+            cur = self.conn.execute(
+                """SELECT n.station_id, s.name as station_name, s.slug as station_slug,
+                          COUNT(*) as event_count,
+                          COALESCE(SUM(
+                              CASE WHEN n.ended_at IS NOT NULL
+                                   THEN (julianday(n.ended_at) - julianday(n.started_at)) * 86400
+                                   ELSE 0 END
+                          ), 0) as total_seconds,
+                          MAX(n.ended_at) as last_event_at
+                   FROM non_music_log n
+                   JOIN stations s ON s.id = n.station_id
+                   WHERE n.station_id = ?
+                   GROUP BY n.station_id""",
+                (station_id,),
+            )
+        else:
+            cur = self.conn.execute(
+                """SELECT n.station_id, s.name as station_name, s.slug as station_slug,
+                          COUNT(*) as event_count,
+                          COALESCE(SUM(
+                              CASE WHEN n.ended_at IS NOT NULL
+                                   THEN (julianday(n.ended_at) - julianday(n.started_at)) * 86400
+                                   ELSE 0 END
+                          ), 0) as total_seconds,
+                          MAX(n.ended_at) as last_event_at
+                   FROM non_music_log n
+                   JOIN stations s ON s.id = n.station_id
+                   GROUP BY n.station_id""",
+            )
+        return [dict(r) for r in cur.fetchall()]
+
+    def get_recent_non_music(self, station_id: int | None = None,
+                              limit: int = 50) -> list[dict[str, Any]]:
+        """Recent non-music events."""
+        if station_id:
+            cur = self.conn.execute(
+                """SELECT n.*, s.name as station_name, s.slug as station_slug
+                   FROM non_music_log n
+                   JOIN stations s ON s.id = n.station_id
+                   WHERE n.station_id = ?
+                   ORDER BY n.started_at DESC LIMIT ?""",
+                (station_id, limit),
+            )
+        else:
+            cur = self.conn.execute(
+                """SELECT n.*, s.name as station_name, s.slug as station_slug
+                   FROM non_music_log n
+                   JOIN stations s ON s.id = n.station_id
+                   ORDER BY n.started_at DESC LIMIT ?""",
+                (limit,),
             )
         return [dict(r) for r in cur.fetchall()]
 

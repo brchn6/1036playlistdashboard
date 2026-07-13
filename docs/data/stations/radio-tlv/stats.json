@@ -10,5 +10,15 @@
       "count": 17
     }
   ],
-  "updated_at": "2026-07-13T17:38:35Z"
+  "non_music": [
+    {
+      "station_id": 4,
+      "station_name": "רדיו תל אביב 102FM",
+      "station_slug": "radio-tlv",
+      "event_count": 1,
+      "total_seconds": 0,
+      "last_event_at": null
+    }
+  ],
+  "updated_at": "2026-07-13T17:39:02Z"
 }

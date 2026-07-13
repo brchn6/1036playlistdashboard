@@ -86,6 +86,7 @@ def generate_all(output_dir: Path = DATA_DIR) -> dict[str, int]:
     # ── stats.json ──
     stats = safe_json(db.get_stats())
     stats["tracks_by_date"] = safe_json(db.get_track_count_by_date())
+    stats["non_music"] = safe_json(db.get_non_music_stats())
     stats["updated_at"] = now_iso()
     (output_dir / "stats.json").write_text(
         json.dumps(stats, ensure_ascii=False, indent=2) + "\n", "utf-8"
@@ -148,6 +149,7 @@ def generate_all(output_dir: Path = DATA_DIR) -> dict[str, int]:
         # Station stats
         s_stats = safe_json(db.get_stats(station_id=sid))
         s_stats["tracks_by_date"] = safe_json(db.get_track_count_by_date(station_id=sid))
+        s_stats["non_music"] = safe_json(db.get_non_music_stats(station_id=sid))
         s_stats["updated_at"] = now_iso()
         (sdir / "stats.json").write_text(
             json.dumps(s_stats, ensure_ascii=False, indent=2) + "\n", "utf-8"

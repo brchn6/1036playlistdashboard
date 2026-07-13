@@ -212,7 +212,18 @@ def main() -> None:
             track = extract_track(proxy_state)
 
             if not track:
+                # No song detected — log as non-music (commercials, talk, silence)
+                open_event = db.get_open_non_music_event(station_id)
+                if open_event:
+                    # Extend the ongoing non-music interval
+                    db.end_non_music_event(station_id)
+                else:
+                    # Start a new non-music interval
+                    db.start_non_music_event(station_id, reason="unknown")
                 continue
+
+            # Song detected — close any open non-music interval
+            db.end_non_music_event(station_id)
 
             # Check if this is a new track for this station
             if db.track_exists(
