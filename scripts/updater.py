@@ -73,16 +73,21 @@ def load_env() -> dict[str, str]:
 # ── git helpers ────────────────────────────────────────────────────────
 
 def git_commit_and_push(message: str) -> None:
-    """Commit and push. Uses token from .env, never stored."""
+    """Commit and push the generated data. Uses token from .env, never stored.
+
+    Only docs/data is staged: `git add -A` would sweep an in-progress source
+    edit into an "auto: multi-station update" commit.
+    """
     try:
         result = subprocess.run(
-            ["git", "status", "--porcelain", "--", "docs/", "scripts/", ".planning/"],
+            ["git", "status", "--porcelain", "--", "docs/data"],
             capture_output=True, text=True, timeout=15,
         )
         if not result.stdout.strip():
             return
 
-        subprocess.run(["git", "add", "-A"], check=True, capture_output=True, timeout=15)
+        subprocess.run(["git", "add", "--", "docs/data"],
+                       check=True, capture_output=True, timeout=15)
         subprocess.run(
             ["git", "commit", "-m", message],
             check=True, capture_output=True, timeout=15,
