@@ -406,9 +406,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Gal De Paz",
+      "title": "Can’t Die from Love",
+      "text": "Gal De Paz — Can’t Die from Love",
+      "recognized_at": "2026-07-13T13:06:28Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 37,
-  "returned": 37,
-  "updated_at": "2026-07-13T13:06:25Z"
+  "total": 38,
+  "returned": 38,
+  "updated_at": "2026-07-13T13:06:42Z"
 }

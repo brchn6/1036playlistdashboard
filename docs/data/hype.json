@@ -105,6 +105,14 @@
       "last_seen": "2026-07-13T12:49:42Z"
     },
     {
+      "artist": "Gal De Paz",
+      "title": "Can’t Die from Love",
+      "text": "Gal De Paz — Can’t Die from Love",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:06:28Z",
+      "last_seen": "2026-07-13T13:06:28Z"
+    },
+    {
       "artist": "Hachaverim Shel Natasha",
       "title": "עשי לי את המוות",
       "text": "Hachaverim Shel Natasha — עשי לי את המוות",
@@ -217,5 +225,5 @@
       "last_seen": "2026-07-13T12:50:12Z"
     }
   ],
-  "updated_at": "2026-07-13T13:06:25Z"
+  "updated_at": "2026-07-13T13:06:42Z"
 }
