@@ -9,7 +9,7 @@ database without explicit user confirmation. This rule is ABSOLUTE.**
 | Item | Value |
 |------|-------|
 | **Repo** | `brchn6/radio-playlist-dashboard` |
-| **Local** | `/home/barc/dev/1036playlistdashboard/` |
+| **Local** | `/home/barc/dev/radio-playlist-dashboard/` |
 | **Dashboard** | `https://brchn6.github.io/radio-playlist-dashboard/` |
 | **Deploy** | Manual only — `gh workflow run "Deploy to Pages"` |
 
@@ -17,7 +17,7 @@ database without explicit user confirmation. This rule is ABSOLUTE.**
 
 ```bash
 # Start collector + all proxies
-cd ~/dev/1036playlistdashboard
+cd ~/dev/radio-playlist-dashboard
 GIT_AUTO_PUSH=1 nohup python scripts/updater.py > logs/updater.log 2>&1 &
 python scripts/proxy_manager.py start
 
