@@ -11,7 +11,7 @@ database without explicit user confirmation. This rule is ABSOLUTE.**
 | **Repo** | `brchn6/radio-playlist-dashboard` |
 | **Local** | `/home/barc/dev/radio-playlist-dashboard/` |
 | **Dashboard** | `https://brchn6.github.io/radio-playlist-dashboard/` |
-| **Deploy** | Manual only — `gh workflow run "Deploy to Pages"` |
+| **Deploy** | Auto via branch-based Pages (`main`/`docs`). Manual option: `gh workflow run "Deploy to Pages"` |
 
 ## Running the Services
 
@@ -34,9 +34,10 @@ gh workflow run "Deploy to Pages" --repo brchn6/radio-playlist-dashboard
 - **8 proxies** (ports 8761-8768), one per station
 - **Collector** polls all 8 every 30s → SQLite
 - **Git pusher** pushes JSON every 30s to main branch
-- **Pages deploy** manual only (`.github/workflows/deploy.yml`)
+- **Data files** in `docs/data/` (inside Pages watch dir) — every push triggers auto-build
+- **Pages deploy** via branch-based auto-build (`main`/`docs`). Manual workflow kept as backup.
 - **Now Playing** tab fetches live from local proxies (30s fresh)
-- **Other tabs** load from Pages JSON (deploy when wanted)
+- **Other tabs** load from Pages JSON (auto-updated every 30s)
 
 ## Critical Bugs Already Fixed
 
@@ -47,7 +48,7 @@ gh workflow run "Deploy to Pages" --repo brchn6/radio-playlist-dashboard
 5. Scatter Y-axis flat → station categories
 6. Pages build collisions → manual deploy only
 7. Collector not pushing → needs `GIT_AUTO_PUSH=1`
-8. **Pages auto-build on every data push** — Data files moved from `docs/data/` → `site-data/` (outside Pages watch directory). Commits include `[skip ci]` to prevent any Actions trigger. Deploy workflow copies `site-data/` into position during manual deploy.
+8. **Pages auto-build collapsing** — Every 30s push triggered BOTH Actions workflow AND branch-based Pages build, causing race conditions. **Final fix:** Data stays in `docs/data/`, no `[skip ci]`. Pages auto-build from branch (`main`/`docs`) queues gracefully. Actions workflow stays manual-only.
 
 ## Memory File
 Full project memory at `~/.memory/radio-playlist-dashboard.md` — **READ BEFORE making any changes**.
