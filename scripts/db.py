@@ -24,9 +24,9 @@ STATIONS_CONFIG: list[dict[str, Any]] = [
     {"slug": "kol-hashfela", "name": "קול השפלה 103FM",  "stream_url": "https://radio.streamgates.net/stream/1036kh",   "proxy_port": 8761, "color": "#6ae3c1"},
     {"slug": "galgalatz",    "name": "גלגלצ",             "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_mp3",       "proxy_port": 8762, "color": "#e36a6a"},
     {"slug": "99fm",         "name": "99FM",              "stream_url": "https://99.livecdn.biz/99fm_aac",                "proxy_port": 8763, "color": "#6ab8e3"},
-    {"slug": "radio-tlv",    "name": "רדיו תל אביב 102FM", "stream_url": "https://102.livecdn.biz/102fm_aac",            "proxy_port": 8764, "color": "#e3c86a"},
+    {"slug": "radio-tlv",    "name": "רדיו תל אביב 102FM", "stream_url": "https://cdn88.mediacast.co.il/102-tlv-live/102fm_aac/icecast.audio",            "proxy_port": 8764, "color": "#e3c86a"},
     {"slug": "kan-88",       "name": "כאן 88",            "stream_url": "https://27953.live.streamtheworld.com/KAN_88.mp3", "proxy_port": 8765, "color": "#c86ae3"},
-    {"slug": "kan-bet",      "name": "כאן ב",             "stream_url": "https://27953.live.streamtheworld.com/KAN_BET.mp3", "proxy_port": 8766, "color": "#e38a6a"},
+    {"slug": "kan-bet",      "name": "כאן ב",             "stream_url": "https://27913.live.streamtheworld.com/KAN_BET.mp3", "proxy_port": 8766, "color": "#e38a6a"},
     {"slug": "galil",        "name": "קול הגליל העליון",   "stream_url": "https://radio.streamgates.net/stream/galil",    "proxy_port": 8767, "color": "#a06ae3"},
 ]
 
