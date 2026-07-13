@@ -23,7 +23,7 @@ case "$cmd" in
       echo "[SKIP] ShazamIO proxy already running (PID $(cat "$PID_DIR/shazamio.pid"))"
     else
       cd "$SHAZAMIO_DIR"
-      nohup .venv/bin/python shazamio_proxy.py > "$SHAZAMIO_LOG" 2>&1 &
+      SHAZAMIO_INTERVAL_SECONDS=60 nohup .venv/bin/python shazamio_proxy.py > "$SHAZAMIO_LOG" 2>&1 &
       echo $! > "$PID_DIR/shazamio.pid"
       echo "[OK] ShazamIO proxy started (PID $(cat "$PID_DIR/shazamio.pid"))"
       cd "$ROOT"
@@ -89,16 +89,28 @@ case "$cmd" in
     "$0" start
     ;;
 
+  generate)
+    echo "=== Generating static data from SQLite ==="
+    cd "$ROOT"
+    python scripts/generate_data.py
+    echo "Data files written to docs/data/"
+    ;;
+
   logs)
     tail -f "$ROOT/logs/updater.log" "$ROOT/logs/shazamio.log"
     ;;
 
   *)
-    echo "Usage: $0 {start|stop|status|restart|logs}"
+    echo "Usage: $0 {start|stop|status|restart|generate|logs}"
     echo ""
     echo "Manages the two servers:"
-    echo "  Server 1 — ShazamIO Proxy  (song recognition)"
-    echo "  Server 2 — Updater Daemon  (dashboard updates + git push)"
+    echo "  Server 1 — ShazamIO Proxy    (song recognition on 103FM)"
+    echo "  Server 2 — Updater Daemon    (SQLite + JSON generation + git push)"
+    echo ""
+    echo "Data locations:"
+    echo "  SQLite DB : data/playlist.db  (local, not in git)"
+    echo "  JSON data : docs/data/*.json  (generated for GitHub Pages)"
+    echo "  Dashboard : docs/index.html   (GitHub Pages root)"
     exit 1
     ;;
 esac

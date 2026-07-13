@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-1036 Playlist Dashboard — Playlist updater.
+1036 Playlist Dashboard — Playlist updater daemon.
 
-Polls the local ShazamIO proxy every 30 seconds, appends new tracks
-to the playlist history, and writes the result to docs/data/playlist.json
-for GitHub Pages to serve.
+Polls the local ShazamIO proxy every 30 seconds, stores new tracks in
+SQLite, generates static JSON data files for GitHub Pages, and optionally
+auto-commits & pushes to GitHub.
 """
 
 from __future__ import annotations
@@ -13,25 +13,27 @@ import argparse
 import json
 import os
 import signal
+import subprocess
 import sys
 import time
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-import subprocess
-import urllib.request
-import urllib.error
-
-# ── paths ──────────────────────────────────────────────────────────────
+# ── project paths ──────────────────────────────────────────────────────
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+
+from db import PlaylistDB  # noqa: E402
+
+DB_PATH = PROJECT_ROOT / "data" / "playlist.db"
 DATA_DIR = PROJECT_ROOT / "docs" / "data"
-DATA_FILE = DATA_DIR / "playlist.json"
 
 # ── defaults ───────────────────────────────────────────────────────────
 DEFAULT_PROXY_URL = "http://localhost:8765"
 DEFAULT_INTERVAL = 30  # seconds
-MAX_HISTORY = 200
 DEFAULT_GIT_AUTO_PUSH = os.environ.get("GIT_AUTO_PUSH", "").lower() in ("1", "true", "yes")
 
 # ── state ──────────────────────────────────────────────────────────────
@@ -48,21 +50,13 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def load_history() -> list[dict[str, Any]]:
-    if DATA_FILE.exists():
-        try:
-            data = json.loads(DATA_FILE.read_text("utf-8"))
-            return data.get("history", []) or []
-        except (json.JSONDecodeError, KeyError) as exc:
-            print(f"[updater] Warning: corrupt data file ({exc}), starting fresh", flush=True)
-    return []
-
+# ── helpers ────────────────────────────────────────────────────────────
 
 def git_commit_and_push(message: str) -> None:
     """Commit and push changes to the git repo."""
     try:
         result = subprocess.run(
-            ["git", "status", "--porcelain", "--", "docs/", "scripts/", "README.md"],
+            ["git", "status", "--porcelain", "--", "docs/", "scripts/", "data/"],
             capture_output=True, text=True, timeout=15,
         )
         if not result.stdout.strip():
@@ -82,20 +76,20 @@ def git_commit_and_push(message: str) -> None:
         print(f"[updater] Git error (non-fatal): {exc}", flush=True)
 
 
-def save_history(
-    history: list[dict[str, Any]],
-    current: dict[str, Any] | None,
-    proxy_state: dict[str, Any] | None,
-) -> None:
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-    payload = {
-        "current": current,
-        "history": history,
-        "proxy_state": proxy_state,
-        "updated_at": now_iso(),
-        "total_tracks": len(history),
-    }
-    DATA_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", "utf-8")
+def generate_static_data() -> None:
+    """Run generate_data.py to refresh all static JSON files."""
+    generator = PROJECT_ROOT / "scripts" / "generate_data.py"
+    try:
+        result = subprocess.run(
+            [sys.executable, str(generator)],
+            capture_output=True, text=True, timeout=30,
+        )
+        if result.stdout:
+            print(result.stdout.strip(), flush=True)
+        if result.stderr:
+            print(f"[updater] generate_data stderr: {result.stderr.strip()}", flush=True)
+    except Exception as exc:
+        print(f"[updater] generate_data error: {exc}", flush=True)
 
 
 def fetch_proxy_state(proxy_url: str) -> dict[str, Any] | None:
@@ -129,17 +123,7 @@ def extract_track(state: dict[str, Any] | None) -> dict[str, Any] | None:
     }
 
 
-def tracks_are_same(a: dict[str, Any], b: dict[str, Any]) -> bool:
-    """Compare two tracks by shazam_key or artist+title."""
-    key_a = a.get("shazam_key")
-    key_b = b.get("shazam_key")
-    if key_a and key_b:
-        return key_a == key_b
-    return (
-        a.get("artist", "").strip().lower() == b.get("artist", "").strip().lower()
-        and a.get("title", "").strip().lower() == b.get("title", "").strip().lower()
-    )
-
+# ── main ───────────────────────────────────────────────────────────────
 
 def main() -> None:
     parser = argparse.ArgumentParser(
@@ -167,9 +151,9 @@ def main() -> None:
     signal.signal(signal.SIGTERM, handle_signal)
     signal.signal(signal.SIGINT, handle_signal)
 
-    history = load_history()
-    last_track: dict[str, Any] | None = history[0] if history else None
-    last_track_key = last_track.get("shazam_key") if last_track else None
+    db = PlaylistDB(DB_PATH)
+    last_track = db.get_latest_track()
+    pending_git = False  # track if we need a git push
 
     print(
         json.dumps(
@@ -177,8 +161,8 @@ def main() -> None:
                 "event": "updater_start",
                 "proxy_url": args.proxy_url,
                 "interval": args.interval,
-                "data_file": str(DATA_FILE),
-                "history_tracks": len(history),
+                "db_path": str(DB_PATH),
+                "total_tracks": db.get_stats()["total_tracks"],
             },
             ensure_ascii=False,
         ),
@@ -188,26 +172,25 @@ def main() -> None:
     iteration = 0
     while running:
         iteration += 1
-        now = time.time()
+        loop_start = time.time()
 
-        # Fetch proxy state
+        # ── 1. Fetch proxy state ──
         proxy_state = fetch_proxy_state(args.proxy_url)
         track = extract_track(proxy_state)
 
         if track:
-            # Check if this is a new track
-            is_new = True
-            if last_track:
-                if tracks_are_same(track, last_track):
-                    is_new = False
+            artist = track["artist"]
+            title = track["title"]
+            shazam_key = track.get("shazam_key", "")
 
-            if is_new:
+            # ── 2. Check if this is a genuinely new track ──
+            if not db.track_exists(shazam_key, artist, title):
                 print(
                     json.dumps(
                         {
                             "event": "new_track",
-                            "artist": track["artist"],
-                            "title": track["title"],
+                            "artist": artist,
+                            "title": title,
                             "text": track.get("text", ""),
                             "iteration": iteration,
                         },
@@ -215,52 +198,55 @@ def main() -> None:
                     ),
                     flush=True,
                 )
-                # Prepend to history
-                history.insert(0, track)
-                if len(history) > MAX_HISTORY:
-                    history = history[:MAX_HISTORY]
+
+                db.insert_track(
+                    artist=artist,
+                    title=title,
+                    text=track.get("text", ""),
+                    url=track.get("url", ""),
+                    shazam_key=shazam_key,
+                    recognized_at=track.get("recognized_at", now_iso()),
+                )
                 last_track = track
-                last_track_key = track.get("shazam_key")
 
-                # Save immediately so git push has fresh data
-                save_history(history, track, proxy_state)
+                # ── 3. Generate static data ──
+                generate_static_data()
+                pending_git = True
 
-                # Auto-commit & push on new track
-                if DEFAULT_GIT_AUTO_PUSH:
-                    track_text = track.get("text", "") or f"{track['artist']} — {track['title']}"
+                # ── 4. Auto-commit & push ──
+                if DEFAULT_GIT_AUTO_PUSH and pending_git:
+                    track_text = track.get("text", "") or f"{artist} — {title}"
                     git_commit_and_push(f"auto: {track_text} [{now_iso()}]")
-            else:
-                # Update timestamp of current track in history
-                if history:
-                    history[0]["recognized_at"] = track["recognized_at"]
-                
-                # Periodic keepalive commit
-                if DEFAULT_GIT_AUTO_PUSH and iteration % 10 == 0:
-                    save_history(history, track, proxy_state)
-                    git_commit_and_push(f"auto: keepalive [{now_iso()}]")
+                    pending_git = False
+        else:
+            # No track detected — still refresh data periodically
+            if iteration % 5 == 0:
+                generate_static_data()
 
-        # Always save (updates timestamps and proxy state) — catches untracked changes too
-        save_history(history, track or last_track, proxy_state)
+            # Periodic keepalive push
+            if DEFAULT_GIT_AUTO_PUSH and iteration % 20 == 0:
+                git_commit_and_push(f"auto: keepalive [{now_iso()}]")
 
         if args.once:
             print(
                 json.dumps(
-                    {
-                        "event": "updater_once_complete",
-                        "track_found": track is not None,
-                    },
+                    {"event": "updater_once_complete", "track_found": track is not None},
                     ensure_ascii=False,
                 ),
                 flush=True,
             )
             break
 
-        # Sleep for the interval (accounting for time spent in fetch)
-        elapsed = time.time() - now
+        # ── 5. Sleep ──
+        elapsed = time.time() - loop_start
         sleep_time = max(0.5, args.interval - elapsed)
         time.sleep(sleep_time)
 
-    print(json.dumps({"event": "updater_stopped", "total_tracks": len(history)}), flush=True)
+    db.close()
+    print(
+        json.dumps({"event": "updater_stopped", "total_tracks": db.get_stats()["total_tracks"]}),
+        flush=True,
+    )
 
 
 if __name__ == "__main__":

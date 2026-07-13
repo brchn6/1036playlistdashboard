@@ -8,3 +8,5 @@ venv/
 /data/
 *.swp
 .DS_Store
+.pids/
+logs/

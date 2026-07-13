@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="1036 פלייליסט דשבורד — מעקב אחרי הפלייליסט של קול השפלה 103FM" />
   <title>1036 פלייליסט דשבורד — קול השפלה 103FM</title>
+  <!-- Chart.js for scatterplot -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <style>
     :root {
       --bg: #0f1220;
@@ -17,6 +19,8 @@
       --border: #262a4a;
       --error: #e36a6a;
       --success: #6ae3c1;
+      --tab-bg: #131626;
+      --tab-active: #1f2440;
       --font: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
     }
 
@@ -31,274 +35,174 @@
     }
 
     .container {
-      max-width: 800px;
+      max-width: 960px;
       margin: 0 auto;
-      padding: 32px 16px;
+      padding: 20px 16px;
     }
 
+    /* Header */
     header {
       text-align: center;
-      padding: 32px 0 24px;
+      padding: 24px 0 16px;
       border-bottom: 1px solid var(--border);
     }
 
     header h1 {
-      font-size: 2rem;
+      font-size: 1.7rem;
       font-weight: 700;
-      margin-bottom: 4px;
-      color: var(--fg);
     }
 
-    header h1 .accent {
-      color: var(--accent);
-    }
+    header h1 .freq { color: var(--accent); font-weight: 800; }
 
-    header h1 .freq {
-      color: var(--accent);
-      font-weight: 800;
-    }
+    header p { color: var(--muted); font-size: 0.9rem; }
 
-    header p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    header .status-bar {
-      margin-top: 12px;
+    .status-bar {
+      margin-top: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--muted);
       flex-wrap: wrap;
     }
 
     .status-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      display: inline-block;
+      width: 8px; height: 8px; border-radius: 50%; display: inline-block;
       animation: pulse 2s infinite;
     }
+    .status-dot.online { background: var(--success); box-shadow: 0 0 6px var(--success); }
+    .status-dot.offline { background: var(--error); box-shadow: 0 0 6px var(--error); animation: none; }
+    .status-dot.stale { background: #e3c86a; box-shadow: 0 0 6px #e3c86a; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
 
-    .status-dot.online {
-      background: var(--success);
-      box-shadow: 0 0 8px var(--success);
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 2px;
+      margin-top: 20px;
+      background: var(--tab-bg);
+      border-radius: 12px;
+      padding: 4px;
+      overflow-x: auto;
     }
 
-    .status-dot.offline {
-      background: var(--error);
-      box-shadow: 0 0 8px var(--error);
-      animation: none;
+    .tab-btn {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+      font-family: var(--font);
     }
 
-    .status-dot.stale {
-      background: #e3c86a;
-      box-shadow: 0 0 8px #e3c86a;
-    }
+    .tab-btn:hover { background: var(--card-hover); color: var(--fg); }
+    .tab-btn.active { background: var(--tab-active); color: var(--accent); }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
+    .tab-content { display: none; margin-top: 16px; }
+    .tab-content.active { display: block; }
 
-    .now-playing {
-      margin: 32px 0;
+    /* Cards */
+    .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px 24px;
-      text-align: center;
-      transition: background 0.3s, border-color 0.3s;
-    }
-
-    .now-playing.has-track {
-      border-color: var(--accent-dim);
-      background: linear-gradient(180deg, #1a2e28, var(--card));
-    }
-
-    .now-playing .label {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .now-playing .track-artist {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 4px;
-    }
-
-    .now-playing .track-title {
-      font-size: 1.3rem;
-      color: var(--fg);
+      border-radius: 12px;
+      padding: 20px 18px;
       margin-bottom: 12px;
     }
 
-    .now-playing .track-time {
-      font-size: 0.8rem;
-      color: var(--muted);
+    /* Now Playing */
+    .now-playing {
+      text-align: center;
+      border-color: var(--accent-dim);
+      background: linear-gradient(180deg, #1a2e28, var(--card));
     }
-
-    .now-playing .empty-state {
-      color: var(--muted);
-      font-size: 1.1rem;
-    }
-
-    .now-playing .empty-state .icon {
-      font-size: 3rem;
-      margin-bottom: 8px;
-    }
-
-    .history-section {
-      margin-top: 32px;
-    }
-
-    .history-section h2 {
-      font-size: 1.1rem;
-      color: var(--muted);
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-
-    .history-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .history-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 18px;
-      transition: background 0.2s, border-color 0.2s;
-    }
-
-    .history-item:hover {
-      background: var(--card-hover);
-    }
-
-    .history-item .rank {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--muted);
-      flex-shrink: 0;
-    }
-
-    .history-item .rank.current {
-      background: var(--accent-dim);
-      color: var(--fg);
-    }
-
-    .history-item .info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .history-item .info .artist {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .history-item .info .title {
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-
-    .history-item .time {
-      font-size: 0.75rem;
-      color: var(--muted);
-      flex-shrink: 0;
-      direction: ltr;
-    }
+    .now-playing .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 6px; }
+    .now-playing .artist { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+    .now-playing .title { font-size: 1.15rem; color: var(--fg); margin-bottom: 8px; }
+    .now-playing .time { font-size: 0.78rem; color: var(--muted); }
+    .now-playing .empty { color: var(--muted); font-size: 1rem; padding: 20px 0; }
+    .now-playing .empty .icon { font-size: 2.5rem; margin-bottom: 6px; }
 
     .shazam-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 12px;
-      font-size: 0.8rem;
-      color: var(--accent);
-      background: rgba(106, 227, 193, 0.1);
-      padding: 6px 14px;
-      border-radius: 20px;
-      text-decoration: none;
-      transition: background 0.2s;
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 10px; font-size: 0.78rem; color: var(--accent);
+      background: rgba(106,227,193,0.1); padding: 5px 12px; border-radius: 20px;
+      text-decoration: none; transition: background 0.2s;
     }
+    .shazam-link:hover { background: rgba(106,227,193,0.2); text-decoration: none; }
 
-    .shazam-link:hover {
-      background: rgba(106, 227, 193, 0.2);
-      text-decoration: none;
-    }
-
+    /* Stats row */
     .stats-row {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      margin-top: 20px;
-      flex-wrap: wrap;
+      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;
     }
-
     .stat-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 20px;
-      text-align: center;
-      min-width: 110px;
+      flex: 1; min-width: 100px; background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 14px; text-align: center;
+    }
+    .stat-card .val { font-size: 1.3rem; font-weight: 700; color: var(--accent); }
+    .stat-card .lbl { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+
+    /* History list */
+    .history-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 10px 14px; border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .history-item:hover { background: var(--card-hover); }
+    .history-item:last-child { border-bottom: none; }
+    .history-item .num { width: 26px; height: 26px; border-radius: 50%; background: var(--border);
+      display: flex; align-items: center; justify-content: center; font-size: 0.7rem;
+      font-weight: 700; color: var(--muted); flex-shrink: 0; }
+    .history-item .num.current { background: var(--accent-dim); color: var(--fg); }
+    .history-item .info { flex: 1; min-width: 0; }
+    .history-item .info .artist { font-size: 0.88rem; font-weight: 600; }
+    .history-item .info .title { font-size: 0.82rem; color: var(--muted); }
+    .history-item .ago { font-size: 0.72rem; color: var(--muted); flex-shrink: 0; direction: ltr; }
+
+    .legend-item { font-size: 0.82rem; margin: 2px 0; }
+
+    .chart-container { position: relative; width: 100%; max-height: 400px; }
+
+    /* Scatter tooltip */
+    #scatterTooltip {
+      display: none; position: fixed; background: var(--card); border: 1px solid var(--accent-dim);
+      border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; z-index: 1000;
+      pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
 
-    .stat-card .stat-value {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--accent);
+    .hype-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 8px 12px; border-bottom: 1px solid var(--border);
     }
+    .hype-item:last-child { border-bottom: none; }
+    .hype-item .rank { width: 24px; font-weight: 700; color: var(--muted); font-size: 0.85rem; }
+    .hype-item .info { flex: 1; }
+    .hype-item .info .artist { font-size: 0.88rem; font-weight: 600; }
+    .hype-item .info .title { font-size: 0.8rem; color: var(--muted); }
+    .hype-item .count { font-size: 0.85rem; color: var(--accent); font-weight: 700; direction: ltr; }
 
-    .stat-card .stat-label {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
+    /* Footer */
     footer {
-      text-align: center;
-      padding: 40px 0 24px;
-      color: var(--muted);
-      font-size: 0.8rem;
-      border-top: 1px solid var(--border);
-      margin-top: 40px;
+      text-align: center; padding: 32px 0 20px; color: var(--muted);
+      font-size: 0.78rem; border-top: 1px solid var(--border); margin-top: 24px;
     }
-
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
 
     @media (max-width: 480px) {
-      header h1 { font-size: 1.5rem; }
-      .now-playing .track-artist { font-size: 1.3rem; }
-      .now-playing .track-title { font-size: 1.1rem; }
-      .now-playing { padding: 24px 16px; }
-      .history-item { padding: 12px 14px; gap: 12px; }
+      .container { padding: 12px 10px; }
+      header h1 { font-size: 1.3rem; }
+      .tab-btn { font-size: 0.75rem; padding: 8px 10px; }
+      .now-playing .artist { font-size: 1.2rem; }
+      .now-playing .title { font-size: 1rem; }
+      .stat-card { min-width: 80px; padding: 10px; }
     }
   </style>
 </head>
@@ -310,27 +214,74 @@
       <div class="status-bar">
         <span class="status-dot offline" id="statusDot"></span>
         <span id="statusText">מתחבר...</span>
-        <span style="margin:0 8px">·</span>
-        <span>עדכון אחרון:</span>
+        <span style="margin:0 6px">·</span>
+        <span>עדכון:</span>
         <span id="lastUpdate">-</span>
       </div>
     </header>
 
-    <div class="now-playing" id="nowPlaying">
-      <div class="empty-state">
-        <div class="icon">📻</div>
-        <div>ממתין לזיהוי השיר הבא...</div>
+    <!-- Tabs -->
+    <div class="tabs" id="tabBar">
+      <button class="tab-btn active" data-tab="now">🎵 עכשיו</button>
+      <button class="tab-btn" data-tab="history">📋 היסטוריה</button>
+      <button class="tab-btn" data-tab="hype">🔥 לייקים</button>
+      <button class="tab-btn" data-tab="scatter">📊 פיזור</button>
+      <button class="tab-btn" data-tab="stats">📈 סטטיסטיקה</button>
+    </div>
+
+    <!-- Tab: Now Playing -->
+    <div class="tab-content active" id="tab-now">
+      <div class="stats-row" id="statsRow"></div>
+      <div class="card now-playing" id="nowPlaying">
+        <div class="empty"><div class="icon">📻</div><div>ממתין לזיהוי השיר הבא...</div></div>
       </div>
     </div>
 
-    <div class="stats-row" id="statsRow"></div>
-
-    <div class="history-section">
-      <h2>📋 היסטוריית השמעה</h2>
-      <div class="history-list" id="historyList">
-        <div style="color:var(--muted); text-align:center; padding:24px;">
-          טוען היסטוריה...
+    <!-- Tab: History -->
+    <div class="tab-content" id="tab-history">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;">
+          <span style="font-weight:600;">היסטוריית השמעה</span>
+          <span id="historyCount" style="color:var(--muted);font-size:0.82rem;"></span>
         </div>
+        <div id="historyList"></div>
+      </div>
+    </div>
+
+    <!-- Tab: Hype Tracks -->
+    <div class="tab-content" id="tab-hype">
+      <div class="card">
+        <div style="font-weight:600;margin-bottom:10px;">🔥 השירים הכי מושמעים</div>
+        <div id="hypeList"></div>
+      </div>
+    </div>
+
+    <!-- Tab: Scatterplot -->
+    <div class="tab-content" id="tab-scatter">
+      <div class="card">
+        <div style="font-weight:600;margin-bottom:10px;">📊 פיזור שירים לאורך זמן</div>
+        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:12px;">
+          כל נקודה = שיר. ציר X = שעה ביום, ציר Y = תאריך.
+        </div>
+        <div class="chart-container">
+          <canvas id="scatterChart"></canvas>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;" id="scatterLegend"></div>
+      </div>
+    </div>
+
+    <!-- Tab: Stats -->
+    <div class="tab-content" id="tab-stats">
+      <div class="stats-row" id="statsDetailRow"></div>
+      <div class="card">
+        <div style="font-weight:600;margin-bottom:10px;">שירים לפי תאריך</div>
+        <div class="chart-container">
+          <canvas id="dateChart"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-weight:600;margin-bottom:10px;">עשרת האמנים המושמעים ביותר</div>
+        <div id="topArtistsList"></div>
       </div>
     </div>
 
@@ -344,168 +295,397 @@
     </footer>
   </div>
 
-  <script>
-    const SHAZAMIO_URL = 'http://localhost:8765';
-    const DATA_URL = 'data/playlist.json';
-    const POLL_INTERVAL = 30000;
+  <div id="scatterTooltip"></div>
 
+  <script>
+    // ── Data URLs ──
+    const DATA_URLS = {
+      current: 'data/current.json?_=',
+      history: 'data/history.json?_=',
+      hype: 'data/hype.json?_=',
+      scatter: 'data/scatter.json?_=',
+      stats: 'data/stats.json?_=',
+    };
+    const POLL_INTERVAL = 30000;
+    let scatterChartInstance = null;
+    let dateChartInstance = null;
+
+    // ── Tab switching ──
+    document.getElementById('tabBar').addEventListener('click', e => {
+      const btn = e.target.closest('.tab-btn');
+      if (!btn) return;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      // Redraw charts when switching to scatter/stats tab (fix sizing)
+      if (btn.dataset.tab === 'scatter' && scatterChartInstance) scatterChartInstance.resize();
+      if (btn.dataset.tab === 'stats' && dateChartInstance) dateChartInstance.resize();
+    });
+
+    // ── Helpers ──
     function timeAgo(isoStr) {
       if (!isoStr) return '-';
-      const then = new Date(isoStr + 'Z');
-      const now = new Date();
-      const diffSec = Math.floor((now - then) / 1000);
-      if (diffSec < 5) return 'עכשיו';
-      if (diffSec < 60) return `לפני ${diffSec} שניות`;
-      const diffMin = Math.floor(diffSec / 60);
-      if (diffMin < 60) return `לפני ${diffMin} דקות`;
-      return then.toLocaleString('he-IL', { hour: '2-digit', minute: '2-digit' });
+      const d = new Date(isoStr.endsWith('Z') ? isoStr : isoStr + 'Z');
+      if (isNaN(d.getTime())) return isoStr;
+      const diff = Math.floor((Date.now() - d) / 1000);
+      if (diff < 5) return 'עכשיו';
+      if (diff < 60) return `לפני ${diff} שניות`;
+      const m = Math.floor(diff / 60);
+      if (m < 60) return `לפני ${m} דקות`;
+      return d.toLocaleString('he-IL', { hour:'2-digit', minute:'2-digit' });
     }
 
     function formatTime(isoStr) {
       if (!isoStr) return '-';
-      const d = new Date(isoStr + 'Z');
-      return d.toLocaleString('he-IL', {
-        hour: '2-digit', minute: '2-digit', second: '2-digit'
-      });
+      const d = new Date(isoStr.endsWith('Z') ? isoStr : isoStr + 'Z');
+      if (isNaN(d.getTime())) return isoStr;
+      return d.toLocaleString('he-IL', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
     }
 
-    function updateStatus(state) {
+    function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+    function parseISODate(isoStr) {
+      const d = new Date(isoStr.endsWith('Z') ? isoStr : isoStr + 'Z');
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    // ── Status ──
+    function updateStatus(data) {
       const dot = document.getElementById('statusDot');
       const text = document.getElementById('statusText');
       const update = document.getElementById('lastUpdate');
 
-      if (!state) {
+      if (!data) {
         dot.className = 'status-dot offline';
-        text.textContent = 'לא זמין';
-        update.textContent = '-';
+        text.textContent = 'לא זמין'; update.textContent = '-';
         return;
       }
+      const now = Date.now();
+      const finished = data.last_finished_at ? parseISODate(data.last_finished_at) : null;
+      const diff = finished ? (now - finished.getTime()) / 1000 : Infinity;
 
-      const now = new Date();
-      const lastFinished = state.last_finished_at ? new Date(state.last_finished_at + 'Z') : null;
-      const diffSec = lastFinished ? (now - lastFinished) / 1000 : Infinity;
+      let cls = 'online', txt = 'מחובר';
+      if (data.last_error && (!finished || diff > 120)) { cls = 'offline'; txt = 'שגיאה'; }
+      else if (diff > 90) { cls = 'stale'; txt = 'ממתין'; }
 
-      let statusClass = 'online';
-      let statusText = 'מחובר';
-
-      if (state.last_error && (!lastFinished || diffSec > 120)) {
-        statusClass = 'offline';
-        statusText = 'שגיאה';
-      } else if (diffSec > 90) {
-        statusClass = 'stale';
-        statusText = 'ממתין לנתונים';
-      }
-
-      dot.className = 'status-dot ' + statusClass;
-      text.textContent = statusText;
-      update.textContent = lastFinished ? formatTime(state.last_finished_at) : '-';
+      dot.className = 'status-dot ' + cls;
+      text.textContent = txt;
+      update.textContent = finished ? formatTime(data.last_finished_at) : '-';
     }
 
+    // ── Tab: Now Playing ──
     function renderNowPlaying(track) {
       const el = document.getElementById('nowPlaying');
       if (!track || (!track.artist && !track.title)) {
-        el.className = 'now-playing';
-        el.innerHTML = `
-          <div class="empty-state">
-            <div class="icon">📻</div>
-            <div>ממתין לזיהוי השיר הבא...</div>
-          </div>
-        `;
+        el.innerHTML = '<div class="empty"><div class="icon">📻</div><div>ממתין לזיהוי השיר הבא...</div></div>';
         return;
       }
-
-      let shazamHtml = '';
-      if (track.url) {
-        shazamHtml = `<a href="${escapeHtml(track.url)}" target="_blank" class="shazam-link">🔍 צפה ב-Shazam</a>`;
-      }
-
-      el.className = 'now-playing has-track';
+      const shazam = track.url ? `<a href="${esc(track.url)}" target="_blank" class="shazam-link">🔍 צפה ב-Shazam</a>` : '';
       el.innerHTML = `
         <div class="label">🎵 מתנגן עכשיו</div>
-        <div class="track-artist">${escapeHtml(track.artist || '')}</div>
-        <div class="track-title">${escapeHtml(track.title || '')}</div>
-        <div class="track-time">זוהה ${timeAgo(track.recognized_at)}</div>
-        ${shazamHtml}
+        <div class="artist">${esc(track.artist)}</div>
+        <div class="title">${esc(track.title)}</div>
+        <div class="time">זוהה ${timeAgo(track.recognized_at)}</div>
+        ${shazam}
       `;
     }
 
-    function renderStats(history) {
+    function renderStats(stats) {
       const el = document.getElementById('statsRow');
-      if (!history || history.length === 0) {
-        el.innerHTML = '';
-        return;
-      }
-      const uniqueArtists = new Set(history.map(t => t.artist).filter(Boolean));
+      if (!stats) { el.innerHTML = ''; return; }
       el.innerHTML = `
-        <div class="stat-card">
-          <div class="stat-value">${history.length}</div>
-          <div class="stat-label">שירים שזוהו</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">${uniqueArtists.size}</div>
-          <div class="stat-label">אמנים שונים</div>
-        </div>
+        <div class="stat-card"><div class="val">${stats.total_tracks||0}</div><div class="lbl">שירים</div></div>
+        <div class="stat-card"><div class="val">${stats.unique_tracks||0}</div><div class="lbl">שירים שונים</div></div>
+        <div class="stat-card"><div class="val">${stats.unique_artists||0}</div><div class="lbl">אמנים</div></div>
       `;
     }
 
-    function renderHistory(history) {
+    // ── Tab: History ──
+    function renderHistory(history, total) {
       const el = document.getElementById('historyList');
+      document.getElementById('historyCount').textContent = `סה״כ ${total||0} שירים`;
+
       if (!history || history.length === 0) {
-        el.innerHTML = '<div style="color:var(--muted); text-align:center; padding:24px;">אין היסטוריה עדיין</div>';
+        el.innerHTML = '<div style="color:var(--muted);text-align:center;padding:20px;">אין היסטוריה עדיין</div>';
         return;
       }
 
-      el.innerHTML = history.map((item, i) => {
-        const isCurrent = i === 0;
-        return `
-          <div class="history-item">
-            <div class="rank ${isCurrent ? 'current' : ''}">${isCurrent ? '♪' : (i + 1)}</div>
-            <div class="info">
-              <div class="artist">${escapeHtml(item.artist || 'לא ידוע')}</div>
-              <div class="title">${escapeHtml(item.title || '')}</div>
-            </div>
-            <div class="time">${timeAgo(item.recognized_at)}</div>
+      el.innerHTML = history.map((item, i) => `
+        <div class="history-item">
+          <div class="num ${i===0?'current':''}">${i===0?'♪':(i+1)}</div>
+          <div class="info">
+            <div class="artist">${esc(item.artist||'לא ידוע')}</div>
+            <div class="title">${esc(item.title||'')}</div>
           </div>
-        `;
-      }).join('');
+          <div class="ago">${timeAgo(item.recognized_at)}</div>
+        </div>
+      `).join('');
     }
 
-    function escapeHtml(str) {
-      if (!str) return '';
-      const div = document.createElement('div');
-      div.textContent = str;
-      return div.innerHTML;
+    // ── Tab: Hype Tracks ──
+    function renderHype(hype) {
+      const el = document.getElementById('hypeList');
+      if (!hype || hype.length === 0) {
+        el.innerHTML = '<div style="color:var(--muted);text-align:center;padding:20px;">אין נתונים עדיין</div>';
+        return;
+      }
+      el.innerHTML = hype.map((item, i) => `
+        <div class="hype-item">
+          <div class="rank">#${i+1}</div>
+          <div class="info">
+            <div class="artist">${esc(item.artist)}</div>
+            <div class="title">${esc(item.title)}</div>
+          </div>
+          <div class="count">${item.play_count}×</div>
+        </div>
+      `).join('');
     }
 
-    async function fetchPlaylist() {
-      try {
-        const resp = await fetch(DATA_URL + '?_=' + Date.now());
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        const data = await resp.json();
-        renderNowPlaying(data.current);
-        renderHistory(data.history || []);
-        renderStats(data.history || []);
-        updateStatus(data.proxy_state || null);
-      } catch (err) {
-        console.warn('Failed to fetch playlist.json, trying proxy directly:', err);
-        try {
-          const proxyResp = await fetch(SHAZAMIO_URL + '/current?_=' + Date.now());
-          if (proxyResp.ok) {
-            const proxyData = await proxyResp.json();
-            updateStatus(proxyData);
-            if (proxyData.last_result && proxyData.last_result.found) {
-              renderNowPlaying(proxyData.last_result);
+    // ── Tab: Scatter ──
+    function renderScatter(points) {
+      if (!points || points.length === 0) {
+        document.getElementById('scatterChart').parentElement.innerHTML =
+          '<div style="color:var(--muted);text-align:center;padding:40px;">אין נתונים עדיין</div>';
+        return;
+      }
+
+      // Group by artist for color coding
+      const artistColors = {};
+      const palette = ['#6ae3c1','#e36a6a','#6ab8e3','#e3c86a','#c86ae3',
+                       '#6ae3a0','#e38a6a','#6a8ae3','#a0e36a','#e36ac8'];
+      let ci = 0;
+      const datasets = {};
+      const dayLabels = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+
+      let minDate = Infinity, maxDate = -Infinity;
+
+      points.forEach(p => {
+        const d = parseISODate(p.recognized_at);
+        if (!d) return;
+        const ts = d.getTime();
+        if (ts < minDate) minDate = ts;
+        if (ts > maxDate) maxDate = ts;
+
+        // X = hour of day (0-23), Y = timestamp
+        const hour = parseInt(p.hour) + (parseInt(p.hour) < 6 ? 24 : 0); // shift early morning hours
+        const artist = p.artist || 'לא ידוע';
+        const key = artist.toLowerCase();
+        if (!datasets[key]) {
+          if (!artistColors[key]) {
+            artistColors[key] = palette[ci % palette.length];
+            ci++;
+          }
+          datasets[key] = {
+            label: artist,
+            data: [],
+            backgroundColor: artistColors[key],
+            borderColor: artistColors[key],
+            pointRadius: 5,
+          };
+        }
+        datasets[key].data.push({
+          x: hour,
+          y: ts,
+          title: p.title,
+          artist: artist,
+          text: p.text || `${artist} — ${p.title}`,
+          date: d.toLocaleDateString('he-IL'),
+          time: d.toLocaleString('he-IL', { hour:'2-digit', minute:'2-digit' }),
+        });
+      });
+
+      const ctx = document.getElementById('scatterChart').getContext('2d');
+      if (scatterChartInstance) scatterChartInstance.destroy();
+
+      scatterChartInstance = new Chart(ctx, {
+        type: 'scatter',
+        data: { datasets: Object.values(datasets) },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              enabled: true,
+              rtl: true,
+              callbacks: {
+                label: ctx => {
+                  const d = ctx.raw;
+                  return `${d.text || ''} — ${d.date} ${d.time}`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: 'שעה ביום', color: '#b6b6c8' },
+              min: 0, max: 30,
+              ticks: {
+                stepSize: 2, color: '#b6b6c8',
+                callback: v => v > 23 ? (v - 24) + ':00' : v + ':00'
+              },
+              grid: { color: '#262a4a' }
+            },
+            y: {
+              title: { display: true, text: 'תאריך', color: '#b6b6c8' },
+              ticks: {
+                color: '#b6b6c8',
+                callback: v => new Date(v).toLocaleDateString('he-IL')
+              },
+              grid: { color: '#262a4a' }
             }
           }
-        } catch (e) {
-          document.getElementById('statusDot').className = 'status-dot offline';
-          document.getElementById('statusText').textContent = 'לא מחובר';
         }
+      });
+
+      // Legend
+      const legendEl = document.getElementById('scatterLegend');
+      legendEl.innerHTML = Object.entries(artistColors).slice(0, 15).map(([artist, color]) =>
+        `<span class="legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color};margin-left:4px;"></span>${esc(artist)}</span>`
+      ).join('');
+      if (Object.keys(artistColors).length > 15) {
+        legendEl.innerHTML += `<span style="color:var(--muted);font-size:0.78rem;">ועוד ${Object.keys(artistColors).length - 15}...</span>`;
       }
     }
 
-    fetchPlaylist();
-    setInterval(fetchPlaylist, POLL_INTERVAL);
+    // ── Tab: Stats ──
+    function renderStatsDetail(stats) {
+      const el = document.getElementById('statsDetailRow');
+      if (!stats) { el.innerHTML = ''; return; }
+      el.innerHTML = `
+        <div class="stat-card"><div class="val">${stats.total_tracks||0}</div><div class="lbl">סה״כ שירים</div></div>
+        <div class="stat-card"><div class="val">${stats.unique_tracks||0}</div><div class="lbl">שירים שונים</div></div>
+        <div class="stat-card"><div class="val">${stats.unique_artists||0}</div><div class="lbl">אמנים שונים</div></div>
+      `;
+    }
+
+    function renderDateChart(dates) {
+      const ctx = document.getElementById('dateChart').getContext('2d');
+      if (dateChartInstance) dateChartInstance.destroy();
+
+      if (!dates || dates.length === 0) {
+        ctx.canvas.parentElement.innerHTML = '<div style="color:var(--muted);text-align:center;padding:20px;">אין נתונים</div>';
+        return;
+      }
+
+      dateChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: dates.map(d => d.date),
+          datasets: [{
+            label: 'שירים',
+            data: dates.map(d => d.count),
+            backgroundColor: '#6ae3c180',
+            borderColor: '#6ae3c1',
+            borderWidth: 1,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: {
+              ticks: { color: '#b6b6c8', maxRotation: 45 },
+              grid: { color: '#262a4a' }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: { color: '#b6b6c8', stepSize: 1 },
+              grid: { color: '#262a4a' }
+            }
+          }
+        }
+      });
+    }
+
+    function renderTopArtists(history) {
+      const el = document.getElementById('topArtistsList');
+      if (!history || history.length === 0) {
+        el.innerHTML = '<div style="color:var(--muted);padding:12px;">אין נתונים</div>';
+        return;
+      }
+      const counts = {};
+      history.forEach(t => {
+        const a = (t.artist || 'לא ידוע').toLowerCase();
+        counts[a] = counts[a] || { artist: t.artist || 'לא ידוע', count: 0, tracks: new Set() };
+        counts[a].count++;
+        counts[a].tracks.add(t.title);
+      });
+      const sorted = Object.values(counts).sort((a,b) => b.count - a.count).slice(0, 10);
+      el.innerHTML = sorted.map((item, i) => `
+        <div class="hype-item">
+          <div class="rank">#${i+1}</div>
+          <div class="info">
+            <div class="artist">${esc(item.artist)}</div>
+            <div style="font-size:0.75rem;color:var(--muted);">${item.tracks.size} שירים שונים</div>
+          </div>
+          <div class="count">${item.count}×</div>
+        </div>
+      `).join('');
+    }
+
+    // ── Fetch all data ──
+    async function fetchAll() {
+      try {
+        const [curResp, histResp, hypeResp, scatResp, statResp] = await Promise.all([
+          fetch(DATA_URLS.current + Date.now()).then(r => r.ok ? r.json() : null),
+          fetch(DATA_URLS.history + Date.now()).then(r => r.ok ? r.json() : null),
+          fetch(DATA_URLS.hype + Date.now()).then(r => r.ok ? r.json() : null),
+          fetch(DATA_URLS.scatter + Date.now()).then(r => r.ok ? r.json() : null),
+          fetch(DATA_URLS.stats + Date.now()).then(r => r.ok ? r.json() : null),
+        ]);
+
+        // Now Playing (from current.json)
+        renderNowPlaying(curResp);
+
+        // Stats row (from stats.json)
+        renderStats(statResp);
+
+        // History
+        if (histResp) {
+          renderHistory(histResp.history, histResp.total);
+        }
+
+        // Hype
+        if (hypeResp) {
+          renderHype(hypeResp.tracks);
+        }
+
+        // Scatter
+        if (scatResp) {
+          renderScatter(scatResp.points);
+        }
+
+        // Stats detail
+        if (statResp) {
+          renderStatsDetail(statResp);
+          renderDateChart(statResp.tracks_by_date);
+          renderTopArtists(histResp ? histResp.history : null);
+        }
+
+        // Status from proxy (fallback: use stats timestamp)
+        document.getElementById('statusDot').className = 'status-dot online';
+        document.getElementById('statusText').textContent = 'מחובר';
+        if (statResp && statResp.last_track_at) {
+          document.getElementById('lastUpdate').textContent = formatTime(statResp.last_track_at);
+        }
+
+      } catch (err) {
+        console.warn('Fetch error:', err);
+        document.getElementById('statusDot').className = 'status-dot offline';
+        document.getElementById('statusText').textContent = 'שגיאה בטעינה';
+      }
+    }
+
+    // ── Init ──
+    fetchAll();
+    setInterval(fetchAll, POLL_INTERVAL);
   </script>
 </body>
 </html>
