@@ -49,7 +49,7 @@ brchn6.github.io — fresh within ~3 minutes
 
 | Var | Default | Meaning |
 |-----|---------|---------|
-| `PUSH_INTERVAL` | 4 | push every N poll cycles (4 × 30s = 2 min) |
+| `PUSH_EVERY_SECONDS` | 120 | minimum seconds between git pushes |
 | `RETENTION_DAYS` | 45 | DB retention window |
 | `CLEANUP_INTERVAL` | 720 | cleanup every N cycles (6h) |
 

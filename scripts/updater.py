@@ -34,7 +34,7 @@ DEFAULT_INTERVAL = 20
 DEFAULT_GIT_AUTO_PUSH = os.environ.get("GIT_AUTO_PUSH", "").lower() in ("1", "true", "yes")
 RETENTION_DAYS = int(os.environ.get("RETENTION_DAYS", "45"))
 CLEANUP_INTERVAL = int(os.environ.get("CLEANUP_INTERVAL", "720"))  # every 6h at 30s poll
-PUSH_INTERVAL = int(os.environ.get("PUSH_INTERVAL", "4"))  # push every 2 min at 30s poll
+PUSH_EVERY_SECONDS = int(os.environ.get("PUSH_EVERY_SECONDS", "120"))  # min gap between pushes
 
 running = True
 
@@ -179,6 +179,7 @@ def main() -> None:
 
     iteration = 0
     new_track_occurred = False
+    last_push = 0.0
 
     while running:
         iteration += 1
@@ -237,11 +238,12 @@ def main() -> None:
             )
             new_track_occurred = True
 
-        # ── Generate data every cycle, push every PUSH_INTERVAL cycles ──
+        # ── Generate data every cycle, push at most every PUSH_EVERY_SECONDS ──
         generate_static_data()
 
-        if DEFAULT_GIT_AUTO_PUSH and (iteration % PUSH_INTERVAL == 0 or args.once):
+        if DEFAULT_GIT_AUTO_PUSH and (time.time() - last_push >= PUSH_EVERY_SECONDS or args.once):
             git_commit_and_push(f"auto: multi-station update [{now_iso()}]")
+            last_push = time.time()
 
         # ── Periodic cleanup ──
         if iteration % CLEANUP_INTERVAL == 0:

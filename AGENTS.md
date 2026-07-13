@@ -33,7 +33,7 @@ gh workflow run "Deploy to Pages" --repo brchn6/radio-playlist-dashboard
 
 - **8 proxies** (ports 8761-8768), one per station
 - **Collector** polls all 8 every 30s → SQLite
-- **Git pusher** commits+pushes every 2 min (`PUSH_INTERVAL=4`, no `[skip ci]`)
+- **Git pusher** commits+pushes at most every 2 min (`PUSH_EVERY_SECONDS=120`, no `[skip ci]`)
 - **Data files** in `docs/data/` — precomputed bounded aggregates
   (top.json, timeline.json, heatmap.json, trends.json, non_music.json, capped history.json)
 - **Pages deploy**: `deploy.yml` runs on every push; concurrency queue
