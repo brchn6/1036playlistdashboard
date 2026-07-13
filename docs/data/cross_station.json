@@ -12,6 +12,17 @@
       "last_seen": "2026-07-13T12:59:22Z"
     },
     {
+      "artist": "Michael Jackson",
+      "title": "Beat It",
+      "text": "Michael Jackson — Beat It",
+      "station_count": 3,
+      "station_names": "99FM,רדיו תל אביב 102FM,כאן 88",
+      "station_slugs": "99fm,radio-tlv,kan-88",
+      "total_plays": 3,
+      "first_seen": "2026-07-13T13:21:07Z",
+      "last_seen": "2026-07-13T13:23:15Z"
+    },
+    {
       "artist": "Aviv Geffen & התעויוט",
       "title": "אל תדאג",
       "text": "Aviv Geffen & התעויוט — אל תדאג",
@@ -87,17 +98,6 @@
       "total_plays": 2,
       "first_seen": "2026-07-13T13:21:56Z",
       "last_seen": "2026-07-13T13:22:57Z"
-    },
-    {
-      "artist": "Michael Jackson",
-      "title": "Beat It",
-      "text": "Michael Jackson — Beat It",
-      "station_count": 2,
-      "station_names": "99FM,רדיו תל אביב 102FM",
-      "station_slugs": "99fm,radio-tlv",
-      "total_plays": 2,
-      "first_seen": "2026-07-13T13:21:07Z",
-      "last_seen": "2026-07-13T13:21:09Z"
     },
     {
       "artist": "Loft",
@@ -199,5 +199,5 @@
       "last_seen": "2026-07-13T12:58:15Z"
     }
   ],
-  "updated_at": "2026-07-13T13:23:12Z"
+  "updated_at": "2026-07-13T13:23:42Z"
 }

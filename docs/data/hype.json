@@ -9,6 +9,14 @@
       "last_seen": "2026-07-13T12:51:30Z"
     },
     {
+      "artist": "Michael Jackson",
+      "title": "Beat It",
+      "text": "Michael Jackson — Beat It",
+      "play_count": 3,
+      "first_seen": "2026-07-13T13:21:07Z",
+      "last_seen": "2026-07-13T13:23:15Z"
+    },
+    {
       "artist": "Sash!",
       "title": "Ecuador (Radio Edit)",
       "text": "Sash! — Ecuador (Radio Edit)",
@@ -87,14 +95,6 @@
       "play_count": 2,
       "first_seen": "2026-07-13T12:48:35Z",
       "last_seen": "2026-07-13T12:48:38Z"
-    },
-    {
-      "artist": "Michael Jackson",
-      "title": "Beat It",
-      "text": "Michael Jackson — Beat It",
-      "play_count": 2,
-      "first_seen": "2026-07-13T13:21:07Z",
-      "last_seen": "2026-07-13T13:21:09Z"
     },
     {
       "artist": "Nouvelle Vague",
@@ -369,5 +369,5 @@
       "last_seen": "2026-07-13T12:50:12Z"
     }
   ],
-  "updated_at": "2026-07-13T13:23:12Z"
+  "updated_at": "2026-07-13T13:23:42Z"
 }

@@ -725,9 +725,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Michael Jackson",
+      "title": "Beat It",
+      "text": "Michael Jackson — Beat It",
+      "recognized_at": "2026-07-13T13:23:15Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 66,
-  "returned": 66,
-  "updated_at": "2026-07-13T13:23:12Z"
+  "total": 67,
+  "returned": 67,
+  "updated_at": "2026-07-13T13:23:42Z"
 }

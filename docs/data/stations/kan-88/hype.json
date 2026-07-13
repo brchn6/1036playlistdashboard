@@ -122,6 +122,17 @@
       "station_color": "#c86ae3"
     },
     {
+      "artist": "Michael Jackson",
+      "title": "Beat It",
+      "text": "Michael Jackson — Beat It",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:23:15Z",
+      "last_seen": "2026-07-13T13:23:15Z",
+      "station_slug": "kan-88",
+      "station_name": "כאן 88",
+      "station_color": "#c86ae3"
+    },
+    {
       "artist": "Ninet Tayeb",
       "title": "להיות טובה (feat. דאנה איבגי)",
       "text": "Ninet Tayeb — להיות טובה (feat. דאנה איבגי)",
@@ -155,5 +166,5 @@
       "station_color": "#c86ae3"
     }
   ],
-  "updated_at": "2026-07-13T13:23:12Z"
+  "updated_at": "2026-07-13T13:23:42Z"
 }

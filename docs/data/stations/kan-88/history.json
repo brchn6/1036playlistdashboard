@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 67,
+      "station_id": 5,
+      "artist": "Michael Jackson",
+      "title": "Beat It",
+      "text": "Michael Jackson — Beat It",
+      "url": "https://www.shazam.com/track/5163937/beat-it",
+      "shazam_key": "5163937",
+      "recognized_at": "2026-07-13T13:23:15Z",
+      "created_at": "2026-07-13 13:23:42",
+      "station_slug": "kan-88",
+      "station_name": "כאן 88",
+      "station_color": "#c86ae3"
+    },
+    {
       "id": 62,
       "station_id": 5,
       "artist": "Led Zeppelin",
@@ -197,6 +211,6 @@
       "station_color": "#c86ae3"
     }
   ],
-  "total": 14,
-  "updated_at": "2026-07-13T13:23:12Z"
+  "total": 15,
+  "updated_at": "2026-07-13T13:23:42Z"
 }
