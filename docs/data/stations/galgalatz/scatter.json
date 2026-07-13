@@ -241,9 +241,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Prince",
+      "title": "Nothing Compares 2 U",
+      "text": "Prince — Nothing Compares 2 U",
+      "recognized_at": "2026-07-13T14:55:18Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 22,
-  "returned": 22,
-  "updated_at": "2026-07-13T14:54:19Z"
+  "total": 23,
+  "returned": 23,
+  "updated_at": "2026-07-13T14:55:19Z"
 }

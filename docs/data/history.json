@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 184,
+      "station_id": 2,
+      "artist": "Prince",
+      "title": "Nothing Compares 2 U",
+      "text": "Prince — Nothing Compares 2 U",
+      "url": "https://www.shazam.com/track/11176212/nothing-compares-2-u",
+      "shazam_key": "11176212",
+      "recognized_at": "2026-07-13T14:55:18Z",
+      "created_at": "2026-07-13 14:55:19",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "id": 183,
       "station_id": 2,
       "artist": "Aretha Franklin",
@@ -1485,7 +1499,7 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "total": 106,
-  "returned": 106,
-  "updated_at": "2026-07-13T14:54:19Z"
+  "total": 107,
+  "returned": 107,
+  "updated_at": "2026-07-13T14:55:19Z"
 }

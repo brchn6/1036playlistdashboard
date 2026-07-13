@@ -561,6 +561,14 @@
       "last_seen": "2026-07-13T14:34:35Z"
     },
     {
+      "artist": "Prince",
+      "title": "Nothing Compares 2 U",
+      "text": "Prince — Nothing Compares 2 U",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:55:18Z",
+      "last_seen": "2026-07-13T14:55:18Z"
+    },
+    {
       "artist": "Queen",
       "title": "I Want To Break Free",
       "text": "Queen — I Want To Break Free",
@@ -791,15 +799,7 @@
       "play_count": 1,
       "first_seen": "2026-07-13T13:34:27Z",
       "last_seen": "2026-07-13T13:34:27Z"
-    },
-    {
-      "artist": "Whitesnake",
-      "title": "Here I Go Again ('87)",
-      "text": "Whitesnake — Here I Go Again ('87)",
-      "play_count": 1,
-      "first_seen": "2026-07-13T14:01:59Z",
-      "last_seen": "2026-07-13T14:01:59Z"
     }
   ],
-  "updated_at": "2026-07-13T14:54:19Z"
+  "updated_at": "2026-07-13T14:55:19Z"
 }

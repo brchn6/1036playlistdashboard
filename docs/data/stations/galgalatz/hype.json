@@ -155,6 +155,17 @@
       "station_color": "#e36a6a"
     },
     {
+      "artist": "Prince",
+      "title": "Nothing Compares 2 U",
+      "text": "Prince — Nothing Compares 2 U",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:55:18Z",
+      "last_seen": "2026-07-13T14:55:18Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "artist": "Rihanna",
       "title": "Where Have You Been",
       "text": "Rihanna — Where Have You Been",
@@ -243,5 +254,5 @@
       "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T14:54:19Z"
+  "updated_at": "2026-07-13T14:55:19Z"
 }

@@ -114,12 +114,12 @@
 <div class=container>
 <header>
   <h1>Radio Playlist Dashboard</h1>
-  <p>Live track monitoring across <span id=stationCount>8</span> Israeli radio stations · <span id=collectRange></span></p>
+  <p>מעקב שירים אוטומטי ב־<span id=stationCount>8</span> תחנות רדיו · <span id=collectRange></span></p>
   <div class=status-bar>
     <span class="dot off" id=statusDot></span>
-    <span id=statusText>Loading...</span>
+    <span id=statusText>טוען...</span>
     <span class=sep>·</span>
-    <span>Last updated:</span>
+    <span>עדכון אחרון:</span>
     <span id=lastUpdate>-</span>
   </div>
 </header>
@@ -127,11 +127,11 @@
 <div class=station-pills id=pills></div>
 
 <div class=tabs id=tabBar>
-  <button class="tab-btn active" data-tab=np>🎵 Now Playing</button>
-  <button class=tab-btn data-tab=history>📋 History</button>
-  <button class=tab-btn data-tab=hype>🔥 Most Played</button>
-  <button class=tab-btn data-tab=scatter>📊 Timeline</button>
-  <button class=tab-btn data-tab=stats>📈 Statistics</button>
+  <button class="tab-btn active" data-tab=np>🎵 עכשיו</button>
+  <button class=tab-btn data-tab=history>📋 היסטוריה</button>
+  <button class=tab-btn data-tab=hype>🔥 הכי מושמעים</button>
+  <button class=tab-btn data-tab=scatter>📊 פיזור</button>
+  <button class=tab-btn data-tab=stats>📈 סטטיסטיקה</button>
 </div>
 
 <div class="tab-content active" id=tab-np>
@@ -140,17 +140,17 @@
 </div>
 
 <div class=tab-content id=tab-history>
-  <div class=card><div class=card-title style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">📋 Play History<button id=exportCsvBtn style="font-size:.7rem;padding:3px 10px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--accent);cursor:pointer;font-family:var(--font);transition:all .15s" onclick="exportCSV()">⬇ Export CSV</button></div><div id=historyList>Loading...</div></div>
+  <div class=card><div class=card-title style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">📋 היסטוריית השמעה<button id=exportCsvBtn style="font-size:.7rem;padding:3px 10px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--accent);cursor:pointer;font-family:var(--font);transition:all .15s" onclick="exportCSV()">⬇ Export CSV</button></div><div id=historyList>טוען...</div></div>
 </div>
 
 <div class=tab-content id=tab-hype>
-  <div class=card><div class=card-title>🔥 Most Played Tracks</div><div id=hypeList>Loading...</div></div>
+  <div class=card><div class=card-title>🔥 השירים הכי מושמעים</div><div id=hypeList>טוען...</div></div>
 </div>
 
 <div class=tab-content id=tab-scatter>
   <div class=card>
-    <div class=card-title>📊 Tracks Over Time</div>
-    <div style="font-size:.76rem;color:var(--muted);margin-bottom:8px">X = hour of day · Y = date · Color = station</div>
+    <div class=card-title>📊 פיזור שירים לאורך זמן</div>
+    <div style="font-size:.76rem;color:var(--muted);margin-bottom:8px">ציר X = שעה ביום · ציר Y = תאריך · צבע = תחנה</div>
     <div class=chart-wrap><canvas id=scatterChart></canvas></div>
     <div id=scatterLegend></div>
   </div>
@@ -158,21 +158,21 @@
 
 <div class=tab-content id=tab-stats>
   <div class=stat-row id=statsDetailRow></div>
-  <div class=card><div class=card-title>📈 Tracks by Date</div><div class=chart-wrap><canvas id=dateChart></canvas></div></div>
-  <div class=card><div class=card-title>🎤 Top Artists</div><div id=topArtistsList></div></div>
-  <div class=card><div class=card-title>⏰ Plays by Hour</div><div class=chart-wrap><canvas id=hourChart></canvas></div></div>
-  <div class=card><div class=card-title>🔄 Cross-Station — Same track on multiple stations</div><div id=crossStationList>Loading...</div></div>
+  <div class=card><div class=card-title>📈 שירים לפי תאריך</div><div class=chart-wrap><canvas id=dateChart></canvas></div></div>
+  <div class=card><div class=card-title>🎤 האמנים המושמעים ביותר</div><div id=topאמניםList></div></div>
+  <div class=card><div class=card-title>⏰ השמעות לפי שעה</div><div class=chart-wrap><canvas id=hourChart></canvas></div></div>
+  <div class=card><div class=card-title>🔄 תזמון צולב — שירים שמושמעים ביותר מתחנה אחת</div><div id=crossStationList>טוען...</div></div>
 </div>
 
 <footer>
   <div class=credits>
-    <span><a href=https://github.com/dotX12/shazamio target=_blank>ShazamIO</a> recognition engine</span>
-    <span><a href=https://github.com/brchn6/shazamio-proxy target=_blank>shazamio-proxy</a> stream capture</span>
-    <span><a href=https://github.com/brchn6/1036playlistdashboard target=_blank>Source code</a></span>
-    <span><span class=tag>45 days</span> track history retention</span>
+    <span>🤖 <a href=https://github.com/dotX12/shazamio target=_blank>ShazamIO</a> מזהה שירים</span>
+    <span>📡 <a href=https://github.com/brchn6/shazamio-proxy target=_blank>shazamio-proxy</a> לוכד שמע</span>
+    <span>⚡ <a href=https://github.com/brchn6/1036playlistdashboard target=_blank>קוד מקור</a></span>
+    <span>💾 <span class=tag>45 ימים</span> שמירת היסטוריה</span>
   </div>
   <div class=stations-attr>
-    <span>Stations:</span>
+    <span>תחנות:</span>
     <a href=https://1036kh.com target=_blank>103FM</a>
     <a href=https://glglz.co.il target=_blank>גלגלצ</a>
     <a href=https://99fm.co.il target=_blank>99FM</a>
@@ -182,7 +182,7 @@
     <a href=https://1036kh.com target=_blank>קול הגליל העליון</a>
     <a href=https://www.radiodarom.co.il/ target=_blank>רדיו דרום 97FM</a>
   </div>
-  <div style="font-size:.65rem;color:rgba(152,152,176,.35);margin-top:6px">Updates every 30 seconds · 45-day data retention · <span id=collectRangeFooter></span></div>
+  <div style="font-size:.65rem;color:rgba(152,152,176,.35);margin-top:6px">מתעדכן כל 30 שניות · נתונים נשמרים 45 יום · <span id=collectRangeFooter></span></div>
 </footer>
 </div>
 
@@ -224,9 +224,9 @@ function timeAgo(s){
   const d=new Date(s.endsWith('Z')?s:s+'Z');
   if(isNaN(d))return s;
   const df=Math.floor((Date.now()-d)/1000);
-  if(df<5)return'now';if(df<60)return df+'s ago';
-  const m=Math.floor(df/60);if(m<60)return m+'m ago';
-  const h=Math.floor(m/60);if(h<24)return h+'h ago';
+  if(df<5)return'עכשיו';if(df<60)return'לפני '+df+'שנ';
+  const m=Math.floor(df/60);if(m<60)return'לפני '+m+'דק';
+  const h=Math.floor(m/60);if(h<24)return'לפני '+h+'ש׳';
   return d.toLocaleDateString('he-IL',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
 }
 
@@ -235,7 +235,7 @@ function loadJSON(u){return fetch(u+'?_='+Date.now()).then(r=>r.ok?r.json():null
 function renderPills(cur){
   const el=document.getElementById('pills');
   const c=cur?cur.length:0;
-  let h='<button class="pill active" data-slug="">All Stations <span style=font-size:.68rem;opacity:.5>('+c+')</span></button>';
+  let h='<button class="pill active" data-slug="">הכל <span style=font-size:.68rem;opacity:.5>('+c+')</span></button>';
   stations.forEach(s=>{
     h+='<button class="pill" data-slug="'+s.slug+'"><span class=dot-sm style=background:'+s.color+'></span>'+esc(s.name)+'</button>';
   });
@@ -252,7 +252,7 @@ function renderNowPlaying(cur){
   const el=document.getElementById('npGrid');
   const data=activeStation?(cur||[]).filter(t=>t.station_slug===activeStation):cur||[];
   if(!data||!data.length){
-    el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--muted)"><div>Waiting for data...</div></div>';return;
+    el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--muted)"><div>ממתין לנתונים...</div></div>';return;
   }
   el.innerHTML=data.map(t=>{
     const c=t.station_color||'#5ddbb5',slug=t.station_slug||'';
@@ -273,17 +273,17 @@ function renderNowPlaying(cur){
 function renderStats(s){
   if(!s)return;
   document.getElementById('statsRow').innerHTML=
-    '<div class=stat-card><div class=v>'+(s.total_tracks||0)+'</div><div class=l>Total Tracks</div></div>'+
-    '<div class=stat-card><div class=v>'+(s.unique_tracks||0)+'</div><div class=l>Unique Tracks</div></div>'+
-    '<div class=stat-card><div class=v>'+(s.unique_artists||0)+'</div><div class=l>Artists</div></div>';
+    '<div class=stat-card><div class=v>'+(s.total_tracks||0)+'</div><div class=l>סה״כ שירים</div></div>'+
+    '<div class=stat-card><div class=v>'+(s.unique_tracks||0)+'</div><div class=l>שירים שונים</div></div>'+
+    '<div class=stat-card><div class=v>'+(s.unique_artists||0)+'</div><div class=l>אמנים</div></div>';
 }
 
 function renderHistory(hist){
   const el=document.getElementById('historyList');
-  if(!hist||!hist.history){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>No data</div>';return}
+  if(!hist||!hist.history){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>אין נתונים</div>';return}
   const d=hist.history;
   el._data=d;
-  if(!d.length){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>No data for this station</div>';return}
+  if(!d.length){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>אין נתונים לתחנה זו</div>';return}
   el.innerHTML=d.slice(0,150).map(t=>
     '<div class=history-item>'+
       '<div class=hs style=color:'+(t.station_color||'#666')+'>'+esc(t.station_name||'')+'</div>'+
@@ -295,9 +295,9 @@ function renderHistory(hist){
 
 function renderHype(hype){
   const el=document.getElementById('hypeList');
-  if(!hype||!hype.tracks){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>No data</div>';return}
+  if(!hype||!hype.tracks){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>אין נתונים</div>';return}
   const d=hype.tracks;
-  if(!d.length){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>No data</div>';return}
+  if(!d.length){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>אין נתונים</div>';return}
   el.innerHTML=d.slice(0,30).map((t,i)=>
     '<div class=history-item>'+
       '<div style=width:28px;font-weight:700;color:var(--muted);font-size:.82rem>'+(i+1)+'</div>'+
@@ -310,11 +310,11 @@ function renderHype(hype){
 function renderScatter(scatter){
   const el=document.getElementById('scatterChart');
   if(!scatter||!scatter.points||!scatter.points.length){
-    el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>No data</div>';return;
+    el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>אין נתונים</div>';return;
   }
   let pts=scatter.points;
   if(activeStation)pts=pts.filter(p=>p.station_slug===activeStation);
-  if(!pts.length){el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>No data for this station</div>';return}
+  if(!pts.length){el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>אין נתונים לתחנה זו</div>';return}
   const ds={};
   // Build lookup: date -> index (day 0, 1, 2...)
   const dateSet={},dateList=[];
@@ -356,13 +356,13 @@ function renderDateChart(s){
   const el=document.getElementById('dateChart');
   if(dateChart)dateChart.destroy();
   if(!s||!s.tracks_by_date||!s.tracks_by_date.length){
-    el.parentElement.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>No data</div>';return;
+    el.parentElement.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים</div>';return;
   }
   const dates=s.tracks_by_date;
   const ctx=el.getContext('2d');
   dateChart=new Chart(ctx,{
     type:'bar',
-    data:{labels:dates.map(d=>d.date),datasets:[{label:'Tracks',data:dates.map(d=>d.count),backgroundColor:'#5ddbb580',borderColor:'#5ddbb5',borderWidth:1,borderRadius:3}]},
+    data:{labels:dates.map(d=>d.date),datasets:[{label:'שירים',data:dates.map(d=>d.count),backgroundColor:'#5ddbb580',borderColor:'#5ddbb5',borderWidth:1,borderRadius:3}]},
     options:{
       responsive:true,maintainAspectRatio:false,animation:false,
       plugins:{legend:{display:false}},
@@ -373,7 +373,7 @@ function renderDateChart(s){
 
 function renderCrossStation(data){
   const el=document.getElementById('crossStationList');
-  if(!data||!data.tracks||!data.tracks.length){el.innerHTML='<div style=text-align:center;padding:16px;color:var(--muted)>No cross-station tracks yet</div>';return;}
+  if(!data||!data.tracks||!data.tracks.length){el.innerHTML='<div style=text-align:center;padding:16px;color:var(--muted)>עדיין אין שירים חוצים</div>';return;}
   el.innerHTML=data.tracks.map((t,i)=>
     '<div class=history-item cross-station>'+
       '<div class=hs style=color:var(--accent);font-size:.85rem>'+t.station_count+'×</div>'+
@@ -383,9 +383,9 @@ function renderCrossStation(data){
   ).join('');
 }
 
-function renderTopArtists(hist){
-  const el=document.getElementById('topArtistsList');
-  if(!hist||!hist.history){el.innerHTML='<div style=padding:12px;color:var(--muted)>No data</div>';return;}
+function renderTopאמנים(hist){
+  const el=document.getElementById('topאמניםList');
+  if(!hist||!hist.history){el.innerHTML='<div style=padding:12px;color:var(--muted)>אין נתונים</div>';return;}
   const data=hist.history||[];
   const cnt={};
   data.forEach(t=>{
@@ -407,11 +407,11 @@ function renderHourChart(scatter){
   const el=document.getElementById('hourChart');
   if(hourChart)hourChart.destroy();
   if(!scatter||!scatter.points||!scatter.points.length){
-    el.parentElement.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>No data</div>';return;
+    el.parentElement.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים</div>';return;
   }
   let pts=scatter.points;
   if(activeStation)pts=pts.filter(p=>p.station_slug===activeStation);
-  if(!pts.length){el.parentElement.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>No data</div>';return;}
+  if(!pts.length){el.parentElement.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים</div>';return;}
   const hours=Array.from({length:24},(_,i)=>({hour:i,count:0}));
   pts.forEach(p=>{const h=parseInt(p.hour);if(h>=0&&h<24)hours[h].count++;});
   const ctx=el.getContext('2d');
@@ -428,7 +428,7 @@ function renderHourChart(scatter){
 
 function exportCSV(){
   const el=document.getElementById('historyList');
-  if(!el||!el._data||!el._data.length){alert('No data to export');return;}
+  if(!el||!el._data||!el._data.length){alert('אין נתונים to export');return;}
   const data=el._data;
   const headers=['Station','Artist','Title','Recognized At'];
   const rows=data.map(t=>[
@@ -460,22 +460,22 @@ async function fetchAll(){
     let histUrl=BASE+'history.json',hypeUrl=BASE+'hype.json';
     if(activeStation){histUrl=BASE+'stations/'+activeStation+'/history.json';hypeUrl=BASE+'stations/'+activeStation+'/hype.json';}
     const[hist,hype]=await Promise.all([loadJSON(histUrl),loadJSON(hypeUrl)]);
-    renderHistory(hist);renderHype(hype);renderTopArtists(hist||{history:[]});
+    renderHistory(hist);renderHype(hype);renderTopאמנים(hist||{history:[]});
 
     document.getElementById('statusDot').className='dot on';
-    document.getElementById('statusText').textContent='Connected';
+    document.getElementById('statusText').textContent='מחובר';
     if(stat&&stat.first_track_at&&stat.last_track_at){
       const f=new Date(stat.first_track_at.endsWith('Z')?stat.first_track_at:stat.first_track_at+'Z');
       const l=new Date(stat.last_track_at.endsWith('Z')?stat.last_track_at:stat.last_track_at+'Z');
       const opts={day:'numeric',month:'short',year:'numeric'};
-      document.getElementById('collectRange').textContent='Collecting since '+f.toLocaleDateString('en-US',opts);
-      document.getElementById('collectRangeFooter').textContent='since '+f.toLocaleDateString('en-US',opts);
+      document.getElementById('collectRange').textContent='אוסף נתונים מ-'+f.toLocaleDateString('en-US',opts);
+      document.getElementById('collectRangeFooter').textContent='מ-'+f.toLocaleDateString('en-US',opts);
     }
     document.getElementById('lastUpdate').textContent=timeAgo(stat?.updated_at)||'-';
   }catch(e){
     console.warn(e);
     document.getElementById('statusDot').className='dot off';
-    document.getElementById('statusText').textContent='Error';
+    document.getElementById('statusText').textContent='שגיאה';
   }
 }
 fetchAll();setInterval(fetchAll,POLL);
