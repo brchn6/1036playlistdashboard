@@ -2056,9 +2056,20 @@
       "day_of_week": "1",
       "hour": "16",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "The Statler Brothers",
+      "title": "Flowers On the Wall",
+      "text": "The Statler Brothers — Flowers On the Wall",
+      "recognized_at": "2026-07-13T16:45:43Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "16",
+      "date": "2026-07-13"
     }
   ],
-  "total": 187,
-  "returned": 187,
-  "updated_at": "2026-07-13T16:45:30Z"
+  "total": 188,
+  "returned": 188,
+  "updated_at": "2026-07-13T16:46:00Z"
 }

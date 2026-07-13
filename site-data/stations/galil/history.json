@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 265,
+      "station_id": 7,
+      "artist": "The Statler Brothers",
+      "title": "Flowers On the Wall",
+      "text": "The Statler Brothers — Flowers On the Wall",
+      "url": "https://www.shazam.com/track/10798996/flowers-on-the-wall",
+      "shazam_key": "10798996",
+      "recognized_at": "2026-07-13T16:45:43Z",
+      "created_at": "2026-07-13 16:46:00",
+      "station_slug": "galil",
+      "station_name": "קול הגליל העליון",
+      "station_color": "#a06ae3"
+    },
+    {
       "id": 257,
       "station_id": 7,
       "artist": "Sting",
@@ -421,6 +435,6 @@
       "station_color": "#a06ae3"
     }
   ],
-  "total": 30,
-  "updated_at": "2026-07-13T16:45:30Z"
+  "total": 31,
+  "updated_at": "2026-07-13T16:46:00Z"
 }
