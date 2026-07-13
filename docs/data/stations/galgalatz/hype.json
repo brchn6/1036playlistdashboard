@@ -12,6 +12,17 @@
       "station_color": "#e36a6a"
     },
     {
+      "artist": "Jasmin Moallem",
+      "title": "תן לי את האששש",
+      "text": "Jasmin Moallem — תן לי את האששש",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:37:28Z",
+      "last_seen": "2026-07-13T13:37:28Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "artist": "The Pointer Sisters",
       "title": "I'm So Excited",
       "text": "The Pointer Sisters — I'm So Excited",
@@ -23,5 +34,5 @@
       "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T13:37:05Z"
+  "updated_at": "2026-07-13T13:37:35Z"
 }
