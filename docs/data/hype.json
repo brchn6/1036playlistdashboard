@@ -730,6 +730,14 @@
     },
     {
       "artist": "The Rolling Stones",
+      "title": "Hit Me In The Head",
+      "text": "The Rolling Stones — Hit Me In The Head",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:51:59Z",
+      "last_seen": "2026-07-13T14:51:59Z"
+    },
+    {
+      "artist": "The Rolling Stones",
       "title": "Paint It, Black",
       "text": "The Rolling Stones — Paint It, Black",
       "play_count": 1,
@@ -777,5 +785,5 @@
       "last_seen": "2026-07-13T14:05:04Z"
     }
   ],
-  "updated_at": "2026-07-13T14:51:15Z"
+  "updated_at": "2026-07-13T14:52:15Z"
 }
