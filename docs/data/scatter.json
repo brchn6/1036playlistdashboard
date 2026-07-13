@@ -26,9 +26,18 @@
       "day_of_week": "1",
       "hour": "12",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Lasgo",
+      "title": "Something",
+      "text": "Lasgo — Something",
+      "recognized_at": "2026-07-13T12:12:00Z",
+      "day_of_week": "1",
+      "hour": "12",
+      "date": "2026-07-13"
     }
   ],
-  "total": 3,
-  "returned": 3,
-  "updated_at": "2026-07-13T12:10:43Z"
+  "total": 4,
+  "returned": 4,
+  "updated_at": "2026-07-13T12:12:10Z"
 }

@@ -9,6 +9,14 @@
       "last_seen": "2026-07-13T12:08:04Z"
     },
     {
+      "artist": "Lasgo",
+      "title": "Something",
+      "text": "Lasgo — Something",
+      "play_count": 1,
+      "first_seen": "2026-07-13T12:12:00Z",
+      "last_seen": "2026-07-13T12:12:00Z"
+    },
+    {
       "artist": "Ricky Martin",
       "title": "María",
       "text": "Ricky Martin — María",
@@ -25,5 +33,5 @@
       "last_seen": "2026-07-13T12:05:00Z"
     }
   ],
-  "updated_at": "2026-07-13T12:10:43Z"
+  "updated_at": "2026-07-13T12:12:10Z"
 }
