@@ -505,9 +505,20 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "The Neighbourhood",
+      "title": "Sweater Weather",
+      "text": "The Neighbourhood — Sweater Weather",
+      "recognized_at": "2026-07-13T17:33:50Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 46,
-  "returned": 46,
-  "updated_at": "2026-07-13T17:33:39Z"
+  "total": 47,
+  "returned": 47,
+  "updated_at": "2026-07-13T17:34:09Z"
 }
