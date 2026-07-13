@@ -1704,9 +1704,42 @@
       "day_of_week": "1",
       "hour": "15",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Gidi Gov",
+      "title": "טוב שבאת",
+      "text": "Gidi Gov — טוב שבאת",
+      "recognized_at": "2026-07-13T15:36:12Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "15",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "The Fly Guy Five",
+      "title": "Entry of the Dimwits",
+      "text": "The Fly Guy Five — Entry of the Dimwits",
+      "recognized_at": "2026-07-13T15:37:11Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "15",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "נעמי בניון",
+      "title": "להיות בן אדם",
+      "text": "נעמי בניון — להיות בן אדם",
+      "recognized_at": "2026-07-13T15:37:15Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "15",
+      "date": "2026-07-13"
     }
   ],
-  "total": 155,
-  "returned": 155,
-  "updated_at": "2026-07-13T15:36:03Z"
+  "total": 158,
+  "returned": 158,
+  "updated_at": "2026-07-13T15:38:11Z"
 }

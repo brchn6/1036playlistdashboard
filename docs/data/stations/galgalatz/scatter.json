@@ -340,9 +340,20 @@
       "day_of_week": "1",
       "hour": "15",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Gidi Gov",
+      "title": "טוב שבאת",
+      "text": "Gidi Gov — טוב שבאת",
+      "recognized_at": "2026-07-13T15:36:12Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "15",
+      "date": "2026-07-13"
     }
   ],
-  "total": 31,
-  "returned": 31,
-  "updated_at": "2026-07-13T15:36:03Z"
+  "total": 32,
+  "returned": 32,
+  "updated_at": "2026-07-13T15:38:11Z"
 }

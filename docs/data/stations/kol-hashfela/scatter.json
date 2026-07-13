@@ -384,9 +384,20 @@
       "day_of_week": "1",
       "hour": "15",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "The Fly Guy Five",
+      "title": "Entry of the Dimwits",
+      "text": "The Fly Guy Five — Entry of the Dimwits",
+      "recognized_at": "2026-07-13T15:37:11Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "15",
+      "date": "2026-07-13"
     }
   ],
-  "total": 35,
-  "returned": 35,
-  "updated_at": "2026-07-13T15:36:03Z"
+  "total": 36,
+  "returned": 36,
+  "updated_at": "2026-07-13T15:38:11Z"
 }

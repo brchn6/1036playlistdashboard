@@ -45,6 +45,17 @@
       "station_color": "#e36a6a"
     },
     {
+      "artist": "Gidi Gov",
+      "title": "טוב שבאת",
+      "text": "Gidi Gov — טוב שבאת",
+      "play_count": 1,
+      "first_seen": "2026-07-13T15:36:12Z",
+      "last_seen": "2026-07-13T15:36:12Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "artist": "Ha'Eivrit",
       "title": "Mesibat Kita",
       "text": "Ha'Eivrit — Mesibat Kita",
@@ -342,5 +353,5 @@
       "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T15:36:03Z"
+  "updated_at": "2026-07-13T15:38:11Z"
 }
