@@ -54,9 +54,20 @@
       "day_of_week": "1",
       "hour": "12",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Sash!",
+      "title": "Ecuador (Radio Edit)",
+      "text": "Sash! — Ecuador (Radio Edit)",
+      "recognized_at": "2026-07-13T12:59:22Z",
+      "station_slug": "kan-bet",
+      "station_color": "#e38a6a",
+      "day_of_week": "1",
+      "hour": "12",
+      "date": "2026-07-13"
     }
   ],
-  "total": 5,
-  "returned": 5,
-  "updated_at": "2026-07-13T12:58:42Z"
+  "total": 6,
+  "returned": 6,
+  "updated_at": "2026-07-13T12:59:42Z"
 }

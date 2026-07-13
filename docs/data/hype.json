@@ -9,6 +9,14 @@
       "last_seen": "2026-07-13T12:51:30Z"
     },
     {
+      "artist": "Sash!",
+      "title": "Ecuador (Radio Edit)",
+      "text": "Sash! — Ecuador (Radio Edit)",
+      "play_count": 3,
+      "first_seen": "2026-07-13T12:57:20Z",
+      "last_seen": "2026-07-13T12:59:22Z"
+    },
+    {
       "artist": "Arkadi Duchin & Meir Banai",
       "title": "דומינו",
       "text": "Arkadi Duchin & Meir Banai — דומינו",
@@ -39,14 +47,6 @@
       "play_count": 2,
       "first_seen": "2026-07-13T12:48:35Z",
       "last_seen": "2026-07-13T12:48:38Z"
-    },
-    {
-      "artist": "Sash!",
-      "title": "Ecuador (Radio Edit)",
-      "text": "Sash! — Ecuador (Radio Edit)",
-      "play_count": 2,
-      "first_seen": "2026-07-13T12:57:20Z",
-      "last_seen": "2026-07-13T12:58:25Z"
     },
     {
       "artist": "Shlomo Artzi & Rita",
@@ -177,5 +177,5 @@
       "last_seen": "2026-07-13T12:50:12Z"
     }
   ],
-  "updated_at": "2026-07-13T12:58:42Z"
+  "updated_at": "2026-07-13T12:59:42Z"
 }
