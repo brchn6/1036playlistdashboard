@@ -122,6 +122,17 @@
       "station_color": "#a06ae3"
     },
     {
+      "artist": "Phil Collins",
+      "title": "Two Hearts",
+      "text": "Phil Collins — Two Hearts",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:27:27Z",
+      "last_seen": "2026-07-13T14:27:27Z",
+      "station_slug": "galil",
+      "station_name": "קול הגליל העליון",
+      "station_color": "#a06ae3"
+    },
+    {
       "artist": "Queen",
       "title": "The Show Must Go On",
       "text": "Queen — The Show Must Go On",
@@ -177,5 +188,5 @@
       "station_color": "#a06ae3"
     }
   ],
-  "updated_at": "2026-07-13T14:25:45Z"
+  "updated_at": "2026-07-13T14:27:45Z"
 }

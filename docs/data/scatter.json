@@ -780,9 +780,31 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Phil Collins",
+      "title": "Two Hearts",
+      "text": "Phil Collins — Two Hearts",
+      "recognized_at": "2026-07-13T14:27:27Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Lea Shabat",
+      "title": "חתיכת שמיים",
+      "text": "Lea Shabat — חתיכת שמיים",
+      "recognized_at": "2026-07-13T14:27:37Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 71,
-  "returned": 71,
-  "updated_at": "2026-07-13T14:25:45Z"
+  "total": 73,
+  "returned": 73,
+  "updated_at": "2026-07-13T14:27:45Z"
 }

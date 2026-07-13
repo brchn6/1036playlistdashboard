@@ -153,9 +153,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Lea Shabat",
+      "title": "חתיכת שמיים",
+      "text": "Lea Shabat — חתיכת שמיים",
+      "recognized_at": "2026-07-13T14:27:37Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 14,
-  "returned": 14,
-  "updated_at": "2026-07-13T14:25:45Z"
+  "total": 15,
+  "returned": 15,
+  "updated_at": "2026-07-13T14:27:45Z"
 }

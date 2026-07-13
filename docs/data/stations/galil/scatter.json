@@ -175,9 +175,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Phil Collins",
+      "title": "Two Hearts",
+      "text": "Phil Collins — Two Hearts",
+      "recognized_at": "2026-07-13T14:27:27Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 16,
-  "returned": 16,
-  "updated_at": "2026-07-13T14:25:45Z"
+  "total": 17,
+  "returned": 17,
+  "updated_at": "2026-07-13T14:27:45Z"
 }
