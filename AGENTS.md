@@ -11,7 +11,7 @@ database without explicit user confirmation. This rule is ABSOLUTE.**
 | **Repo** | `brchn6/radio-playlist-dashboard` |
 | **Local** | `/home/barc/dev/radio-playlist-dashboard/` |
 | **Dashboard** | `https://brchn6.github.io/radio-playlist-dashboard/` |
-| **Deploy** | API-triggered every 15 min from updater. Manual: `gh workflow run "Deploy to Pages"` |
+| **Deploy** | Actions workflow on every push (Pages `build_type=workflow`). Manual: `gh workflow run "Deploy to Pages"` |
 
 ## Running the Services
 
@@ -33,11 +33,16 @@ gh workflow run "Deploy to Pages" --repo brchn6/radio-playlist-dashboard
 
 - **8 proxies** (ports 8761-8768), one per station
 - **Collector** polls all 8 every 30s → SQLite
-- **Git pusher** pushes JSON every 30s to `main` with `[skip ci]`
-- **Data files** in `docs/data/`
-- **Pages deploy** triggered by updater every 15 min via `gh api -X POST .../pages/builds` (no Actions minutes used)
-- **Now Playing** tab fetches live from local proxies (30s fresh)
-- **Other tabs** load from deployed Pages JSON (updated every ~15 min)
+- **Git pusher** commits+pushes every 2 min (`PUSH_INTERVAL=4`, no `[skip ci]`)
+- **Data files** in `docs/data/` — precomputed bounded aggregates
+  (top.json, timeline.json, heatmap.json, trends.json, non_music.json, capped history.json)
+- **Pages deploy**: `deploy.yml` runs on every push; concurrency queue
+  (`cancel-in-progress: false`) so the newest data always deploys; repo is
+  public so Actions minutes are free and unlimited
+- **Now Playing** tab fetches live from local proxies (30s fresh on this machine)
+- **Other tabs** load deployed Pages JSON (fresh within ~3 min)
+- **non_music_log** table is owned by the separate talk/ads-segment agent;
+  generate_data.py reads it defensively (tolerates absence/schema change)
 
 ## Critical Bugs Already Fixed
 
@@ -48,7 +53,7 @@ gh workflow run "Deploy to Pages" --repo brchn6/radio-playlist-dashboard
 5. Scatter Y-axis flat → station categories
 6. Pages build collisions → manual deploy only
 7. Collector not pushing → needs `GIT_AUTO_PUSH=1`
-8. **Pages auto-build collapsing** — Every 30s push triggered a new Pages build that canceled the previous one (builds take ~1-2 min). **Final fix:** Auto-commits use `[skip ci]` to prevent push-triggered builds. Updater triggers Pages deploy via REST API every 15 min — spaced enough for builds to complete. No Actions minutes consumed. See `scripts/updater.py` → `deploy_pages()` + `DEPLOY_INTERVAL`.
+8. **Pages auto-build collapsing** — Every 30s push triggered a legacy Pages build that canceled the previous one. **Final fix (v2):** Pages switched to Actions-based deploys (`build_type=workflow`) with a non-cancelling concurrency queue, pushes batched to every 2 min. Note: `[skip ci]` never suppressed legacy builds, and legacy builds have a 10/hour soft quota — see `.planning/DEPLOY-ARCHITECTURE.md` for the full corrected record.
 
 ## Memory File
 Full project memory at `~/.memory/radio-playlist-dashboard.md` — **READ BEFORE making any changes**.

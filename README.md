@@ -3,25 +3,25 @@
 > **Live at → [brchn6.github.io/radio-playlist-dashboard](https://brchn6.github.io/radio-playlist-dashboard/)**  
 > Automatic track monitoring across Israeli radio stations
 
-A live dashboard that tracks songs played on **7 Israeli radio stations** simultaneously using [ShazamIO](https://github.com/dotX12/shazamio). Each station gets its own recognition proxy. All data flows into a single SQLite database and gets published to **GitHub Pages** every 30 seconds.
+A live dashboard that tracks songs played on **8 Israeli radio stations** simultaneously using [ShazamIO](https://github.com/dotX12/shazamio). Each station gets its own recognition proxy. All data flows into a single SQLite database and gets published to **GitHub Pages** — the live site refreshes within ~3 minutes.
 
 ## 🚀 How it works
 
 ```
-7x ShazamIO Proxies (ports 8761-8767)
-  kol-hashfela │ galgalatz │ 99fm │ radio-tlv │ kan-88 │ kan-bet │ galil
+8x ShazamIO Proxies (ports 8761-8768)
+  kol-hashfela │ galgalatz │ 99fm │ radio-tlv │ kan-88 │ kan-bet │ galil │ radio-darom
         │
-        ▼  poll all 7 every 30s
+        ▼  poll all 8 every 30s
 Multi-Station Updater
         │
         ▼
 SQLite (single DB, station_id on every track)
         │
         ▼
-Data Generator → 41 JSON files (aggregated + per-station)
+Data Generator → bounded analytics JSON (top / timeline / heatmap / trends / history)
         │
-        ▼
-GitHub Pages (auto-push on new tracks)
+        ▼  git push every 2 min
+GitHub Actions → GitHub Pages deploy (queued, never cancelled, free on public repos)
 ```
 
 ## 📦 Project structure
