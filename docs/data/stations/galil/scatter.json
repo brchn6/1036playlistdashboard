@@ -21,9 +21,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Ehud Banai",
+      "title": "ממשיך לנסוע",
+      "text": "Ehud Banai — ממשיך לנסוע",
+      "recognized_at": "2026-07-13T13:33:45Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 2,
-  "returned": 2,
-  "updated_at": "2026-07-13T13:33:05Z"
+  "total": 3,
+  "returned": 3,
+  "updated_at": "2026-07-13T13:34:05Z"
 }

@@ -10,7 +10,18 @@
       "station_slug": "galgalatz",
       "station_name": "גלגלצ",
       "station_color": "#e36a6a"
+    },
+    {
+      "artist": "The Pointer Sisters",
+      "title": "I'm So Excited",
+      "text": "The Pointer Sisters — I'm So Excited",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:33:44Z",
+      "last_seen": "2026-07-13T13:33:44Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T13:33:05Z"
+  "updated_at": "2026-07-13T13:34:05Z"
 }

@@ -10,9 +10,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "The Pointer Sisters",
+      "title": "I'm So Excited",
+      "text": "The Pointer Sisters — I'm So Excited",
+      "recognized_at": "2026-07-13T13:33:44Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 1,
-  "returned": 1,
-  "updated_at": "2026-07-13T13:33:05Z"
+  "total": 2,
+  "returned": 2,
+  "updated_at": "2026-07-13T13:34:05Z"
 }
