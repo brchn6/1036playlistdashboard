@@ -25,12 +25,12 @@
 - [x] `start_one(slug)` / `stop_one(slug)`
 - [x] Logs per station
 
-## 🔲 Phase 3 — Multi-Station Updater
-- [ ] Rewrite `updater.py` with async polling (all 7 proxies)
-- [ ] `station_id` tagging on insert
-- [ ] Per-station dedup (track_exists checks station_id)
-- [ ] Graceful handling of offline stations
-- [ ] Cleanup respects per-station retention
+## ✅ Phase 3 — Multi-Station Updater
+- [x] Rewrite `updater.py` with multi-proxy polling (all 7 proxies)
+- [x] `station_id` tagging on insert
+- [x] Per-station dedup (track_exists checks station_id)
+- [x] Graceful handling of offline stations
+- [x] Cleanup respects per-station retention
 
 ## 🔲 Phase 4 — Per-Station Data Generation
 - [ ] Update `generate_data.py` for per-station JSON
