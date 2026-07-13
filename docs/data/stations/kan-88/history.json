@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 9,
+      "station_id": 5,
+      "artist": "Free",
+      "title": "All Right Now",
+      "text": "Free — All Right Now",
+      "url": "https://www.shazam.com/track/237069/all-right-now",
+      "shazam_key": "237069",
+      "recognized_at": "2026-07-13T12:49:42Z",
+      "created_at": "2026-07-13 12:50:12",
+      "station_slug": "kan-88",
+      "station_name": "כאן 88",
+      "station_color": "#c86ae3"
+    },
+    {
       "id": 6,
       "station_id": 5,
       "artist": "Loft",
@@ -15,6 +29,6 @@
       "station_color": "#c86ae3"
     }
   ],
-  "total": 1,
-  "updated_at": "2026-07-13T12:49:42Z"
+  "total": 2,
+  "updated_at": "2026-07-13T12:50:12Z"
 }
