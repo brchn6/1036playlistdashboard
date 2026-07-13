@@ -254,6 +254,17 @@
       "station_color": "#a06ae3"
     },
     {
+      "artist": "Sting",
+      "title": "The Windmills Of Your Mind",
+      "text": "Sting — The Windmills Of Your Mind",
+      "play_count": 1,
+      "first_seen": "2026-07-13T16:41:39Z",
+      "last_seen": "2026-07-13T16:41:39Z",
+      "station_slug": "galil",
+      "station_name": "קול הגליל העליון",
+      "station_color": "#a06ae3"
+    },
+    {
       "artist": "Taylor Swift",
       "title": "Fortnight (feat. Post Malone)",
       "text": "Taylor Swift — Fortnight (feat. Post Malone)",
@@ -320,5 +331,5 @@
       "station_color": "#a06ae3"
     }
   ],
-  "updated_at": "2026-07-13T16:41:30Z"
+  "updated_at": "2026-07-13T16:42:00Z"
 }

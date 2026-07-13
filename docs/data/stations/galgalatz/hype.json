@@ -56,6 +56,17 @@
       "station_color": "#e36a6a"
     },
     {
+      "artist": "Eden Ben Zaken",
+      "title": "לופ שלא נגמר",
+      "text": "Eden Ben Zaken — לופ שלא נגמר",
+      "play_count": 1,
+      "first_seen": "2026-07-13T16:41:39Z",
+      "last_seen": "2026-07-13T16:41:39Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "artist": "Ethnix",
       "title": "מתי לחזור",
       "text": "Ethnix — מתי לחזור",
@@ -375,5 +386,5 @@
       "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T16:41:30Z"
+  "updated_at": "2026-07-13T16:42:00Z"
 }

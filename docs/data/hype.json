@@ -377,6 +377,14 @@
       "last_seen": "2026-07-13T15:10:10Z"
     },
     {
+      "artist": "Eden Ben Zaken",
+      "title": "לופ שלא נגמר",
+      "text": "Eden Ben Zaken — לופ שלא נגמר",
+      "play_count": 1,
+      "first_seen": "2026-07-13T16:41:39Z",
+      "last_seen": "2026-07-13T16:41:39Z"
+    },
+    {
       "artist": "Ehud Banai",
       "title": "היום",
       "text": "Ehud Banai — היום",
@@ -609,6 +617,14 @@
       "last_seen": "2026-07-13T15:12:43Z"
     },
     {
+      "artist": "Kanye West",
+      "title": "Love Lockdown",
+      "text": "Kanye West — Love Lockdown",
+      "play_count": 1,
+      "first_seen": "2026-07-13T16:41:57Z",
+      "last_seen": "2026-07-13T16:41:57Z"
+    },
+    {
       "artist": "Kate Bush",
       "title": "Babooshka",
       "text": "Kate Bush — Babooshka",
@@ -783,23 +799,7 @@
       "play_count": 1,
       "first_seen": "2026-07-13T14:08:03Z",
       "last_seen": "2026-07-13T14:08:03Z"
-    },
-    {
-      "artist": "New Order",
-      "title": "Regret",
-      "text": "New Order — Regret",
-      "play_count": 1,
-      "first_seen": "2026-07-13T14:34:53Z",
-      "last_seen": "2026-07-13T14:34:53Z"
-    },
-    {
-      "artist": "Ninet Tayeb",
-      "title": "בינתיים לך איתה",
-      "text": "Ninet Tayeb — בינתיים לך איתה",
-      "play_count": 1,
-      "first_seen": "2026-07-13T14:48:09Z",
-      "last_seen": "2026-07-13T14:48:09Z"
     }
   ],
-  "updated_at": "2026-07-13T16:41:30Z"
+  "updated_at": "2026-07-13T16:42:00Z"
 }
