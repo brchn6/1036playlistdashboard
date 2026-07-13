@@ -2595,9 +2595,20 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Cat Stevens",
+      "title": "Moonshadow",
+      "text": "Cat Stevens — Moonshadow",
+      "recognized_at": "2026-07-13T17:19:26Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 236,
-  "returned": 236,
-  "updated_at": "2026-07-13T17:19:09Z"
+  "total": 237,
+  "returned": 237,
+  "updated_at": "2026-07-13T17:19:39Z"
 }
