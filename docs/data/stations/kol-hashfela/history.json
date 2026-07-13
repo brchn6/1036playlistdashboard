@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 282,
+      "station_id": 1,
+      "artist": "Bronski Beat",
+      "title": "Smalltown Boy",
+      "text": "Bronski Beat — Smalltown Boy",
+      "url": "https://www.shazam.com/track/5224014/smalltown-boy",
+      "shazam_key": "5224014",
+      "recognized_at": "2026-07-13T16:55:53Z",
+      "created_at": "2026-07-13 16:56:11",
+      "station_slug": "kol-hashfela",
+      "station_name": "קול השפלה 103FM",
+      "station_color": "#6ae3c1"
+    },
+    {
       "id": 276,
       "station_id": 1,
       "artist": "David Bowie",
@@ -617,6 +631,6 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "total": 44,
-  "updated_at": "2026-07-13T16:55:41Z"
+  "total": 45,
+  "updated_at": "2026-07-13T16:56:11Z"
 }

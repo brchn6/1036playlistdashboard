@@ -233,6 +233,14 @@
       "last_seen": "2026-07-13T14:57:18Z"
     },
     {
+      "artist": "Bronski Beat",
+      "title": "Smalltown Boy",
+      "text": "Bronski Beat — Smalltown Boy",
+      "play_count": 1,
+      "first_seen": "2026-07-13T16:55:53Z",
+      "last_seen": "2026-07-13T16:55:53Z"
+    },
+    {
       "artist": "Bruno Mars",
       "title": "Risk It All",
       "text": "Bruno Mars — Risk It All",
@@ -791,15 +799,7 @@
       "play_count": 1,
       "first_seen": "2026-07-13T14:32:32Z",
       "last_seen": "2026-07-13T14:32:32Z"
-    },
-    {
-      "artist": "Madonna",
-      "title": "Express Yourself",
-      "text": "Madonna — Express Yourself",
-      "play_count": 1,
-      "first_seen": "2026-07-13T15:05:34Z",
-      "last_seen": "2026-07-13T15:05:34Z"
     }
   ],
-  "updated_at": "2026-07-13T16:55:41Z"
+  "updated_at": "2026-07-13T16:56:11Z"
 }

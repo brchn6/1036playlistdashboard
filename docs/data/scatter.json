@@ -2243,9 +2243,31 @@
       "day_of_week": "1",
       "hour": "16",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Bronski Beat",
+      "title": "Smalltown Boy",
+      "text": "Bronski Beat — Smalltown Boy",
+      "recognized_at": "2026-07-13T16:55:53Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "16",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Noam Bettan",
+      "title": "תמיד רציתי עוד",
+      "text": "Noam Bettan — תמיד רציתי עוד",
+      "recognized_at": "2026-07-13T16:55:57Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "16",
+      "date": "2026-07-13"
     }
   ],
-  "total": 204,
-  "returned": 204,
-  "updated_at": "2026-07-13T16:55:41Z"
+  "total": 206,
+  "returned": 206,
+  "updated_at": "2026-07-13T16:56:11Z"
 }
