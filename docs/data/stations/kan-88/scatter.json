@@ -32,9 +32,20 @@
       "day_of_week": "1",
       "hour": "12",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "La Bouche",
+      "title": "Be My Lover",
+      "text": "La Bouche — Be My Lover",
+      "recognized_at": "2026-07-13T12:55:17Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "12",
+      "date": "2026-07-13"
     }
   ],
-  "total": 3,
-  "returned": 3,
-  "updated_at": "2026-07-13T12:55:12Z"
+  "total": 4,
+  "returned": 4,
+  "updated_at": "2026-07-13T12:55:42Z"
 }

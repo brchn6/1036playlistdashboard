@@ -219,9 +219,31 @@
       "day_of_week": "1",
       "hour": "12",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "La Bouche",
+      "title": "Be My Lover",
+      "text": "La Bouche — Be My Lover",
+      "recognized_at": "2026-07-13T12:55:17Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "12",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Shlomo Artzi & Rita",
+      "title": "שניים",
+      "text": "Shlomo Artzi & Rita — שניים",
+      "recognized_at": "2026-07-13T12:55:22Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "12",
+      "date": "2026-07-13"
     }
   ],
-  "total": 20,
-  "returned": 20,
-  "updated_at": "2026-07-13T12:55:12Z"
+  "total": 22,
+  "returned": 22,
+  "updated_at": "2026-07-13T12:55:42Z"
 }

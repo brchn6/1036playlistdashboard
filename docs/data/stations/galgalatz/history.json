@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 21,
+      "station_id": 2,
+      "artist": "Shlomo Artzi & Rita",
+      "title": "שניים",
+      "text": "Shlomo Artzi & Rita — שניים",
+      "url": "https://www.shazam.com/track/280799668/%D7%A9%D7%A0%D7%99%D7%99%D7%9D",
+      "shazam_key": "280799668",
+      "recognized_at": "2026-07-13T12:55:22Z",
+      "created_at": "2026-07-13 12:55:42",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "id": 13,
       "station_id": 2,
       "artist": "Bruno Mars",
@@ -29,6 +43,6 @@
       "station_color": "#e36a6a"
     }
   ],
-  "total": 2,
-  "updated_at": "2026-07-13T12:55:12Z"
+  "total": 3,
+  "updated_at": "2026-07-13T12:55:42Z"
 }
