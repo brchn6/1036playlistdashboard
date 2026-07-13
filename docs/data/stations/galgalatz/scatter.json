@@ -494,9 +494,20 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Amir Benayoun",
+      "title": "Rak At",
+      "text": "Amir Benayoun — Rak At",
+      "recognized_at": "2026-07-13T17:26:40Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 45,
-  "returned": 45,
-  "updated_at": "2026-07-13T17:26:39Z"
+  "total": 46,
+  "returned": 46,
+  "updated_at": "2026-07-13T17:27:09Z"
 }
