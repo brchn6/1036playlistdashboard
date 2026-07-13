@@ -3,94 +3,129 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="description" content="1036 פלייליסט דשבורד — מעקב רב-תחנות"/>
-  <title>1036 פלייליסט דשבורד</title>
+  <meta name="description" content="1036 פלייליסט דשבורד — מעקב שירים אוטומטי ב-8 תחנות רדיו ישראליות"/>
+  <title>1036 פלייליסט דשבורד — 8 תחנות</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <style>
     :root {
-      --bg: #0f1220; --fg: #eaeaf0; --muted: #b6b6c8; --accent: #6ae3c1;
-      --card: #181b2e; --card-hover: #1f2440; --border: #262a4a;
-      --tab-bg: #131626; --tab-active: #1f2440;
+      --bg: #0b0e1a; --fg: #e8e8f0; --muted: #9898b0; --accent: #5ddbb5;
+      --card: #151829; --card-hover: #1c2038; --border: #252940;
+      --tab-bg: #101325; --tab-active: #1c2038;
       --font: system-ui,-apple-system,'Segoe UI','Helvetica Neue',sans-serif;
+      --radius: 12px; --radius-sm: 8px;
     }
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:var(--font);background:linear-gradient(180deg,#0f1220,#0a0c17);color:var(--fg);min-height:100vh;line-height:1.6}
-    .container{max-width:1060px;margin:0 auto;padding:16px}
-    header{text-align:center;padding:20px 0 12px;border-bottom:1px solid var(--border)}
-    header h1{font-size:1.5rem;font-weight:700}
-    header h1 .freq{color:var(--accent)}
-    header p{color:var(--muted);font-size:.85rem}
-    .status-bar{display:flex;align-items:center;justify-content:center;gap:8px;font-size:.78rem;color:var(--muted);flex-wrap:wrap;margin-top:6px}
-    .dot{width:8px;height:8px;border-radius:50%;display:inline-block;animation:pulse 2s infinite}
-    .dot.on{background:var(--accent);box-shadow:0 0 6px var(--accent)}
-    .dot.off{background:#e36a6a;box-shadow:0 0 6px #e36a6a;animation:none}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    body{font-family:var(--font);background:linear-gradient(160deg,#0b0e1a 0%,#080a14 100%);color:var(--fg);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
+    .container{max-width:1080px;margin:0 auto;padding:20px 16px}
+
+    /* Header */
+    header{text-align:center;padding:24px 0 14px}
+    header h1{font-size:1.5rem;font-weight:800;letter-spacing:-.3px}
+    header h1 .freq{color:var(--accent);background:rgba(93,219,181,.12);padding:0 6px;border-radius:4px}
+    header p{color:var(--muted);font-size:.82rem;margin-top:2px}
+    .status-bar{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.75rem;color:var(--muted);flex-wrap:wrap;margin-top:8px}
+    .dot{width:7px;height:7px;border-radius:50%;display:inline-block;animation:pulse 2s infinite}
+    .dot.on{background:var(--accent);box-shadow:0 0 8px var(--accent)}
+    .dot.off{background:#e05555;box-shadow:0 0 8px #e05555;animation:none}
+    .dot.stale{background:#d4b85a;box-shadow:0 0 8px #d4b85a}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+    .sep{opacity:.25;margin:0 4px}
 
     /* Station pills */
-    .station-pills{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;justify-content:center}
-    .pill{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:.8rem;font-weight:600;transition:all .2s;font-family:var(--font)}
-    .pill:hover{background:var(--card-hover)}
-    .pill.active{background:var(--tab-active);color:var(--fg);border-color:transparent}
-    .pill .indicator{display:inline-block;width:8px;height:8px;border-radius:50%;margin-left:6px;vertical-align:middle}
+    .station-pills{display:flex;gap:5px;margin-top:14px;flex-wrap:wrap;justify-content:center}
+    .pill{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:.78rem;font-weight:600;transition:all .2s;font-family:var(--font);display:flex;align-items:center;gap:5px}
+    .pill:hover{background:var(--card-hover);border-color:var(--muted)}
+    .pill.active{background:var(--tab-active);color:var(--fg);border-color:transparent;box-shadow:0 0 0 1px rgba(93,219,181,.3)}
+    .pill .dot-sm{width:7px;height:7px;border-radius:50%;display:inline-block}
 
     /* Tabs */
-    .tabs{display:flex;gap:2px;margin-top:14px;background:var(--tab-bg);border-radius:10px;padding:3px;overflow-x:auto}
-    .tab-btn{flex:1;padding:8px 12px;border:none;background:transparent;color:var(--muted);font-size:.8rem;font-weight:600;cursor:pointer;border-radius:7px;transition:all .2s;white-space:nowrap;font-family:var(--font)}
+    .tabs{display:flex;gap:2px;margin-top:14px;background:var(--tab-bg);border-radius:var(--radius);padding:3px;overflow-x:auto}
+    .tab-btn{flex:1;padding:9px 10px;border:none;background:transparent;color:var(--muted);font-size:.8rem;font-weight:600;cursor:pointer;border-radius:var(--radius-sm);transition:all .18s;white-space:nowrap;font-family:var(--font);min-width:0}
     .tab-btn:hover{background:var(--card-hover);color:var(--fg)}
     .tab-btn.active{background:var(--tab-active);color:var(--accent)}
-    .tab-content{display:none;margin-top:12px}
+    .tab-content{display:none;margin-top:14px;animation:fadeIn .25s}
     .tab-content.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
     /* Cards */
-    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px}
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    @media(max-width:640px){.grid-2{grid-template-columns:1fr}}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px;transition:border-color .2s}
+    .card-title{font-weight:700;font-size:.9rem;margin-bottom:10px;display:flex;align-items:center;gap:6px}
 
-    /* Now Playing per station */
-    .np-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
-    .np-card{border-radius:10px;padding:14px;text-align:center;position:relative;overflow:hidden}
-    .np-card .name{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;opacity:.8;margin-bottom:4px}
-    .np-card .artist{font-weight:700;font-size:1rem}
-    .np-card .title{font-size:.88rem;opacity:.8}
-    .np-card .time{font-size:.72rem;opacity:.5;margin-top:4px}
-    .np-card .empty{font-size:.85rem;opacity:.5;padding:10px 0}
+    /* Stats row */
+    .stat-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    .stat-card{flex:1;min-width:80px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;text-align:center}
+    .stat-card .v{font-size:1.15rem;font-weight:700;color:var(--accent)}
+    .stat-card .l{font-size:.66rem;color:var(--muted);margin-top:1px}
 
-    .stat-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-    .stat-card{flex:1;min-width:90px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;text-align:center}
-    .stat-card .v{font-size:1.2rem;font-weight:700;color:var(--accent)}
-    .stat-card .l{font-size:.68rem;color:var(--muted)}
+    /* NP Grid */
+    .np-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+    .np-card{border-radius:var(--radius);padding:16px 14px;text-align:center;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
+    .np-card:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+    .np-card .ns{font-size:.65rem;text-transform:uppercase;letter-spacing:1.2px;opacity:.7;margin-bottom:5px}
+    .np-card .ar{font-weight:700;font-size:1.05rem;margin-bottom:1px}
+    .np-card .tl{font-size:.88rem;opacity:.75}
+    .np-card .tm{font-size:.68rem;opacity:.45;margin-top:5px}
+    .np-card .empty{padding:16px 0;color:var(--muted);font-size:.85rem}
+    .np-card .np-actions{display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+    .np-card .np-btn{font-size:.7rem;padding:4px 12px;border-radius:14px;border:1px solid;text-decoration:none;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
+    .np-card .np-btn:hover{filter:brightness(1.2)}
 
-    .history-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px solid var(--border);font-size:.85rem}
+    /* History */
+    .history-item{display:flex;align-items:center;gap:10px;padding:7px 10px;border-bottom:1px solid rgba(37,41,64,.6);font-size:.84rem;transition:background .1s}
+    .history-item:hover{background:var(--card-hover);border-radius:4px}
     .history-item:last-child{border-bottom:none}
-    .history-item .sname{font-size:.7rem;opacity:.6;width:80px;flex-shrink:0}
-    .history-item .info{flex:1;min-width:0}
-    .history-item .info .ar{font-weight:600}
-    .history-item .info .ti{opacity:.7;font-size:.8rem}
-    .history-item .ago{font-size:.7rem;opacity:.5;flex-shrink:0}
+    .history-item .hs{font-size:.66rem;opacity:.55;width:75px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .history-item .hi{flex:1;min-width:0}
+    .history-item .hi .ha{font-weight:600}
+    .history-item .hi .ht{opacity:.65;font-size:.78rem}
+    .history-item .hago{font-size:.66rem;opacity:.5;flex-shrink:0;direction:ltr}
+    .cross-station .hs{width:auto;min-width:28px;text-align:center;font-weight:700}
 
-    .chart-box{position:relative;width:100%;max-height:350px}
+    /* Chart */
+    .chart-wrap{position:relative;width:100%;max-height:340px}
+    .chart-wrap canvas{width:100%!important}
+    #scatterLegend{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;font-size:.75rem}
+    #scatterLegend span{display:inline-flex;align-items:center;gap:4px}
 
-    footer{text-align:center;padding:24px 0 12px;color:var(--muted);font-size:.75rem;border-top:1px solid var(--border);margin-top:16px}
-    footer a{color:var(--accent);text-decoration:none}
+    /* Footer */
+    footer{margin-top:28px;padding:20px 0 14px;border-top:1px solid var(--border);text-align:center}
+    footer .credits{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 16px;font-size:.72rem;color:var(--muted);margin-bottom:6px}
+    footer a{color:var(--accent);text-decoration:none;transition:opacity .15s}
+    footer a:hover{opacity:.8;text-decoration:underline}
+    footer .stations-attr{display:flex;flex-wrap:wrap;justify-content:center;gap:3px 12px;font-size:.68rem;color:rgba(152,152,176,.55);margin-top:4px}
+    footer .tag{font-size:.6rem;padding:1px 6px;border-radius:4px;background:rgba(93,219,181,.08);color:var(--accent);margin:0 2px}
+
+    @media(max-width:640px){
+      .container{padding:12px 10px}
+      header h1{font-size:1.2rem}
+      .np-grid{grid-template-columns:1fr 1fr}
+      .tabs{overflow-x:auto}
+      .tab-btn{font-size:.72rem;padding:7px 6px}
+      .stat-card{min-width:60px;padding:8px}
+    }
+    @media(max-width:400px){
+      .np-grid{grid-template-columns:1fr}
+      .station-pills{gap:4px}
+      .pill{font-size:.7rem;padding:4px 10px}
+    }
   </style>
 </head>
 <body>
 <div class=container>
 <header>
   <h1>🎧 <span class=freq>1036</span> פלייליסט דשבורד</h1>
-  <p>מעקב אוטומטי — 7 תחנות רדיו</p>
+  <p>מעקב שירים אוטומטי ב־<span id=stationCount>8</span> תחנות רדיו ישראליות</p>
   <div class=status-bar>
     <span class="dot off" id=statusDot></span>
     <span id=statusText>טוען...</span>
-    <span style="margin:0 4px">·</span>
+    <span class=sep>·</span>
+    <span>עדכון אחרון:</span>
     <span id=lastUpdate>-</span>
   </div>
 </header>
 
-<!-- Station pills -->
 <div class=station-pills id=pills></div>
 
-<!-- Sub-tabs -->
 <div class=tabs id=tabBar>
   <button class="tab-btn active" data-tab=np>🎵 עכשיו</button>
   <button class=tab-btn data-tab=history>📋 היסטוריה</button>
@@ -105,47 +140,77 @@
 </div>
 
 <div class=tab-content id=tab-history>
-  <div class=card><div style="font-weight:600;margin-bottom:8px">היסטוריית השמעה</div><div id=historyList>טוען...</div></div>
+  <div class=card><div class=card-title>📋 היסטוריית השמעה</div><div id=historyList>טוען...</div></div>
 </div>
 
 <div class=tab-content id=tab-hype>
-  <div class=card><div style="font-weight:600;margin-bottom:8px">🔥 השירים הכי מושמעים</div><div id=hypeList>טוען...</div></div>
+  <div class=card><div class=card-title>🔥 השירים הכי מושמעים</div><div id=hypeList>טוען...</div></div>
 </div>
 
 <div class=tab-content id=tab-scatter>
   <div class=card>
-    <div style="font-weight:600;margin-bottom:6px">📊 פיזור שירים לאורך זמן</div>
-    <div style="font-size:.78rem;color:var(--muted);margin-bottom:8px">ציר X = שעה, ציר Y = תאריך. צבע = תחנה.</div>
-    <div class=chart-box><canvas id=scatterChart></canvas></div>
-    <div id=scatterLegend style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;font-size:.78rem"></div>
+    <div class=card-title>📊 פיזור שירים לאורך זמן</div>
+    <div style="font-size:.76rem;color:var(--muted);margin-bottom:8px">ציר X = שעה ביום · ציר Y = תאריך · צבע = תחנה</div>
+    <div class=chart-wrap><canvas id=scatterChart></canvas></div>
+    <div id=scatterLegend></div>
   </div>
 </div>
 
 <div class=tab-content id=tab-stats>
   <div class=stat-row id=statsDetailRow></div>
-  <div class=card><div style="font-weight:600;margin-bottom:6px">שירים לפי תאריך</div><div class=chart-box><canvas id=dateChart></canvas></div></div>
-  <div class=card><div style="font-weight:600;margin-bottom:6px">האמנים המושמעים ביותר</div><div id=topArtistsList></div></div>
-  <div class=card><div style="font-weight:600;margin-bottom:6px">🔄 תזמון צולב — שירים שמושמעים ביותר מתחנה אחת</div><div id=crossStationList>טוען...</div></div>
+  <div class=card><div class=card-title>📈 שירים לפי תאריך</div><div class=chart-wrap><canvas id=dateChart></canvas></div></div>
+  <div class=card><div class=card-title>🎤 האמנים המושמעים ביותר</div><div id=topArtistsList></div></div>
+  <div class=card><div class=card-title>🔄 תזמון צולב — שירים שמושמעים ביותר מתחנה אחת</div><div id=crossStationList>טוען...</div></div>
 </div>
 
 <footer>
-  <p>מופעל על ידי <a href=https://github.com/dotX12/shazamio target=_blank>ShazamIO</a> · <a href=https://github.com/brchn6/1036playlistdashboard target=_blank>קוד מקור</a></p>
-  <p style="margin-top:2px">🤖 מתעדכן כל 30 שניות</p>
+  <div class=credits>
+    <span>🤖 <a href=https://github.com/dotX12/shazamio target=_blank>ShazamIO</a> מזהה שירים</span>
+    <span>📡 <a href=https://github.com/brchn6/shazamio-proxy target=_blank>shazamio-proxy</a> לוכד שמע</span>
+    <span>⚡ <a href=https://github.com/brchn6/1036playlistdashboard target=_blank>1036playlistdashboard</a> קוד מקור</span>
+    <span>💾 <span class=tag>45 ימים</span> שמירת היסטוריה</span>
+  </div>
+  <div class=stations-attr>
+    <span>תחנות:</span>
+    <a href=https://1036kh.com target=_blank>103FM</a>
+    <a href=https://glglz.co.il target=_blank>גלגלצ</a>
+    <a href=https://99fm.co.il target=_blank>99FM</a>
+    <a href=https://102fm.co.il target=_blank>102FM</a>
+    <a href=https://www.kan.org.il/radio/88.aspx target=_blank>כאן 88</a>
+    <a href=https://www.kan.org.il/radio/bet.aspx target=_blank>כאן ב</a>
+    <span>קול הגליל</span>
+    <span>רדיו דרום</span>
+  </div>
+  <div style="font-size:.65rem;color:rgba(152,152,176,.35);margin-top:6px">מתעדכן כל 30 שניות · נתונים נשמרים 45 יום</div>
 </footer>
 </div>
 
 <script>
-const POLL=30000;
-const BASE='data/';
-let stations=[], activeStation=null, scatterChart=null, dateChart=null;
+const POLL=30000,BASE='data/';
+let stations=[],activeStation=null,scatterChart=null,dateChart=null;
 
-// Tab switching
+const STATION_WEBSITES={
+  "kol-hashfela":"https://1036kh.com","galgalatz":"https://glglz.co.il",
+  "99fm":"https://99fm.co.il","radio-tlv":"https://102fm.co.il",
+  "kan-88":"https://www.kan.org.il/radio/88.aspx","kan-bet":"https://www.kan.org.il/radio/bet.aspx",
+};
+const STATION_STREAMS={
+  "kol-hashfela":"https://radio.streamgates.net/stream/1036kh",
+  "galgalatz":"https://glzwizzlv.bynetcdn.com/glglz_mp3",
+  "99fm":"https://99.livecdn.biz/99fm_aac",
+  "radio-tlv":"https://cdn88.mediacast.co.il/102-tlv-live/102fm_aac/icecast.audio",
+  "kan-88":"https://27953.live.streamtheworld.com/KAN_88.mp3",
+  "kan-bet":"https://27913.live.streamtheworld.com/KAN_BET.mp3",
+  "galil":"https://radio.streamgates.net/stream/galil",
+  "radio-darom":"https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio",
+};
+
 document.getElementById('tabBar').onclick=e=>{
   const b=e.target.closest('.tab-btn');if(!b)return;
   document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
   b.classList.add('active');
-  const t=document.getElementById('tab-'+b.dataset.tab);t.classList.add('active');
+  document.getElementById('tab-'+b.dataset.tab).classList.add('active');
   if(scatterChart&&b.dataset.tab==='scatter')scatterChart.resize();
   if(dateChart&&b.dataset.tab==='stats')dateChart.resize();
 };
@@ -157,175 +222,157 @@ function timeAgo(s){
   const d=new Date(s.endsWith('Z')?s:s+'Z');
   if(isNaN(d))return s;
   const df=Math.floor((Date.now()-d)/1000);
-  if(df<5)return'עכשיו';if(df<60)return'לפני '+df+'s';
+  if(df<5)return'עכשיו';if(df<60)return'לפני '+df+'ש';
   const m=Math.floor(df/60);if(m<60)return'לפני '+m+'ד';
-  return d.toLocaleString('he-IL',{hour:'2-digit',minute:'2-digit'});
+  const h=Math.floor(m/60);if(h<24)return'לפני '+h+'ש';
+  return d.toLocaleDateString('he-IL',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
 }
 
-function loadJSON(url){return fetch(url+'?_='+Date.now()).then(r=>r.ok?r.json():null)}
+function loadJSON(u){return fetch(u+'?_='+Date.now()).then(r=>r.ok?r.json():null)}
 
-// Station pills
 function renderPills(cur){
   const el=document.getElementById('pills');
-  const allCount=cur?cur.length:0;
-  let h='<button class="pill active" data-slug="">🇮🇜 הכל <span style=font-size:.72rem;opacity:.6>('+allCount+')</span></button>';
+  const c=cur?cur.length:0;
+  let h='<button class="pill active" data-slug="">🇮🇱 הכל <span style=font-size:.68rem;opacity:.5>('+c+')</span></button>';
   stations.forEach(s=>{
-    const has=cur?cur.find(t=>t.station_slug===s.slug):null;
-    h+='<button class="pill" data-slug="'+s.slug+'"><span class=indicator style="background:'+s.color+'"></span> '+esc(s.name)+'</button>';
+    h+='<button class="pill" data-slug="'+s.slug+'"><span class=dot-sm style=background:'+s.color+'></span>'+esc(s.name)+'</button>';
   });
   el.innerHTML=h;
   el.onclick=e=>{
     const b=e.target.closest('.pill');if(!b)return;
     document.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    activeStation=b.dataset.slug||null;
+    b.classList.add('active');activeStation=b.dataset.slug||null;
     fetchAll();
   };
 }
 
-
-
-// Now Playing grid
 function renderNowPlaying(cur){
   const el=document.getElementById('npGrid');
   const data=activeStation?(cur||[]).filter(t=>t.station_slug===activeStation):cur||[];
-  if(!data||data.length===0){
-    el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">📻 ממתין לנתונים...</div>';
-    return;
+  if(!data||!data.length){
+    el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--muted)"><div style=font-size:2.2rem;margin-bottom:8px>📻</div><div>ממתין לנתונים...</div></div>';return;
   }
   el.innerHTML=data.map(t=>{
-    const c=t.station_color||'#6ae3c1';
-    return '<div class="np-card card" style="border-color:'+c+'40;background:linear-gradient(180deg,'+c+'15,var(--card))">'+
-      '<div class=name style=color:'+c+'>'+esc(t.station_name||'')+'</div>'+
-      '<div class=artist>'+esc(t.artist||'')+'</div>'+
-      '<div class=title>'+esc(t.title||'')+'</div>'+
-      '<div class=time>'+timeAgo(t.recognized_at)+'</div>'+
-      (t.url?'<a href="'+esc(t.url)+'" target=_blank style="font-size:.72rem;color:'+c+'">🔍 Shazam</a>':'')+
+    const c=t.station_color||'#5ddbb5',slug=t.station_slug||'';
+    const web=STATION_WEBSITES[slug],stream=STATION_STREAMS[slug];
+    const listen=web?`<a href="${web}" target=_blank class=np-btn style="color:${c};border-color:${c}33" title="האזנה באתר">🔊 אתר</a>`:'';
+    const direct=stream?`<a href="${stream}" target=_blank class=np-btn style="color:${c};border-color:${c}33" title="האזנה ישירה">📡 סטרים</a>`:'';
+    const shazam=t.url?`<a href="${esc(t.url)}" target=_blank class=np-btn style="color:${c};border-color:${c}33">🔍 Shazam</a>`:'';
+    return '<div class="np-card card" style="border-color:'+c+'55;background:linear-gradient(180deg,'+c+'18,var(--card))">'+
+      '<div class=ns style=color:'+c+'>'+esc(t.station_name||'')+'</div>'+
+      '<div class=ar>'+esc(t.artist||'')+'</div>'+
+      '<div class=tl>'+esc(t.title||'')+'</div>'+
+      '<div class=tm>'+timeAgo(t.recognized_at)+'</div>'+
+      '<div class=np-actions>'+listen+direct+shazam+'</div>'+
     '</div>';
   }).join('');
 }
 
-// Stats row
-function renderStats(stats){
-  if(!stats)return;
+function renderStats(s){
+  if(!s)return;
   document.getElementById('statsRow').innerHTML=
-    '<div class=stat-card><div class=v>'+(stats.total_tracks||0)+'</div><div class=l>סה"כ שירים</div></div>'+
-    '<div class=stat-card><div class=v>'+(stats.unique_tracks||0)+'</div><div class=l>שירים שונים</div></div>'+
-    '<div class=stat-card><div class=v>'+(stats.unique_artists||0)+'</div><div class=l>אמנים</div></div>';
+    '<div class=stat-card><div class=v>'+(s.total_tracks||0)+'</div><div class=l>סה"כ שירים</div></div>'+
+    '<div class=stat-card><div class=v>'+(s.unique_tracks||0)+'</div><div class=l>שירים שונים</div></div>'+
+    '<div class=stat-card><div class=v>'+(s.unique_artists||0)+'</div><div class=l>אמנים</div></div>';
 }
 
-// History
 function renderHistory(hist){
   const el=document.getElementById('historyList');
-  if(!hist||!hist.history){el.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים</div>';return}
-  const data=hist.history;
-  if(!data.length){el.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים לתחנה זו</div>';return}
-  el.innerHTML='<div style=font-size:.78rem;color:var(--muted);margin-bottom:6px>'+data.length+'/'+hist.total+' שירים</div>'+
-    data.slice(0,200).map(t=>
-      '<div class=history-item>'+
-        '<div class=sname style=color:'+(t.station_color||'#666')+'>'+esc(t.station_name||'')+'</div>'+
-        '<div class=info><div class=ar>'+esc(t.artist||'')+'</div><div class=ti>'+esc(t.title||'')+'</div></div>'+
-        '<div class=ago>'+timeAgo(t.recognized_at)+'</div>'+
-      '</div>'
-    ).join('');
-}
-
-// Hype
-function renderHype(hype){
-  const el=document.getElementById('hypeList');
-  if(!hype||!hype.tracks){el.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים</div>';return}
-  const data=hype.tracks;
-  if(!data.length){el.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים</div>';return}
-  el.innerHTML=data.slice(0,30).map((t,i)=>
+  if(!hist||!hist.history){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>אין נתונים</div>';return}
+  const d=hist.history;
+  if(!d.length){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>אין נתונים לתחנה זו</div>';return}
+  el.innerHTML=d.slice(0,150).map(t=>
     '<div class=history-item>'+
-      '<div style=width:24px;font-weight:700;color:var(--muted);font-size:.8rem>'+(i+1)+'</div>'+
-      '<div class=info><div class=ar>'+esc(t.artist||'')+'</div><div class=ti>'+esc(t.title||'')+'</div></div>'+
-      '<div style=font-size:.85rem;font-weight:700;color:var(--accent)>'+t.play_count+'×</div>'+
+      '<div class=hs style=color:'+(t.station_color||'#666')+'>'+esc(t.station_name||'')+'</div>'+
+      '<div class=hi><div class=ha>'+esc(t.artist||'')+'</div><div class=ht>'+esc(t.title||'')+'</div></div>'+
+      '<div class=hago>'+timeAgo(t.recognized_at)+'</div>'+
     '</div>'
   ).join('');
 }
 
-// Scatter
+function renderHype(hype){
+  const el=document.getElementById('hypeList');
+  if(!hype||!hype.tracks){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>אין נתונים</div>';return}
+  const d=hype.tracks;
+  if(!d.length){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>אין נתונים</div>';return}
+  el.innerHTML=d.slice(0,30).map((t,i)=>
+    '<div class=history-item>'+
+      '<div style=width:28px;font-weight:700;color:var(--muted);font-size:.82rem>'+(i+1)+'</div>'+
+      '<div class=hi><div class=ha>'+esc(t.artist||'')+'</div><div class=ht>'+esc(t.title||'')+'</div></div>'+
+      '<div style=font-size:.82rem;font-weight:700;color:var(--accent);direction:ltr>'+t.play_count+'×</div>'+
+    '</div>'
+  ).join('');
+}
+
 function renderScatter(scatter){
   const el=document.getElementById('scatterChart');
   if(!scatter||!scatter.points||!scatter.points.length){
-    el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>אין נתונים</div>';
-    return;
+    el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>אין נתונים</div>';return;
   }
   let pts=scatter.points;
-  if(activeStation) pts=pts.filter(p=>p.station_slug===activeStation);
+  if(activeStation)pts=pts.filter(p=>p.station_slug===activeStation);
   if(!pts.length){el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>אין נתונים לתחנה זו</div>';return}
-
   const ds={};
   pts.forEach(p=>{
     const d=new Date(p.recognized_at.endsWith('Z')?p.recognized_at:p.recognized_at+'Z');
     if(isNaN(d))return;
     const hour=parseInt(p.hour)+(parseInt(p.hour)<6?24:0);
-    const key=p.station_slug||'unknown';
-    if(!ds[key])ds[key]={label:p.station_name||key,data:[],bg:p.station_color||'#6ae3c1',border:p.station_color||'#6ae3c1'};
+    const key=p.station_slug||'unk';
+    if(!ds[key])ds[key]={label:p.station_name||key,data:[],bg:p.station_color||'#5ddbb5',border:p.station_color||'#5ddbb5'};
     ds[key].data.push({x:hour,y:d.getTime(),title:p.title,artist:p.artist,time:d.toLocaleString('he-IL'),date:d.toLocaleDateString('he-IL')});
   });
-
   if(scatterChart)scatterChart.destroy();
   const ctx=el.getContext('2d');
   scatterChart=new Chart(ctx,{
-    type:'scatter',
-    data:{datasets:Object.values(ds)},
+    type:'scatter',data:{datasets:Object.values(ds)},
     options:{
       responsive:true,maintainAspectRatio:false,animation:false,
-      plugins:{
-        legend:{display:false},
-        tooltip:{callbacks:{label:ctx=>{const r=ctx.raw;return r.artist+' — '+r.title+' '+r.date+' '+r.time}}}
-      },
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const r=ctx.raw;return r.artist+' — '+r.title+' '+r.date+' '+r.time}}}},
       scales:{
-        x:{min:0,max:30,ticks:{stepSize:2,color:'#b6b6c8',callback:v=>v>23?(v-24)+':00':v+':00'},grid:{color:'#262a4a'}},
-        y:{ticks:{color:'#b6b6c8',callback:v=>new Date(v).toLocaleDateString('he-IL')},grid:{color:'#262a4a'}}
+        x:{min:0,max:30,ticks:{stepSize:2,color:'#9898b0',callback:v=>v>23?(v-24)+':00':v+':00'},grid:{color:'#252940'}},
+        y:{ticks:{color:'#9898b0',callback:v=>new Date(v).toLocaleDateString('he-IL')},grid:{color:'#252940'}}
       }
     }
   });
-
   const legend=document.getElementById('scatterLegend');
   legend.innerHTML=Object.entries(ds).slice(0,15).map(([k,v])=>'<span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+v.bg+';margin-left:4px"></span>'+esc(v.label)+'</span>').join('');
 }
 
-// Date chart
-function renderDateChart(stats){
+function renderDateChart(s){
   const el=document.getElementById('dateChart');
   if(dateChart)dateChart.destroy();
-  if(!stats||!stats.tracks_by_date||!stats.tracks_by_date.length){
-    el.parentElement.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים</div>';return
+  if(!s||!s.tracks_by_date||!s.tracks_by_date.length){
+    el.parentElement.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים</div>';return;
   }
-  const dates=activeStation?stats.tracks_by_date:stats.tracks_by_date;
+  const dates=s.tracks_by_date;
   const ctx=el.getContext('2d');
   dateChart=new Chart(ctx,{
     type:'bar',
-    data:{labels:dates.map(d=>d.date),datasets:[{label:'שירים',data:dates.map(d=>d.count),backgroundColor:'#6ae3c180',borderColor:'#6ae3c1',borderWidth:1}]},
+    data:{labels:dates.map(d=>d.date),datasets:[{label:'שירים',data:dates.map(d=>d.count),backgroundColor:'#5ddbb580',borderColor:'#5ddbb5',borderWidth:1,borderRadius:3}]},
     options:{
       responsive:true,maintainAspectRatio:false,animation:false,
       plugins:{legend:{display:false}},
-      scales:{x:{ticks:{color:'#b6b6c8',maxRotation:45},grid:{color:'#262a4a'}},y:{beginAtZero:true,ticks:{color:'#b6b6c8',stepSize:1},grid:{color:'#262a4a'}}}
+      scales:{x:{ticks:{color:'#9898b0',maxRotation:45},grid:{color:'#252940'}},y:{beginAtZero:true,ticks:{color:'#9898b0',stepSize:1},grid:{color:'#252940'}}}
     }
   });
 }
 
 function renderCrossStation(data){
   const el=document.getElementById('crossStationList');
-  if(!data||!data.tracks||!data.tracks.length){
-    el.innerHTML='<div style=text-align:center;padding:16px;color:var(--muted)>\u05e2\u05d3\u05d9\u05d9\u05df \u05d0\u05d9\u05df \u05e9\u05d9\u05e8\u05d9\u05dd \u05d7\u05d5\u05e6\u05d9\u05dd</div>';return;
-  }
+  if(!data||!data.tracks||!data.tracks.length){el.innerHTML='<div style=text-align:center;padding:16px;color:var(--muted)>עדיין אין שירים חוצים</div>';return;}
   el.innerHTML=data.tracks.map((t,i)=>
-    '<div class=history-item>'+
-      '<div style=width:28px;font-weight:700;color:var(--accent);font-size:.85rem>'+t.station_count+'\u00d7</div>'+
-      '<div class=info><div class=ar>'+esc(t.artist)+'</div><div class=ti>'+esc(t.title)+'</div></div>'+
-      '<div style=font-size:.72rem;color:var(--muted);text-align:left;direction:ltr>'+esc(t.station_names||'')+'</div>'+
+    '<div class=history-item cross-station>'+
+      '<div class=hs style=color:var(--accent);font-size:.85rem>'+t.station_count+'×</div>'+
+      '<div class=hi><div class=ha>'+esc(t.artist)+'</div><div class=ht>'+esc(t.title)+'</div></div>'+
+      '<div style=font-size:.68rem;color:var(--muted);text-align:left;direction:ltr;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap>'+esc(t.station_names||'')+'</div>'+
     '</div>'
   ).join('');
 }
 
 function renderTopArtists(hist){
   const el=document.getElementById('topArtistsList');
-  if(!hist||!hist.history){el.innerHTML='<div style=padding:12px;color:var(--muted)>אין נתונים</div>';return}
-  const data=hist.history;
+  if(!hist||!hist.history){el.innerHTML='<div style=padding:12px;color:var(--muted)>אין נתונים</div>';return;}
+  const data=hist.history||[];
   const cnt={};
   data.forEach(t=>{
     const a=(t.artist||'?').toLowerCase();
@@ -335,46 +382,29 @@ function renderTopArtists(hist){
   const sorted=Object.values(cnt).sort((a,b)=>b.count-a.count).slice(0,10);
   el.innerHTML=sorted.map((t,i)=>
     '<div class=history-item>'+
-      '<div style=width:24px;font-weight:700;color:var(--muted);font-size:.8rem>#'+(i+1)+'</div>'+
-      '<div class=info><div class=ar>'+esc(t.artist)+'</div><div style=font-size:.72rem;color:var(--muted)>'+t.tracks.size+' שירים</div></div>'+
-      '<div style=font-size:.85rem;font-weight:700;color:var(--accent)>'+t.count+'×</div>'+
+      '<div style=width:28px;font-weight:700;color:var(--muted);font-size:.8rem>#'+(i+1)+'</div>'+
+      '<div class=hi><div class=ha>'+esc(t.artist)+'</div><div style=font-size:.68rem;color:var(--muted)>'+t.tracks.size+' שירים</div></div>'+
+      '<div style=font-size:.82rem;font-weight:700;color:var(--accent)>'+t.count+'×</div>'+
     '</div>'
   ).join('');
 }
 
-// Multi-fetch
 async function fetchAll(){
   try{
-    // Always fetch: stations, current, stats, scatter, cross-station
     const[stationsJSON,cur,scatter,stat,cross]=await Promise.all([
-      loadJSON(BASE+'stations.json'),
-      loadJSON(BASE+'current.json'),
-      loadJSON(BASE+'scatter.json'),
-      loadJSON(BASE+'stats.json'),
+      loadJSON(BASE+'stations.json'),loadJSON(BASE+'current.json'),
+      loadJSON(BASE+'scatter.json'),loadJSON(BASE+'stats.json'),
       loadJSON(BASE+'cross_station.json'),
     ]);
     if(stationsJSON)stations=stationsJSON;
-    renderPills(cur);
-    renderNowPlaying(cur);
-    renderStats(stat);
-    renderScatter(scatter);
-    renderDateChart(stat);
-    renderCrossStation(cross);
+    document.getElementById('stationCount').textContent=stations.length;
+    renderPills(cur);renderNowPlaying(cur);renderStats(stat);
+    renderScatter(scatter);renderDateChart(stat);renderCrossStation(cross);
 
-    // Fetch history + hype — use per-station URL when filtered
-    let histUrl=BASE+'history.json';
-    let hypeUrl=BASE+'hype.json';
-    if(activeStation){
-      histUrl=BASE+'stations/'+activeStation+'/history.json';
-      hypeUrl=BASE+'stations/'+activeStation+'/hype.json';
-    }
-    const[hist,hype]=await Promise.all([
-      loadJSON(histUrl),
-      loadJSON(hypeUrl),
-    ]);
-    renderHistory(hist);
-    renderHype(hype);
-    renderTopArtists(hist||{history:[]});
+    let histUrl=BASE+'history.json',hypeUrl=BASE+'hype.json';
+    if(activeStation){histUrl=BASE+'stations/'+activeStation+'/history.json';hypeUrl=BASE+'stations/'+activeStation+'/hype.json';}
+    const[hist,hype]=await Promise.all([loadJSON(histUrl),loadJSON(hypeUrl)]);
+    renderHistory(hist);renderHype(hype);renderTopArtists(hist||{history:[]});
 
     document.getElementById('statusDot').className='dot on';
     document.getElementById('statusText').textContent='מחובר';
@@ -385,9 +415,7 @@ async function fetchAll(){
     document.getElementById('statusText').textContent='שגיאה';
   }
 }
-
-fetchAll();
-setInterval(fetchAll,POLL);
+fetchAll();setInterval(fetchAll,POLL);
 </script>
 </body>
 </html>
