@@ -87,7 +87,7 @@ def git_commit_and_push(message: str) -> None:
         env = load_env()
         token = env.get("GIT_TOKEN") or os.environ.get("GIT_TOKEN", "")
         if token:
-            repo_url = f"https://brchn6:{token}@github.com/brchn6/1036playlistdashboard.git"
+            repo_url = f"https://brchn6:{token}@github.com/brchn6/radio-playlist-dashboard.git"
             subprocess.run(
                 ["git", "push", repo_url, "main"],
                 check=True, capture_output=True, timeout=60,
