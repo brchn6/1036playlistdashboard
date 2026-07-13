@@ -137,6 +137,14 @@
       "last_seen": "2026-07-13T14:08:01Z"
     },
     {
+      "artist": "Coldplay & BTS",
+      "title": "My Universe",
+      "text": "Coldplay & BTS — My Universe",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:28:28Z",
+      "last_seen": "2026-07-13T14:28:28Z"
+    },
+    {
       "artist": "Corinne Allal",
       "title": "ארץ קטנה עם שפם",
       "text": "Corinne Allal — ארץ קטנה עם שפם",
@@ -561,5 +569,5 @@
       "last_seen": "2026-07-13T14:05:04Z"
     }
   ],
-  "updated_at": "2026-07-13T14:27:49Z"
+  "updated_at": "2026-07-13T14:28:45Z"
 }

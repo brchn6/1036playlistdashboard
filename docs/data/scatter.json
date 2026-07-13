@@ -813,9 +813,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Coldplay & BTS",
+      "title": "My Universe",
+      "text": "Coldplay & BTS — My Universe",
+      "recognized_at": "2026-07-13T14:28:28Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 74,
-  "returned": 74,
-  "updated_at": "2026-07-13T14:27:49Z"
+  "total": 75,
+  "returned": 75,
+  "updated_at": "2026-07-13T14:28:45Z"
 }
