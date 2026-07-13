@@ -1,5 +1,9 @@
 # 1036 Playlist Dashboard — Agent Handoff
 
+## 🚫 ABSOLUTE RULE: NEVER DELETE USER DATA
+**Never run DELETE, DROP, TRUNCATE, or any destructive operation on the
+database without explicit user confirmation. This rule is ABSOLUTE.**
+
 ## Quick start
 ```bash
 cd ~/dev/1036playlistdashboard
