@@ -65,6 +65,14 @@
       "last_seen": "2026-07-13T13:50:05Z"
     },
     {
+      "artist": "Amy Macdonald",
+      "title": "This Is The Life",
+      "text": "Amy Macdonald — This Is The Life",
+      "play_count": 1,
+      "first_seen": "2026-07-13T15:45:40Z",
+      "last_seen": "2026-07-13T15:45:40Z"
+    },
+    {
       "artist": "Anat Moshkovski",
       "title": "דינה",
       "text": "Anat Moshkovski — דינה",
@@ -167,6 +175,14 @@
       "play_count": 1,
       "first_seen": "2026-07-13T14:57:18Z",
       "last_seen": "2026-07-13T14:57:18Z"
+    },
+    {
+      "artist": "Bruno Mars",
+      "title": "Risk It All",
+      "text": "Bruno Mars — Risk It All",
+      "play_count": 1,
+      "first_seen": "2026-07-13T15:45:29Z",
+      "last_seen": "2026-07-13T15:45:29Z"
     },
     {
       "artist": "Bryan Adams",
@@ -777,29 +793,13 @@
       "last_seen": "2026-07-13T14:44:59Z"
     },
     {
-      "artist": "Phil Collins",
-      "title": "Two Hearts",
-      "text": "Phil Collins — Two Hearts",
+      "artist": "Peter Schilling",
+      "title": "Major Tom (Völlig losgelöst)",
+      "text": "Peter Schilling — Major Tom (Völlig losgelöst)",
       "play_count": 1,
-      "first_seen": "2026-07-13T14:27:27Z",
-      "last_seen": "2026-07-13T14:27:27Z"
-    },
-    {
-      "artist": "Pitbull",
-      "title": "We Are One (Ole Ola) [feat. Jennifer Lopez & Claudia Leitte] [The Official 2014 FIFA World Cup Song]",
-      "text": "Pitbull — We Are One (Ole Ola) [feat. Jennifer Lopez & Claudia Leitte] [The Official 2014 FIFA World Cup Song]",
-      "play_count": 1,
-      "first_seen": "2026-07-13T15:29:02Z",
-      "last_seen": "2026-07-13T15:29:02Z"
-    },
-    {
-      "artist": "Pretenders",
-      "title": "Don't Get Me Wrong",
-      "text": "Pretenders — Don't Get Me Wrong",
-      "play_count": 1,
-      "first_seen": "2026-07-13T14:49:54Z",
-      "last_seen": "2026-07-13T14:49:54Z"
+      "first_seen": "2026-07-13T15:45:33Z",
+      "last_seen": "2026-07-13T15:45:33Z"
     }
   ],
-  "updated_at": "2026-07-13T15:39:11Z"
+  "updated_at": "2026-07-13T15:45:52Z"
 }

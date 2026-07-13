@@ -35,4 +35,4 @@ python scripts/generate_data.py         # Regenerate JSON
 ```
 
 ## Memory file
-Full project memory at `~/.memory/1036-playlist-dashboard.md` — READ BEFORE making changes.
+Full project memory at `~/.memory/radio-playlist-dashboard.md` — READ BEFORE making changes.

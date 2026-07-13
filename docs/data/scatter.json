@@ -1748,9 +1748,53 @@
       "day_of_week": "1",
       "hour": "15",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Teapacks",
+      "title": "שלוש בלילה",
+      "text": "Teapacks — שלוש בלילה",
+      "recognized_at": "2026-07-13T15:44:57Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "15",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Bruno Mars",
+      "title": "Risk It All",
+      "text": "Bruno Mars — Risk It All",
+      "recognized_at": "2026-07-13T15:45:29Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "15",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Peter Schilling",
+      "title": "Major Tom (Völlig losgelöst)",
+      "text": "Peter Schilling — Major Tom (Völlig losgelöst)",
+      "recognized_at": "2026-07-13T15:45:33Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "15",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Amy Macdonald",
+      "title": "This Is The Life",
+      "text": "Amy Macdonald — This Is The Life",
+      "recognized_at": "2026-07-13T15:45:40Z",
+      "station_slug": "radio-tlv",
+      "station_color": "#e3c86a",
+      "day_of_week": "1",
+      "hour": "15",
+      "date": "2026-07-13"
     }
   ],
-  "total": 159,
-  "returned": 159,
-  "updated_at": "2026-07-13T15:39:11Z"
+  "total": 163,
+  "returned": 163,
+  "updated_at": "2026-07-13T15:45:52Z"
 }

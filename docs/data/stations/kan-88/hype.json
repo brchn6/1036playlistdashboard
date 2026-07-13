@@ -232,6 +232,17 @@
       "station_color": "#c86ae3"
     },
     {
+      "artist": "Peter Schilling",
+      "title": "Major Tom (Völlig losgelöst)",
+      "text": "Peter Schilling — Major Tom (Völlig losgelöst)",
+      "play_count": 1,
+      "first_seen": "2026-07-13T15:45:33Z",
+      "last_seen": "2026-07-13T15:45:33Z",
+      "station_slug": "kan-88",
+      "station_name": "כאן 88",
+      "station_color": "#c86ae3"
+    },
+    {
       "artist": "Robin Thicke",
       "title": "Blurred Lines (feat. T.I. & Pharrell)",
       "text": "Robin Thicke — Blurred Lines (feat. T.I. & Pharrell)",
@@ -331,5 +342,5 @@
       "station_color": "#c86ae3"
     }
   ],
-  "updated_at": "2026-07-13T15:39:11Z"
+  "updated_at": "2026-07-13T15:45:52Z"
 }
