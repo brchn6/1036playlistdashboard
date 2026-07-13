@@ -149,6 +149,41 @@ def build_heatmap(tracks: list[dict[str, Any]], slugs: list[str], now: datetime)
     }
 
 
+def build_non_music(db: PlaylistDB, slugs: list[str], now: datetime) -> dict[str, Any] | None:
+    """Minutes of talk/commercials/unrecognized audio per station per IL hour (7d).
+    Returns None when the non-music agent hasn't logged anything yet."""
+    intervals = db.get_non_music_intervals(days=HEATMAP_STATION_DAYS)
+    if not intervals:
+        return None
+    station_hour = {s: [0.0] * 24 for s in slugs}
+    totals: dict[str, float] = {s: 0.0 for s in slugs}
+    for iv in intervals:
+        slug = iv["station_slug"]
+        if slug not in station_hour:
+            continue
+        start = parse_utc(iv["started_at"])
+        end = parse_utc(iv["ended_at"]) or now
+        if not start or end <= start:
+            continue
+        # clip each interval into IL hour buckets
+        cur = start
+        while cur < end:
+            il = cur.astimezone(IL_TZ)
+            bucket_end = (il.replace(minute=0, second=0, microsecond=0)
+                          + timedelta(hours=1)).astimezone(timezone.utc)
+            seg_end = min(end, bucket_end)
+            mins = (seg_end - cur).total_seconds() / 60
+            station_hour[slug][il.hour] += mins
+            totals[slug] += mins
+            cur = seg_end
+    return {
+        "tz": "Asia/Jerusalem",
+        "days": HEATMAP_STATION_DAYS,
+        "station_hour_minutes": {s: [round(v, 1) for v in station_hour[s]] for s in slugs},
+        "total_minutes": {s: round(v, 1) for s, v in totals.items()},
+    }
+
+
 def build_trends(tracks: list[dict[str, Any]], now: datetime) -> dict[str, Any]:
     # first-seen date (IL) per song across the whole dataset, for discovery rate
     first_seen: dict[str, str] = {}
@@ -248,6 +283,7 @@ def generate_all(output_dir: Path = DATA_DIR) -> dict[str, int]:
     }, sizes, "timeline.json")
 
     write_json(output_dir / "heatmap.json", build_heatmap(tracks, slugs, now), sizes, "heatmap.json")
+    write_json(output_dir / "non_music.json", build_non_music(db, slugs, now), sizes, "non_music.json")
     write_json(output_dir / "trends.json", build_trends(tracks, now), sizes, "trends.json")
     write_json(output_dir / "cross_station.json",
                {"tracks": db.get_cross_station_tracks()}, sizes, "cross_station.json")
