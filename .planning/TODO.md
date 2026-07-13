@@ -32,29 +32,27 @@
 - [x] Graceful handling of offline stations
 - [x] Cleanup respects per-station retention
 
-## 🔲 Phase 4 — Per-Station Data Generation
-- [ ] Update `generate_data.py` for per-station JSON
-- [ ] `docs/data/stations/` directory structure
-- [ ] Aggregated "all" views
-- [ ] Per-station current, history, hype, scatter, stats
-- [ ] Stations metadata JSON
+## ✅ Phase 4 — Per-Station Data Generation
+- [x] Update `generate_data.py` for per-station JSON
+- [x] `docs/data/stations/` directory structure (41 files)
+- [x] Aggregated "all" views
+- [x] Per-station current, history, hype, scatter, stats
+- [x] Stations metadata JSON
 
-## 🔲 Phase 5 — Multi-Station Dashboard
-- [ ] Station selector tabs (7 colored pills)
-- [ ] "All stations" aggregated tab
-- [ ] Per-station Now Playing
-- [ ] Per-station History
-- [ ] Per-station Hype Tracks
-- [ ] Per-station Scatter (colored by station)
-- [ ] Per-station Stats
-- [ ] Comparison scatter (overlay all stations)
-- [ ] Lazy loading (fetch per-station JSON on tab switch)
+## ✅ Phase 5 — Multi-Station Dashboard
+- [x] Station selector pills (7 colored)
+- [x] "All stations" aggregated tab
+- [x] Per-station Now Playing grid
+- [x] Per-station History (filtered by pill)
+- [x] Per-station Hype Tracks
+- [x] Per-station Scatter (colored by station)
+- [x] Per-station Stats
+- [x] Comparison scatter (overlay all stations)
 
-## 🔲 Phase 6 — Deployment
-- [ ] Update `scripts/manage.sh` for multi-station
-- [ ] Test full start/stop cycle
-- [ ] SystemD template units (optional)
-- [ ] Stress test with all 7 stations running
+## 🔲 Phase 6 — Polish
+- [ ] 99FM and 102FM referer header fix (streams return 403 sometimes)
+- [ ] SystemD template units for proxies
+- [ ] Stress test with all 7 stations running 24h
 - [ ] Resource monitoring
 
 ## 🔲 Future Ideas
