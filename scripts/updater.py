@@ -159,6 +159,7 @@ def extract_track(state: dict[str, Any] | None) -> dict[str, Any] | None:
         "text": result.get("text") or "",
         "url": result.get("url") or "",
         "shazam_key": result.get("shazam_key") or "",
+        "isrc": result.get("isrc") or "",
         "recognized_at": result.get("recognized_at") or now_iso(),
     }
 
@@ -245,6 +246,7 @@ def main() -> None:
                 text=track.get("text", ""),
                 url=track.get("url", ""),
                 shazam_key=track.get("shazam_key", ""),
+                isrc=track.get("isrc", ""),
                 recognized_at=track.get("recognized_at", now_iso()),
             )
             new_track_occurred = True

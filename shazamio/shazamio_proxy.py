@@ -62,6 +62,10 @@ def parse_shazam_result(raw: Any) -> dict[str, Any]:
         "text": text,
         "url": track.get("url"),
         "shazam_key": track.get("key"),
+        # Global recording id. The only reliable key for matching a track to
+        # another catalogue (Spotify/Apple) — artist+title fails on live takes,
+        # remixes, and Hebrew transliterations. Cannot be recovered later.
+        "isrc": track.get("isrc"),
         "recognized_at": now_iso(),
     }
 

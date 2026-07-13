@@ -79,6 +79,7 @@ class PlaylistDB:
                 text          TEXT,
                 url           TEXT,
                 shazam_key    TEXT,
+                isrc          TEXT,
                 recognized_at TEXT NOT NULL,
                 created_at    TEXT DEFAULT (datetime('now'))
             );
@@ -86,7 +87,6 @@ class PlaylistDB:
             CREATE INDEX IF NOT EXISTS idx_tracks_recognized_at ON tracks(recognized_at);
             CREATE INDEX IF NOT EXISTS idx_tracks_shazam_key ON tracks(shazam_key);
             CREATE INDEX IF NOT EXISTS idx_tracks_artist_title ON tracks(artist, title);
-            CREATE INDEX IF NOT EXISTS idx_tracks_isrc ON tracks(isrc);
 
             CREATE TABLE IF NOT EXISTS meta (
                 key   TEXT PRIMARY KEY,
@@ -120,6 +120,8 @@ class PlaylistDB:
         for idx_sql in [
             "CREATE INDEX IF NOT EXISTS idx_tracks_station_id ON tracks(station_id)",
             "CREATE INDEX IF NOT EXISTS idx_tracks_station_recog ON tracks(station_id, recognized_at)",
+            # after the isrc migration above, so it works on fresh and upgraded DBs alike
+            "CREATE INDEX IF NOT EXISTS idx_tracks_isrc ON tracks(isrc)",
         ]:
             try:
                 self.conn.execute(idx_sql)
@@ -186,12 +188,14 @@ class PlaylistDB:
 
     def insert_track(self, station_id: int, artist: str, title: str,
                      text: str = "", url: str = "", shazam_key: str = "",
-                     recognized_at: str = "") -> int:
+                     recognized_at: str = "", isrc: str = "") -> int:
         """Insert a track for a specific station. Returns row ID."""
         cur = self.conn.execute(
-            """INSERT INTO tracks (station_id, artist, title, text, url, shazam_key, recognized_at)
-               VALUES (?, ?, ?, ?, ?, ?, ?)""",
-            (station_id, artist, title, text, url, shazam_key, recognized_at),
+            """INSERT INTO tracks (station_id, artist, title, text, url, shazam_key,
+                                   isrc, recognized_at)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+            (station_id, artist, title, text, url, shazam_key,
+             isrc or None, recognized_at),
         )
         self.conn.commit()
         return cur.lastrowid
