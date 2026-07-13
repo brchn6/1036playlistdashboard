@@ -125,16 +125,27 @@ class PlaylistDB:
         self.conn.commit()
 
     def _seed_stations(self) -> None:
-        """Ensure all configured stations exist in the DB."""
-        cur = self.conn.execute("SELECT COUNT(*) as cnt FROM stations")
-        if cur.fetchone()["cnt"] == 0:
-            for s in STATIONS_CONFIG:
-                self.conn.execute(
-                    """INSERT INTO stations (slug, name, stream_url, proxy_port, color)
-                       VALUES (?, ?, ?, ?, ?)""",
-                    (s["slug"], s["name"], s["stream_url"], s["proxy_port"], s["color"]),
-                )
-            self.conn.commit()
+        """Sync STATIONS_CONFIG into the stations table.
+
+        Upsert by slug, not "insert only if the table is empty" — otherwise a
+        station added to the config after first run is never inserted, so it is
+        never polled and never appears, and a renamed station keeps its old
+        name forever. Existing rows keep their id, so tracks stay attached.
+        A station dropped from the config is left in place (its history is
+        still valid); disable it with `enabled = 0` instead.
+        """
+        for s in STATIONS_CONFIG:
+            self.conn.execute(
+                """INSERT INTO stations (slug, name, stream_url, proxy_port, color)
+                   VALUES (?, ?, ?, ?, ?)
+                   ON CONFLICT(slug) DO UPDATE SET
+                       name       = excluded.name,
+                       stream_url = excluded.stream_url,
+                       proxy_port = excluded.proxy_port,
+                       color      = excluded.color""",
+                (s["slug"], s["name"], s["stream_url"], s["proxy_port"], s["color"]),
+            )
+        self.conn.commit()
 
     # ── Stations ───────────────────────────────────────────────────────
 
