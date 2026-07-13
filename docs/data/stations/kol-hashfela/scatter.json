@@ -615,9 +615,20 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Clean Bandit",
+      "title": "Symphony (feat. Zara Larsson)",
+      "text": "Clean Bandit — Symphony (feat. Zara Larsson)",
+      "recognized_at": "2026-07-13T17:37:49Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 56,
-  "returned": 56,
-  "updated_at": "2026-07-13T17:37:09Z"
+  "total": 57,
+  "returned": 57,
+  "updated_at": "2026-07-13T17:37:55Z"
 }

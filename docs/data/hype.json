@@ -377,6 +377,14 @@
       "last_seen": "2026-07-13T16:49:49Z"
     },
     {
+      "artist": "Clean Bandit",
+      "title": "Symphony (feat. Zara Larsson)",
+      "text": "Clean Bandit — Symphony (feat. Zara Larsson)",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:37:49Z",
+      "last_seen": "2026-07-13T17:37:49Z"
+    },
+    {
       "artist": "Cold War Kids",
       "title": "There Goes The Night",
       "text": "Cold War Kids — There Goes The Night",
@@ -791,15 +799,7 @@
       "play_count": 1,
       "first_seen": "2026-07-13T15:21:40Z",
       "last_seen": "2026-07-13T15:21:40Z"
-    },
-    {
-      "artist": "Jacob Banks & Louis The Child",
-      "title": "Diddy Bop",
-      "text": "Jacob Banks & Louis The Child — Diddy Bop",
-      "play_count": 1,
-      "first_seen": "2026-07-13T17:22:30Z",
-      "last_seen": "2026-07-13T17:22:30Z"
     }
   ],
-  "updated_at": "2026-07-13T17:37:09Z"
+  "updated_at": "2026-07-13T17:37:55Z"
 }

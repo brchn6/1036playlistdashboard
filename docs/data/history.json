@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 339,
+      "station_id": 1,
+      "artist": "Clean Bandit",
+      "title": "Symphony (feat. Zara Larsson)",
+      "text": "Clean Bandit — Symphony (feat. Zara Larsson)",
+      "url": "https://www.shazam.com/track/342980369/symphony-feat-zara-larsson",
+      "shazam_key": "342980369",
+      "recognized_at": "2026-07-13T17:37:49Z",
+      "created_at": "2026-07-13 17:37:55",
+      "station_slug": "kol-hashfela",
+      "station_name": "קול השפלה 103FM",
+      "station_color": "#6ae3c1"
+    },
+    {
       "id": 338,
       "station_id": 8,
       "artist": "Shlomi Shabat",
@@ -3655,7 +3669,7 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "total": 261,
-  "returned": 261,
-  "updated_at": "2026-07-13T17:37:09Z"
+  "total": 262,
+  "returned": 262,
+  "updated_at": "2026-07-13T17:37:55Z"
 }

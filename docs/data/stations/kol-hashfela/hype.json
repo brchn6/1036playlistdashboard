@@ -111,6 +111,17 @@
       "station_color": "#6ae3c1"
     },
     {
+      "artist": "Clean Bandit",
+      "title": "Symphony (feat. Zara Larsson)",
+      "text": "Clean Bandit — Symphony (feat. Zara Larsson)",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:37:49Z",
+      "last_seen": "2026-07-13T17:37:49Z",
+      "station_slug": "kol-hashfela",
+      "station_name": "קול השפלה 103FM",
+      "station_color": "#6ae3c1"
+    },
+    {
       "artist": "Coldplay & BTS",
       "title": "My Universe",
       "text": "Coldplay & BTS — My Universe",
@@ -538,18 +549,7 @@
       "station_slug": "kol-hashfela",
       "station_name": "קול השפלה 103FM",
       "station_color": "#6ae3c1"
-    },
-    {
-      "artist": "The Contours",
-      "title": "Do You Love Me",
-      "text": "The Contours — Do You Love Me",
-      "play_count": 1,
-      "first_seen": "2026-07-13T15:12:21Z",
-      "last_seen": "2026-07-13T15:12:21Z",
-      "station_slug": "kol-hashfela",
-      "station_name": "קול השפלה 103FM",
-      "station_color": "#6ae3c1"
     }
   ],
-  "updated_at": "2026-07-13T17:37:09Z"
+  "updated_at": "2026-07-13T17:37:55Z"
 }
