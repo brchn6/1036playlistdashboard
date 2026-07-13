@@ -989,9 +989,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Ariel Zilber",
+      "title": "בחברה להגנת הטבע",
+      "text": "Ariel Zilber — בחברה להגנת הטבע",
+      "recognized_at": "2026-07-13T14:42:45Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 90,
-  "returned": 90,
-  "updated_at": "2026-07-13T14:42:15Z"
+  "total": 91,
+  "returned": 91,
+  "updated_at": "2026-07-13T14:42:45Z"
 }

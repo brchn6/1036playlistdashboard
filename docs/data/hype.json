@@ -81,6 +81,14 @@
       "last_seen": "2026-07-13T14:10:51Z"
     },
     {
+      "artist": "Ariel Zilber",
+      "title": "בחברה להגנת הטבע",
+      "text": "Ariel Zilber — בחברה להגנת הטבע",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:42:45Z",
+      "last_seen": "2026-07-13T14:42:45Z"
+    },
+    {
       "artist": "Asha Puthli & Say She She",
       "title": "Pawa!",
       "text": "Asha Puthli & Say She She — Pawa!",
@@ -689,5 +697,5 @@
       "last_seen": "2026-07-13T14:05:04Z"
     }
   ],
-  "updated_at": "2026-07-13T14:42:15Z"
+  "updated_at": "2026-07-13T14:42:45Z"
 }
