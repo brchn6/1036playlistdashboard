@@ -1737,9 +1737,20 @@
       "day_of_week": "1",
       "hour": "15",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "כאן - תאגיד השידור הישראלי, עילי בוטנר והילדים החדשים & Elai Botner",
+      "title": "עוד יבוא היום",
+      "text": "כאן - תאגיד השידור הישראלי, עילי בוטנר והילדים החדשים & Elai Botner — עוד יבוא היום",
+      "recognized_at": "2026-07-13T15:38:12Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "15",
+      "date": "2026-07-13"
     }
   ],
-  "total": 158,
-  "returned": 158,
-  "updated_at": "2026-07-13T15:38:11Z"
+  "total": 159,
+  "returned": 159,
+  "updated_at": "2026-07-13T15:38:41Z"
 }
