@@ -49,6 +49,14 @@
       "last_seen": "2026-07-13T12:53:46Z"
     },
     {
+      "artist": "Arkadi Duchin & Meir Banai",
+      "title": "דומינו",
+      "text": "Arkadi Duchin & Meir Banai — דומינו",
+      "play_count": 1,
+      "first_seen": "2026-07-13T12:57:07Z",
+      "last_seen": "2026-07-13T12:57:07Z"
+    },
+    {
       "artist": "Bruno Mars",
       "title": "Cha Cha Cha",
       "text": "Bruno Mars — Cha Cha Cha",
@@ -145,5 +153,5 @@
       "last_seen": "2026-07-13T12:50:12Z"
     }
   ],
-  "updated_at": "2026-07-13T12:56:42Z"
+  "updated_at": "2026-07-13T12:57:12Z"
 }

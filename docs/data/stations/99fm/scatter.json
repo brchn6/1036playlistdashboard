@@ -32,9 +32,20 @@
       "day_of_week": "1",
       "hour": "12",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Arkadi Duchin & Meir Banai",
+      "title": "דומינו",
+      "text": "Arkadi Duchin & Meir Banai — דומינו",
+      "recognized_at": "2026-07-13T12:57:07Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "12",
+      "date": "2026-07-13"
     }
   ],
-  "total": 3,
-  "returned": 3,
-  "updated_at": "2026-07-13T12:56:42Z"
+  "total": 4,
+  "returned": 4,
+  "updated_at": "2026-07-13T12:57:12Z"
 }
