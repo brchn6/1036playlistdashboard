@@ -337,6 +337,14 @@
       "last_seen": "2026-07-13T14:11:23Z"
     },
     {
+      "artist": "Queen",
+      "title": "The Show Must Go On",
+      "text": "Queen — The Show Must Go On",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:19:18Z",
+      "last_seen": "2026-07-13T14:19:18Z"
+    },
+    {
       "artist": "Ran Danker",
       "title": "בית משוגעים",
       "text": "Ran Danker — בית משוגעים",
@@ -473,5 +481,5 @@
       "last_seen": "2026-07-13T14:05:04Z"
     }
   ],
-  "updated_at": "2026-07-13T14:19:15Z"
+  "updated_at": "2026-07-13T14:19:19Z"
 }

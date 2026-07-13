@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 141,
+      "station_id": 7,
+      "artist": "Queen",
+      "title": "The Show Must Go On",
+      "text": "Queen — The Show Must Go On",
+      "url": "https://www.shazam.com/track/5175848/the-show-must-go-on",
+      "shazam_key": "5175848",
+      "recognized_at": "2026-07-13T14:19:18Z",
+      "created_at": "2026-07-13 14:19:19",
+      "station_slug": "galil",
+      "station_name": "קול הגליל העליון",
+      "station_color": "#a06ae3"
+    },
+    {
       "id": 140,
       "station_id": 5,
       "artist": "Sharon Roter",
@@ -883,7 +897,7 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "total": 63,
-  "returned": 63,
-  "updated_at": "2026-07-13T14:19:15Z"
+  "total": 64,
+  "returned": 64,
+  "updated_at": "2026-07-13T14:19:19Z"
 }

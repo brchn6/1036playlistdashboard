@@ -692,9 +692,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Queen",
+      "title": "The Show Must Go On",
+      "text": "Queen — The Show Must Go On",
+      "recognized_at": "2026-07-13T14:19:18Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 63,
-  "returned": 63,
-  "updated_at": "2026-07-13T14:19:15Z"
+  "total": 64,
+  "returned": 64,
+  "updated_at": "2026-07-13T14:19:19Z"
 }
