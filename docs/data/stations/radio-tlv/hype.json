@@ -12,6 +12,17 @@
       "station_color": "#e3c86a"
     },
     {
+      "artist": "B.o.B",
+      "title": "Airplanes (feat. Hayley Williams of Paramore)",
+      "text": "B.o.B — Airplanes (feat. Hayley Williams of Paramore)",
+      "play_count": 1,
+      "first_seen": "2026-07-13T16:36:59Z",
+      "last_seen": "2026-07-13T16:36:59Z",
+      "station_slug": "radio-tlv",
+      "station_name": "רדיו תל אביב 102FM",
+      "station_color": "#e3c86a"
+    },
+    {
       "artist": "Chad Kroeger featuring Josey Scott",
       "title": "Hero (Motion Picture Version) [feat. Josey Scott]",
       "text": "Chad Kroeger featuring Josey Scott — Hero (Motion Picture Version) [feat. Josey Scott]",
@@ -122,5 +133,5 @@
       "station_color": "#e3c86a"
     }
   ],
-  "updated_at": "2026-07-13T16:36:30Z"
+  "updated_at": "2026-07-13T16:37:00Z"
 }

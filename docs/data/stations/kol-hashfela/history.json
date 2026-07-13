@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 249,
+      "station_id": 1,
+      "artist": "Madonna",
+      "title": "Secret",
+      "text": "Madonna — Secret",
+      "url": "https://www.shazam.com/track/234640/secret",
+      "shazam_key": "234640",
+      "recognized_at": "2026-07-13T16:36:30Z",
+      "created_at": "2026-07-13 16:37:00",
+      "station_slug": "kol-hashfela",
+      "station_name": "קול השפלה 103FM",
+      "station_color": "#6ae3c1"
+    },
+    {
       "id": 242,
       "station_id": 1,
       "artist": "Shiri Maimon",
@@ -547,6 +561,6 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "total": 39,
-  "updated_at": "2026-07-13T16:36:30Z"
+  "total": 40,
+  "updated_at": "2026-07-13T16:37:00Z"
 }

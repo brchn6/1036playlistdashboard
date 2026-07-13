@@ -120,9 +120,20 @@
       "day_of_week": "1",
       "hour": "16",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "B.o.B",
+      "title": "Airplanes (feat. Hayley Williams of Paramore)",
+      "text": "B.o.B — Airplanes (feat. Hayley Williams of Paramore)",
+      "recognized_at": "2026-07-13T16:36:59Z",
+      "station_slug": "radio-tlv",
+      "station_color": "#e3c86a",
+      "day_of_week": "1",
+      "hour": "16",
+      "date": "2026-07-13"
     }
   ],
-  "total": 11,
-  "returned": 11,
-  "updated_at": "2026-07-13T16:36:30Z"
+  "total": 12,
+  "returned": 12,
+  "updated_at": "2026-07-13T16:37:00Z"
 }

@@ -1880,9 +1880,31 @@
       "day_of_week": "1",
       "hour": "16",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Madonna",
+      "title": "Secret",
+      "text": "Madonna — Secret",
+      "recognized_at": "2026-07-13T16:36:30Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "16",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "B.o.B",
+      "title": "Airplanes (feat. Hayley Williams of Paramore)",
+      "text": "B.o.B — Airplanes (feat. Hayley Williams of Paramore)",
+      "recognized_at": "2026-07-13T16:36:59Z",
+      "station_slug": "radio-tlv",
+      "station_color": "#e3c86a",
+      "day_of_week": "1",
+      "hour": "16",
+      "date": "2026-07-13"
     }
   ],
-  "total": 171,
-  "returned": 171,
-  "updated_at": "2026-07-13T16:36:30Z"
+  "total": 173,
+  "returned": 173,
+  "updated_at": "2026-07-13T16:37:00Z"
 }
