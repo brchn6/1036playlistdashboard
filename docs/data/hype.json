@@ -49,6 +49,14 @@
       "last_seen": "2026-07-13T12:54:53Z"
     },
     {
+      "artist": "Bomfunk MC's",
+      "title": "Freestyler",
+      "text": "Bomfunk MC's — Freestyler",
+      "play_count": 2,
+      "first_seen": "2026-07-13T13:27:34Z",
+      "last_seen": "2026-07-13T13:27:34Z"
+    },
+    {
       "artist": "Gal De Paz",
       "title": "Can’t Die from Love",
       "text": "Gal De Paz — Can’t Die from Love",
@@ -241,6 +249,14 @@
       "last_seen": "2026-07-13T12:49:42Z"
     },
     {
+      "artist": "Ha'Eivrit",
+      "title": "Mesibat Kita",
+      "text": "Ha'Eivrit — Mesibat Kita",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:27:35Z",
+      "last_seen": "2026-07-13T13:27:35Z"
+    },
+    {
       "artist": "Hachaverim Shel Natasha",
       "title": "עשי לי את המוות",
       "text": "Hachaverim Shel Natasha — עשי לי את המוות",
@@ -409,5 +425,5 @@
       "last_seen": "2026-07-13T12:50:12Z"
     }
   ],
-  "updated_at": "2026-07-13T13:26:42Z"
+  "updated_at": "2026-07-13T13:27:35Z"
 }

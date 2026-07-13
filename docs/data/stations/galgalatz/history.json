@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 76,
+      "station_id": 2,
+      "artist": "Ha'Eivrit",
+      "title": "Mesibat Kita",
+      "text": "Ha'Eivrit — Mesibat Kita",
+      "url": "https://www.shazam.com/track/58554077/mesibat-kita",
+      "shazam_key": "58554077",
+      "recognized_at": "2026-07-13T13:27:35Z",
+      "created_at": "2026-07-13 13:27:35",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "id": 65,
       "station_id": 2,
       "artist": "Malcolm Todd",
@@ -113,6 +127,6 @@
       "station_color": "#e36a6a"
     }
   ],
-  "total": 8,
-  "updated_at": "2026-07-13T13:26:42Z"
+  "total": 9,
+  "updated_at": "2026-07-13T13:27:35Z"
 }

@@ -186,9 +186,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Bomfunk MC's",
+      "title": "Freestyler",
+      "text": "Bomfunk MC's — Freestyler",
+      "recognized_at": "2026-07-13T13:27:34Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 17,
-  "returned": 17,
-  "updated_at": "2026-07-13T13:26:42Z"
+  "total": 18,
+  "returned": 18,
+  "updated_at": "2026-07-13T13:27:35Z"
 }

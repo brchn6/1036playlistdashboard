@@ -23,6 +23,17 @@
       "station_color": "#c86ae3"
     },
     {
+      "artist": "Bomfunk MC's",
+      "title": "Freestyler",
+      "text": "Bomfunk MC's — Freestyler",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:27:34Z",
+      "last_seen": "2026-07-13T13:27:34Z",
+      "station_slug": "kan-88",
+      "station_name": "כאן 88",
+      "station_color": "#c86ae3"
+    },
+    {
       "artist": "Free",
       "title": "All Right Now",
       "text": "Free — All Right Now",
@@ -188,5 +199,5 @@
       "station_color": "#c86ae3"
     }
   ],
-  "updated_at": "2026-07-13T13:26:42Z"
+  "updated_at": "2026-07-13T13:27:35Z"
 }

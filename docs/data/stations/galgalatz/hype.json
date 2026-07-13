@@ -23,6 +23,17 @@
       "station_color": "#e36a6a"
     },
     {
+      "artist": "Ha'Eivrit",
+      "title": "Mesibat Kita",
+      "text": "Ha'Eivrit — Mesibat Kita",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:27:35Z",
+      "last_seen": "2026-07-13T13:27:35Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "artist": "Hadag Nahash",
       "title": "הכל יסתדר (feat. פלד)",
       "text": "Hadag Nahash — הכל יסתדר (feat. פלד)",
@@ -89,5 +100,5 @@
       "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T13:26:42Z"
+  "updated_at": "2026-07-13T13:27:35Z"
 }

@@ -188,6 +188,17 @@
       "last_seen": "2026-07-13T13:08:39Z"
     },
     {
+      "artist": "Bomfunk MC's",
+      "title": "Freestyler",
+      "text": "Bomfunk MC's — Freestyler",
+      "station_count": 2,
+      "station_names": "קול השפלה 103FM,כאן 88",
+      "station_slugs": "kol-hashfela,kan-88",
+      "total_plays": 2,
+      "first_seen": "2026-07-13T13:27:34Z",
+      "last_seen": "2026-07-13T13:27:34Z"
+    },
+    {
       "artist": "Blondie",
       "title": "The Tide Is High",
       "text": "Blondie — The Tide Is High",
@@ -221,5 +232,5 @@
       "last_seen": "2026-07-13T12:58:15Z"
     }
   ],
-  "updated_at": "2026-07-13T13:26:42Z"
+  "updated_at": "2026-07-13T13:27:35Z"
 }

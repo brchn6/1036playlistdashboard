@@ -90,6 +90,7 @@ def start_one(slug: str) -> dict[str, Any]:
     env["RADIO_STREAM_URL"] = stream_url
     env["SHAZAMIO_SAMPLE_SECONDS"] = "15"
     env["SHAZAMIO_INTERVAL_SECONDS"] = str(INTERVAL)
+    env["SHAZAMIO_WORK_DIR"] = f"/tmp/1036-proxy-{slug}"
 
     try:
         with open(log_file, "w") as lf:
