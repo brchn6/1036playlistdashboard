@@ -824,9 +824,31 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Talking Heads",
+      "title": "Once In a Lifetime",
+      "text": "Talking Heads — Once In a Lifetime",
+      "recognized_at": "2026-07-13T14:30:25Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Bryan Adams",
+      "title": "Summer Of '69",
+      "text": "Bryan Adams — Summer Of '69",
+      "recognized_at": "2026-07-13T14:30:31Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 75,
-  "returned": 75,
-  "updated_at": "2026-07-13T14:28:45Z"
+  "total": 77,
+  "returned": 77,
+  "updated_at": "2026-07-13T14:30:45Z"
 }

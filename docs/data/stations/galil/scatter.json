@@ -186,9 +186,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Bryan Adams",
+      "title": "Summer Of '69",
+      "text": "Bryan Adams — Summer Of '69",
+      "recognized_at": "2026-07-13T14:30:31Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 17,
-  "returned": 17,
-  "updated_at": "2026-07-13T14:28:45Z"
+  "total": 18,
+  "returned": 18,
+  "updated_at": "2026-07-13T14:30:45Z"
 }
