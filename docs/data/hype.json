@@ -106,6 +106,14 @@
     },
     {
       "artist": "Ehud Banai",
+      "title": "טיפ טיפה",
+      "text": "Ehud Banai — טיפ טיפה",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:55:42Z",
+      "last_seen": "2026-07-13T13:55:42Z"
+    },
+    {
+      "artist": "Ehud Banai",
       "title": "ממשיך לנסוע",
       "text": "Ehud Banai — ממשיך לנסוע",
       "play_count": 1,
@@ -257,5 +265,5 @@
       "last_seen": "2026-07-13T13:52:52Z"
     }
   ],
-  "updated_at": "2026-07-13T13:53:49Z"
+  "updated_at": "2026-07-13T13:55:45Z"
 }

@@ -87,9 +87,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Ehud Banai",
+      "title": "טיפ טיפה",
+      "text": "Ehud Banai — טיפ טיפה",
+      "recognized_at": "2026-07-13T13:55:42Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 8,
-  "returned": 8,
-  "updated_at": "2026-07-13T13:53:49Z"
+  "total": 9,
+  "returned": 9,
+  "updated_at": "2026-07-13T13:55:45Z"
 }
