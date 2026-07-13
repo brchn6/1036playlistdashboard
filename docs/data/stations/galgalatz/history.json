@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 142,
+      "station_id": 2,
+      "artist": "Leona Lewis",
+      "title": "Bleeding Love",
+      "text": "Leona Lewis — Bleeding Love",
+      "url": "https://www.shazam.com/track/45848405/bleeding-love",
+      "shazam_key": "45848405",
+      "recognized_at": "2026-07-13T14:20:25Z",
+      "created_at": "2026-07-13 14:20:45",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "id": 136,
       "station_id": 2,
       "artist": "Ethnix",
@@ -169,6 +183,6 @@
       "station_color": "#e36a6a"
     }
   ],
-  "total": 12,
-  "updated_at": "2026-07-13T14:19:19Z"
+  "total": 13,
+  "updated_at": "2026-07-13T14:20:45Z"
 }

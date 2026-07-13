@@ -131,9 +131,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Leona Lewis",
+      "title": "Bleeding Love",
+      "text": "Leona Lewis — Bleeding Love",
+      "recognized_at": "2026-07-13T14:20:25Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 12,
-  "returned": 12,
-  "updated_at": "2026-07-13T14:19:19Z"
+  "total": 13,
+  "returned": 13,
+  "updated_at": "2026-07-13T14:20:45Z"
 }

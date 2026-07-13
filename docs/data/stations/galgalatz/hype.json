@@ -56,6 +56,17 @@
       "station_color": "#e36a6a"
     },
     {
+      "artist": "Leona Lewis",
+      "title": "Bleeding Love",
+      "text": "Leona Lewis — Bleeding Love",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:20:25Z",
+      "last_seen": "2026-07-13T14:20:25Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "artist": "Olivia Rodrigo",
       "title": "stupid song",
       "text": "Olivia Rodrigo — stupid song",
@@ -133,5 +144,5 @@
       "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T14:19:19Z"
+  "updated_at": "2026-07-13T14:20:45Z"
 }
