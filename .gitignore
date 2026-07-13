@@ -10,3 +10,5 @@ venv/
 .DS_Store
 .pids/
 logs/
+test123.txt
+test.env

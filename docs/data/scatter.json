@@ -53,9 +53,18 @@
       "day_of_week": "1",
       "hour": "12",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "David Guetta",
+      "title": "Titanium (feat. Sia)",
+      "text": "David Guetta — Titanium (feat. Sia)",
+      "recognized_at": "2026-07-13T12:21:48Z",
+      "day_of_week": "1",
+      "hour": "12",
+      "date": "2026-07-13"
     }
   ],
-  "total": 6,
-  "returned": 6,
-  "updated_at": "2026-07-13T12:18:10Z"
+  "total": 7,
+  "returned": 7,
+  "updated_at": "2026-07-13T12:22:14Z"
 }

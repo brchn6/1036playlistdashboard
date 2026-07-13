@@ -52,8 +52,25 @@ def now_iso() -> str:
 
 # ── helpers ────────────────────────────────────────────────────────────
 
+def load_env() -> dict[str, str]:
+    """Load .env file from project root. Returns dict of key=value pairs."""
+    env_path = PROJECT_ROOT / ".env"
+    env_vars: dict[str, str] = {}
+    if env_path.exists():
+        for line in env_path.read_text("utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if "=" in line:
+                key, _, val = line.partition("=")
+                env_vars[key.strip()] = val.strip().strip("'\"")
+    return env_vars
+
+
 def git_commit_and_push(message: str) -> None:
-    """Commit and push changes to the git repo."""
+    """Commit and push changes to the git repo.
+    Reads GIT_TOKEN from .env for authentication — never stored in git config.
+    """
     try:
         result = subprocess.run(
             ["git", "status", "--porcelain", "--", "docs/", "scripts/", "data/"],
@@ -68,7 +85,20 @@ def git_commit_and_push(message: str) -> None:
             check=True, capture_output=True, timeout=15,
         )
         subprocess.run(["git", "pull", "--rebase"], check=True, capture_output=True, timeout=30)
-        subprocess.run(["git", "push"], check=True, capture_output=True, timeout=60)
+
+        # Use token from .env if available (no stored credentials)
+        env = load_env()
+        token = env.get("GIT_TOKEN") or os.environ.get("GIT_TOKEN", "")
+        if token:
+            # Temporarily use token for push (never stored in git config)
+            repo_url = f"https://brchn6:{token}@github.com/brchn6/1036playlistdashboard.git"
+            subprocess.run(
+                ["git", "push", repo_url, "main"],
+                check=True, capture_output=True, timeout=60,
+            )
+        else:
+            subprocess.run(["git", "push"], check=True, capture_output=True, timeout=60)
+
         print(f"[updater] Git commit & push: {message}", flush=True)
     except subprocess.TimeoutExpired:
         print("[updater] Git push timed out (skip)", flush=True)

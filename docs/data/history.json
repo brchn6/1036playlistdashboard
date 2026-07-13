@@ -1,6 +1,16 @@
 {
   "history": [
     {
+      "id": 7,
+      "artist": "David Guetta",
+      "title": "Titanium (feat. Sia)",
+      "text": "David Guetta — Titanium (feat. Sia)",
+      "url": "https://www.shazam.com/track/53848631/titanium-feat-sia",
+      "shazam_key": "53848631",
+      "recognized_at": "2026-07-13T12:21:48Z",
+      "created_at": "2026-07-13 12:22:14"
+    },
+    {
       "id": 6,
       "artist": "Ace of Base",
       "title": "Beautiful Life",
@@ -61,7 +71,7 @@
       "created_at": "2026-07-13 12:04:28"
     }
   ],
-  "total": 6,
-  "returned": 6,
-  "updated_at": "2026-07-13T12:18:10Z"
+  "total": 7,
+  "returned": 7,
+  "updated_at": "2026-07-13T12:22:14Z"
 }
