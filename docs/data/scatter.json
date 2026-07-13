@@ -714,9 +714,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Ethnix",
+      "title": "היא לא תשוב",
+      "text": "Ethnix — היא לא תשוב",
+      "recognized_at": "2026-07-13T14:22:20Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 65,
-  "returned": 65,
-  "updated_at": "2026-07-13T14:22:15Z"
+  "total": 66,
+  "returned": 66,
+  "updated_at": "2026-07-13T14:22:45Z"
 }

@@ -202,6 +202,14 @@
     },
     {
       "artist": "Ethnix",
+      "title": "היא לא תשוב",
+      "text": "Ethnix — היא לא תשוב",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:22:20Z",
+      "last_seen": "2026-07-13T14:22:20Z"
+    },
+    {
+      "artist": "Ethnix",
       "title": "מתי לחזור",
       "text": "Ethnix — מתי לחזור",
       "play_count": 1,
@@ -489,5 +497,5 @@
       "last_seen": "2026-07-13T14:05:04Z"
     }
   ],
-  "updated_at": "2026-07-13T14:22:15Z"
+  "updated_at": "2026-07-13T14:22:45Z"
 }

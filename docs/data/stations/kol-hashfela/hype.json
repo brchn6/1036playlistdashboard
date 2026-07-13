@@ -78,6 +78,17 @@
       "station_color": "#6ae3c1"
     },
     {
+      "artist": "Ethnix",
+      "title": "היא לא תשוב",
+      "text": "Ethnix — היא לא תשוב",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:22:20Z",
+      "last_seen": "2026-07-13T14:22:20Z",
+      "station_slug": "kol-hashfela",
+      "station_name": "קול השפלה 103FM",
+      "station_color": "#6ae3c1"
+    },
+    {
       "artist": "Gala",
       "title": "Let a Boy Cry",
       "text": "Gala — Let a Boy Cry",
@@ -155,5 +166,5 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "updated_at": "2026-07-13T14:22:15Z"
+  "updated_at": "2026-07-13T14:22:45Z"
 }
