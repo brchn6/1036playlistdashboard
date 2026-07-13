@@ -78,6 +78,17 @@
       "station_color": "#a06ae3"
     },
     {
+      "artist": "The New Mastersounds",
+      "title": "Your Love Is Mine",
+      "text": "The New Mastersounds — Your Love Is Mine",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:57:54Z",
+      "last_seen": "2026-07-13T13:57:54Z",
+      "station_slug": "galil",
+      "station_name": "קול הגליל העליון",
+      "station_color": "#a06ae3"
+    },
+    {
       "artist": "U2",
       "title": "All I Want Is You (Songs of Surrender)",
       "text": "U2 — All I Want Is You (Songs of Surrender)",
@@ -89,5 +100,5 @@
       "station_color": "#a06ae3"
     }
   ],
-  "updated_at": "2026-07-13T13:57:15Z"
+  "updated_at": "2026-07-13T13:58:15Z"
 }

@@ -428,9 +428,31 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "The New Mastersounds",
+      "title": "Your Love Is Mine",
+      "text": "The New Mastersounds — Your Love Is Mine",
+      "recognized_at": "2026-07-13T13:57:54Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Alex Warren",
+      "title": "FEVER DREAM",
+      "text": "Alex Warren — FEVER DREAM",
+      "recognized_at": "2026-07-13T13:58:15Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 39,
-  "returned": 39,
-  "updated_at": "2026-07-13T13:57:15Z"
+  "total": 41,
+  "returned": 41,
+  "updated_at": "2026-07-13T13:58:15Z"
 }
