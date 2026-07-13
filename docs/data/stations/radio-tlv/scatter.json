@@ -1,6 +1,18 @@
 {
-  "points": [],
-  "total": 0,
-  "returned": 0,
-  "updated_at": "2026-07-13T13:52:45Z"
+  "points": [
+    {
+      "artist": "Margalit Tzan׳ani",
+      "title": "לשיר ולהנות",
+      "text": "Margalit Tzan׳ani — לשיר ולהנות",
+      "recognized_at": "2026-07-13T13:52:52Z",
+      "station_slug": "radio-tlv",
+      "station_color": "#e3c86a",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
+    }
+  ],
+  "total": 1,
+  "returned": 1,
+  "updated_at": "2026-07-13T13:53:15Z"
 }

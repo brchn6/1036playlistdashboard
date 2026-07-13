@@ -32,9 +32,20 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Yehudit Ravitz",
+      "title": "געגוע",
+      "text": "Yehudit Ravitz — געגוע",
+      "recognized_at": "2026-07-13T13:52:52Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 3,
-  "returned": 3,
-  "updated_at": "2026-07-13T13:52:45Z"
+  "total": 4,
+  "returned": 4,
+  "updated_at": "2026-07-13T13:53:15Z"
 }

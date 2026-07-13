@@ -362,9 +362,31 @@
       "day_of_week": "1",
       "hour": "13",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Yehudit Ravitz",
+      "title": "געגוע",
+      "text": "Yehudit Ravitz — געגוע",
+      "recognized_at": "2026-07-13T13:52:52Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Margalit Tzan׳ani",
+      "title": "לשיר ולהנות",
+      "text": "Margalit Tzan׳ani — לשיר ולהנות",
+      "recognized_at": "2026-07-13T13:52:52Z",
+      "station_slug": "radio-tlv",
+      "station_color": "#e3c86a",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 33,
-  "returned": 33,
-  "updated_at": "2026-07-13T13:52:45Z"
+  "total": 35,
+  "returned": 35,
+  "updated_at": "2026-07-13T13:53:15Z"
 }
