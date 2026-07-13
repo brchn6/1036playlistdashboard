@@ -56,6 +56,17 @@
       "station_color": "#e36ac8"
     },
     {
+      "artist": "Taylor Swift",
+      "title": "Blank Space",
+      "text": "Taylor Swift — Blank Space",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:16:36Z",
+      "last_seen": "2026-07-13T17:16:36Z",
+      "station_slug": "radio-darom",
+      "station_name": "רדיו דרום 97FM",
+      "station_color": "#e36ac8"
+    },
+    {
       "artist": "The Israeli Andalusian Orchestra–Ashdod & Patrick Sebag",
       "title": "שינויי מזג האוויר (feat. בניה ברבי)",
       "text": "The Israeli Andalusian Orchestra–Ashdod & Patrick Sebag — שינויי מזג האוויר (feat. בניה ברבי)",
@@ -89,5 +100,5 @@
       "station_color": "#e36ac8"
     }
   ],
-  "updated_at": "2026-07-13T17:16:09Z"
+  "updated_at": "2026-07-13T17:16:39Z"
 }

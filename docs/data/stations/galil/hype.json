@@ -1,6 +1,17 @@
 {
   "tracks": [
     {
+      "artist": "Alicia Keys",
+      "title": "Perfect Way To Die",
+      "text": "Alicia Keys — Perfect Way To Die",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:16:22Z",
+      "last_seen": "2026-07-13T17:16:22Z",
+      "station_slug": "galil",
+      "station_name": "קול הגליל העליון",
+      "station_color": "#a06ae3"
+    },
+    {
       "artist": "Antenna",
       "title": "Come On Spring",
       "text": "Antenna — Come On Spring",
@@ -430,5 +441,5 @@
       "station_color": "#a06ae3"
     }
   ],
-  "updated_at": "2026-07-13T17:16:09Z"
+  "updated_at": "2026-07-13T17:16:39Z"
 }

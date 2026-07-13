@@ -81,6 +81,14 @@
       "last_seen": "2026-07-13T13:36:26Z"
     },
     {
+      "artist": "Alicia Keys",
+      "title": "Perfect Way To Die",
+      "text": "Alicia Keys — Perfect Way To Die",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:16:22Z",
+      "last_seen": "2026-07-13T17:16:22Z"
+    },
+    {
       "artist": "Altın Gün",
       "title": "Goca Dünya",
       "text": "Altın Gün — Goca Dünya",
@@ -791,15 +799,7 @@
       "play_count": 1,
       "first_seen": "2026-07-13T17:03:44Z",
       "last_seen": "2026-07-13T17:03:44Z"
-    },
-    {
-      "artist": "Kings of Leon",
-      "title": "Find Me",
-      "text": "Kings of Leon — Find Me",
-      "play_count": 1,
-      "first_seen": "2026-07-13T17:07:11Z",
-      "last_seen": "2026-07-13T17:07:11Z"
     }
   ],
-  "updated_at": "2026-07-13T17:16:09Z"
+  "updated_at": "2026-07-13T17:16:39Z"
 }
