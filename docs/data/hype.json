@@ -57,6 +57,14 @@
       "last_seen": "2026-07-13T12:47:51Z"
     },
     {
+      "artist": "La Bouche",
+      "title": "Be My Lover",
+      "text": "La Bouche — Be My Lover",
+      "play_count": 1,
+      "first_seen": "2026-07-13T12:53:15Z",
+      "last_seen": "2026-07-13T12:53:15Z"
+    },
+    {
       "artist": "Madcon",
       "title": "Beggin (Uscar Version)",
       "text": "Madcon — Beggin (Uscar Version)",
@@ -105,5 +113,5 @@
       "last_seen": "2026-07-13T12:50:12Z"
     }
   ],
-  "updated_at": "2026-07-13T12:53:12Z"
+  "updated_at": "2026-07-13T12:53:42Z"
 }

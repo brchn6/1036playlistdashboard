@@ -175,9 +175,20 @@
       "day_of_week": "1",
       "hour": "12",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "La Bouche",
+      "title": "Be My Lover",
+      "text": "La Bouche — Be My Lover",
+      "recognized_at": "2026-07-13T12:53:15Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "12",
+      "date": "2026-07-13"
     }
   ],
-  "total": 16,
-  "returned": 16,
-  "updated_at": "2026-07-13T12:53:12Z"
+  "total": 17,
+  "returned": 17,
+  "updated_at": "2026-07-13T12:53:42Z"
 }
