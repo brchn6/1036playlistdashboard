@@ -263,9 +263,20 @@
       "day_of_week": "1",
       "hour": "15",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Rona Kenan",
+      "title": "Ata Mitorer",
+      "text": "Rona Kenan — Ata Mitorer",
+      "recognized_at": "2026-07-13T15:14:06Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "15",
+      "date": "2026-07-13"
     }
   ],
-  "total": 24,
-  "returned": 24,
-  "updated_at": "2026-07-13T15:13:45Z"
+  "total": 25,
+  "returned": 25,
+  "updated_at": "2026-07-13T15:14:15Z"
 }

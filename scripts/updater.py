@@ -178,6 +178,8 @@ def main() -> None:
 
     iteration = 0
     new_track_occurred = False
+    last_push_time = 0.0
+    MIN_PUSH_INTERVAL = 300  # 5 minutes between git pushes
 
     while running:
         iteration += 1

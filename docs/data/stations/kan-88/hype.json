@@ -210,6 +210,17 @@
       "station_color": "#c86ae3"
     },
     {
+      "artist": "Rona Kenan",
+      "title": "Ata Mitorer",
+      "text": "Rona Kenan — Ata Mitorer",
+      "play_count": 1,
+      "first_seen": "2026-07-13T15:14:06Z",
+      "last_seen": "2026-07-13T15:14:06Z",
+      "station_slug": "kan-88",
+      "station_name": "כאן 88",
+      "station_color": "#c86ae3"
+    },
+    {
       "artist": "Sharon Roter",
       "title": "Arutz Elecha",
       "text": "Sharon Roter — Arutz Elecha",
@@ -265,5 +276,5 @@
       "station_color": "#c86ae3"
     }
   ],
-  "updated_at": "2026-07-13T15:13:45Z"
+  "updated_at": "2026-07-13T15:14:15Z"
 }
