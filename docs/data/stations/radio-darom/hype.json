@@ -23,6 +23,17 @@
       "station_color": "#e36ac8"
     },
     {
+      "artist": "Idan Amedi",
+      "title": "סופרמן",
+      "text": "Idan Amedi — סופרמן",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:40:46Z",
+      "last_seen": "2026-07-13T17:40:46Z",
+      "station_slug": "radio-darom",
+      "station_name": "רדיו דרום 97FM",
+      "station_color": "#e36ac8"
+    },
+    {
       "artist": "Omer Adam",
       "title": "חי (שיר הנושא מתוך לשחרר את שולי סאן)",
       "text": "Omer Adam — חי (שיר הנושא מתוך לשחרר את שולי סאן)",
@@ -144,5 +155,5 @@
       "station_color": "#e36ac8"
     }
   ],
-  "updated_at": "2026-07-13T17:40:42Z"
+  "updated_at": "2026-07-13T17:41:02Z"
 }

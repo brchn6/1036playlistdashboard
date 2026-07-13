@@ -1,6 +1,34 @@
 {
   "history": [
     {
+      "id": 343,
+      "station_id": 2,
+      "artist": "Mary Mary",
+      "title": "Shackles (Praise You)",
+      "text": "Mary Mary — Shackles (Praise You)",
+      "url": "https://www.shazam.com/track/5168699/shackles-praise-you",
+      "shazam_key": "5168699",
+      "recognized_at": "2026-07-13T17:40:48Z",
+      "created_at": "2026-07-13 17:41:02",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
+      "id": 344,
+      "station_id": 8,
+      "artist": "Idan Amedi",
+      "title": "סופרמן",
+      "text": "Idan Amedi — סופרמן",
+      "url": "https://www.shazam.com/track/806494307/%D7%A1%D7%95%D7%A4%D7%A8%D7%9E%D7%9F",
+      "shazam_key": "806494307",
+      "recognized_at": "2026-07-13T17:40:46Z",
+      "created_at": "2026-07-13 17:41:02",
+      "station_slug": "radio-darom",
+      "station_name": "רדיו דרום 97FM",
+      "station_color": "#e36ac8"
+    },
+    {
       "id": 342,
       "station_id": 1,
       "artist": "Imagination",
@@ -3711,7 +3739,7 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "total": 265,
-  "returned": 265,
-  "updated_at": "2026-07-13T17:40:42Z"
+  "total": 267,
+  "returned": 267,
+  "updated_at": "2026-07-13T17:41:02Z"
 }

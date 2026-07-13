@@ -2914,9 +2914,31 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Idan Amedi",
+      "title": "סופרמן",
+      "text": "Idan Amedi — סופרמן",
+      "recognized_at": "2026-07-13T17:40:46Z",
+      "station_slug": "radio-darom",
+      "station_color": "#e36ac8",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Mary Mary",
+      "title": "Shackles (Praise You)",
+      "text": "Mary Mary — Shackles (Praise You)",
+      "recognized_at": "2026-07-13T17:40:48Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 265,
-  "returned": 265,
-  "updated_at": "2026-07-13T17:40:42Z"
+  "total": 267,
+  "returned": 267,
+  "updated_at": "2026-07-13T17:41:02Z"
 }
