@@ -54,9 +54,20 @@
       "day_of_week": "1",
       "hour": "12",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "The Clash",
+      "title": "Rock the Casbah",
+      "text": "The Clash — Rock the Casbah",
+      "recognized_at": "2026-07-13T13:04:29Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "13",
+      "date": "2026-07-13"
     }
   ],
-  "total": 5,
-  "returned": 5,
-  "updated_at": "2026-07-13T13:03:42Z"
+  "total": 6,
+  "returned": 6,
+  "updated_at": "2026-07-13T13:06:25Z"
 }

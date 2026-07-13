@@ -183,16 +183,12 @@ function renderPills(cur){
   };
 }
 
-function getFilteredData(arr){
-  if(!arr)return [];
-  if(!activeStation)return arr;
-  return arr.filter(t=>t.station_slug===activeStation||t.slug===activeStation);
-}
+
 
 // Now Playing grid
 function renderNowPlaying(cur){
   const el=document.getElementById('npGrid');
-  const data=getFilteredData(cur);
+  const data=activeStation?(cur||[]).filter(t=>t.station_slug===activeStation):cur||[];
   if(!data||data.length===0){
     el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">📻 ממתין לנתונים...</div>';
     return;
@@ -222,7 +218,7 @@ function renderStats(stats){
 function renderHistory(hist){
   const el=document.getElementById('historyList');
   if(!hist||!hist.history){el.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים</div>';return}
-  const data=getFilteredData(hist.history);
+  const data=hist.history;
   if(!data.length){el.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים לתחנה זו</div>';return}
   el.innerHTML='<div style=font-size:.78rem;color:var(--muted);margin-bottom:6px>'+data.length+'/'+hist.total+' שירים</div>'+
     data.slice(0,200).map(t=>
@@ -238,7 +234,7 @@ function renderHistory(hist){
 function renderHype(hype){
   const el=document.getElementById('hypeList');
   if(!hype||!hype.tracks){el.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים</div>';return}
-  const data=getFilteredData(hype.tracks);
+  const data=hype.tracks;
   if(!data.length){el.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים</div>';return}
   el.innerHTML=data.slice(0,30).map((t,i)=>
     '<div class=history-item>'+
@@ -312,10 +308,24 @@ function renderDateChart(stats){
   });
 }
 
+function renderCrossStation(data){
+  const el=document.getElementById('crossStationList');
+  if(!data||!data.tracks||!data.tracks.length){
+    el.innerHTML='<div style=text-align:center;padding:16px;color:var(--muted)>\u05e2\u05d3\u05d9\u05d9\u05df \u05d0\u05d9\u05df \u05e9\u05d9\u05e8\u05d9\u05dd \u05d7\u05d5\u05e6\u05d9\u05dd</div>';return;
+  }
+  el.innerHTML=data.tracks.map((t,i)=>
+    '<div class=history-item>'+
+      '<div style=width:28px;font-weight:700;color:var(--accent);font-size:.85rem>'+t.station_count+'\u00d7</div>'+
+      '<div class=info><div class=ar>'+esc(t.artist)+'</div><div class=ti>'+esc(t.title)+'</div></div>'+
+      '<div style=font-size:.72rem;color:var(--muted);text-align:left;direction:ltr>'+esc(t.station_names||'')+'</div>'+
+    '</div>'
+  ).join('');
+}
+
 function renderTopArtists(hist){
   const el=document.getElementById('topArtistsList');
   if(!hist||!hist.history){el.innerHTML='<div style=padding:12px;color:var(--muted)>אין נתונים</div>';return}
-  const data=getFilteredData(hist.history);
+  const data=hist.history;
   const cnt={};
   data.forEach(t=>{
     const a=(t.artist||'?').toLowerCase();

@@ -1,0 +1,93 @@
+{
+  "tracks": [
+    {
+      "artist": "Sash!",
+      "title": "Ecuador (Radio Edit)",
+      "text": "Sash! — Ecuador (Radio Edit)",
+      "station_count": 3,
+      "station_names": "קול השפלה 103FM,רדיו תל אביב 102FM,כאן ב",
+      "station_slugs": "kol-hashfela,radio-tlv,kan-bet",
+      "total_plays": 3,
+      "first_seen": "2026-07-13T12:57:20Z",
+      "last_seen": "2026-07-13T12:59:22Z"
+    },
+    {
+      "artist": "Aviv Geffen & התעויוט",
+      "title": "אל תדאג",
+      "text": "Aviv Geffen & התעויוט — אל תדאג",
+      "station_count": 3,
+      "station_names": "רדיו תל אביב 102FM,כאן ב,99FM",
+      "station_slugs": "radio-tlv,kan-bet,99fm",
+      "total_plays": 3,
+      "first_seen": "2026-07-13T12:50:26Z",
+      "last_seen": "2026-07-13T12:51:30Z"
+    },
+    {
+      "artist": "SZA",
+      "title": "Kill Bill",
+      "text": "SZA — Kill Bill",
+      "station_count": 2,
+      "station_names": "רדיו תל אביב 102FM,כאן ב",
+      "station_slugs": "radio-tlv,kan-bet",
+      "total_plays": 2,
+      "first_seen": "2026-07-13T12:52:43Z",
+      "last_seen": "2026-07-13T12:53:46Z"
+    },
+    {
+      "artist": "Shlomo Artzi & Rita",
+      "title": "שניים",
+      "text": "Shlomo Artzi & Rita — שניים",
+      "station_count": 2,
+      "station_names": "גלגלצ,כאן 88",
+      "station_slugs": "galgalatz,kan-88",
+      "total_plays": 2,
+      "first_seen": "2026-07-13T12:55:22Z",
+      "last_seen": "2026-07-13T12:56:25Z"
+    },
+    {
+      "artist": "Loft",
+      "title": "Hold On",
+      "text": "Loft — Hold On",
+      "station_count": 2,
+      "station_names": "קול השפלה 103FM,כאן 88",
+      "station_slugs": "kol-hashfela,kan-88",
+      "total_plays": 2,
+      "first_seen": "2026-07-13T12:48:35Z",
+      "last_seen": "2026-07-13T12:48:38Z"
+    },
+    {
+      "artist": "La Bouche",
+      "title": "Be My Lover",
+      "text": "La Bouche — Be My Lover",
+      "station_count": 2,
+      "station_names": "קול השפלה 103FM,כאן 88",
+      "station_slugs": "kol-hashfela,kan-88",
+      "total_plays": 2,
+      "first_seen": "2026-07-13T12:53:15Z",
+      "last_seen": "2026-07-13T12:55:17Z"
+    },
+    {
+      "artist": "Blondie",
+      "title": "The Tide Is High",
+      "text": "Blondie — The Tide Is High",
+      "station_count": 2,
+      "station_names": "99FM,כאן ב",
+      "station_slugs": "99fm,kan-bet",
+      "total_plays": 2,
+      "first_seen": "2026-07-13T12:53:49Z",
+      "last_seen": "2026-07-13T12:54:53Z"
+    },
+    {
+      "artist": "Arkadi Duchin & Meir Banai",
+      "title": "דומינו",
+      "text": "Arkadi Duchin & Meir Banai — דומינו",
+      "station_count": 2,
+      "station_names": "99FM,כאן ב",
+      "station_slugs": "99fm,kan-bet",
+      "total_plays": 2,
+      "first_seen": "2026-07-13T12:57:07Z",
+      "last_seen": "2026-07-13T12:58:15Z"
+    }
+  ],
+  "updated_at": "2026-07-13T13:06:25Z"
+}

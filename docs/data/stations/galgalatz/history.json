@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 36,
+      "station_id": 2,
+      "artist": "Stardust",
+      "title": "Music Sounds Better with You",
+      "text": "Stardust — Music Sounds Better with You",
+      "url": "https://www.shazam.com/track/5907610/music-sounds-better-with-you",
+      "shazam_key": "5907610",
+      "recognized_at": "2026-07-13T13:04:40Z",
+      "created_at": "2026-07-13 13:04:42",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "id": 21,
       "station_id": 2,
       "artist": "Shlomo Artzi & Rita",
@@ -43,6 +57,6 @@
       "station_color": "#e36a6a"
     }
   ],
-  "total": 3,
-  "updated_at": "2026-07-13T13:03:42Z"
+  "total": 4,
+  "updated_at": "2026-07-13T13:06:25Z"
 }

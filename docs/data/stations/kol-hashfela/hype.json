@@ -45,6 +45,17 @@
       "station_color": "#6ae3c1"
     },
     {
+      "artist": "The Clash",
+      "title": "Rock the Casbah",
+      "text": "The Clash — Rock the Casbah",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:04:29Z",
+      "last_seen": "2026-07-13T13:04:29Z",
+      "station_slug": "kol-hashfela",
+      "station_name": "קול השפלה 103FM",
+      "station_color": "#6ae3c1"
+    },
+    {
       "artist": "Years & Years",
       "title": "Desire",
       "text": "Years & Years — Desire",
@@ -56,5 +67,5 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "updated_at": "2026-07-13T13:03:42Z"
+  "updated_at": "2026-07-13T13:06:25Z"
 }

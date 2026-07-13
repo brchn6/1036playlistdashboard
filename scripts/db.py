@@ -281,8 +281,8 @@ class PlaylistDB:
         cur = self.conn.execute(
             """SELECT t.artist, t.title, t.text,
                       COUNT(DISTINCT t.station_id) as station_count,
-                      GROUP_CONCAT(DISTINCT s.name, ' | ') as station_names,
-                      GROUP_CONCAT(DISTINCT s.slug, ',') as station_slugs,
+                      GROUP_CONCAT(DISTINCT s.name) as station_names,
+                      GROUP_CONCAT(DISTINCT s.slug) as station_slugs,
                       COUNT(*) as total_plays,
                       MIN(t.recognized_at) as first_seen,
                       MAX(t.recognized_at) as last_seen

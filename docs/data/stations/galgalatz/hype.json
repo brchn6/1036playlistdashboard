@@ -32,7 +32,18 @@
       "station_slug": "galgalatz",
       "station_name": "גלגלצ",
       "station_color": "#e36a6a"
+    },
+    {
+      "artist": "Stardust",
+      "title": "Music Sounds Better with You",
+      "text": "Stardust — Music Sounds Better with You",
+      "play_count": 1,
+      "first_seen": "2026-07-13T13:04:40Z",
+      "last_seen": "2026-07-13T13:04:40Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T13:03:42Z"
+  "updated_at": "2026-07-13T13:06:25Z"
 }
