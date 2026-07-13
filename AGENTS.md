@@ -47,6 +47,7 @@ gh workflow run "Deploy to Pages" --repo brchn6/radio-playlist-dashboard
 5. Scatter Y-axis flat → station categories
 6. Pages build collisions → manual deploy only
 7. Collector not pushing → needs `GIT_AUTO_PUSH=1`
+8. **Pages auto-build on every data push** — Data files moved from `docs/data/` → `site-data/` (outside Pages watch directory). Commits include `[skip ci]` to prevent any Actions trigger. Deploy workflow copies `site-data/` into position during manual deploy.
 
 ## Memory File
 Full project memory at `~/.memory/radio-playlist-dashboard.md` — **READ BEFORE making any changes**.
