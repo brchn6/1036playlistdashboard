@@ -52,3 +52,6 @@ gh workflow run "Deploy to Pages" --repo brchn6/radio-playlist-dashboard
 
 ## Memory File
 Full project memory at `~/.memory/radio-playlist-dashboard.md` — **READ BEFORE making any changes**.
+
+## Deployment Architecture Decisions
+Full analysis, failed attempts, and final solution documented in `.planning/DEPLOY-ARCHITECTURE.md` — read this before making any changes to the deploy pipeline.
