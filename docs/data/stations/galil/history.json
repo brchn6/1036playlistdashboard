@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 332,
+      "station_id": 7,
+      "artist": "AURORA",
+      "title": "Dance On The Moon",
+      "text": "AURORA — Dance On The Moon",
+      "url": "https://www.shazam.com/track/461394431/dance-on-the-moon",
+      "shazam_key": "461394431",
+      "recognized_at": "2026-07-13T17:32:44Z",
+      "created_at": "2026-07-13 17:33:09",
+      "station_slug": "galil",
+      "station_name": "קול הגליל העליון",
+      "station_color": "#a06ae3"
+    },
+    {
       "id": 328,
       "station_id": 7,
       "artist": "Bob Dylan",
@@ -617,6 +631,6 @@
       "station_color": "#a06ae3"
     }
   ],
-  "total": 44,
-  "updated_at": "2026-07-13T17:32:39Z"
+  "total": 45,
+  "updated_at": "2026-07-13T17:33:09Z"
 }

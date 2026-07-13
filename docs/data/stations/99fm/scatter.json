@@ -406,9 +406,20 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "GÅEL",
+      "title": "Now I See",
+      "text": "GÅEL — Now I See",
+      "recognized_at": "2026-07-13T17:32:51Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 37,
-  "returned": 37,
-  "updated_at": "2026-07-13T17:32:39Z"
+  "total": 38,
+  "returned": 38,
+  "updated_at": "2026-07-13T17:33:09Z"
 }

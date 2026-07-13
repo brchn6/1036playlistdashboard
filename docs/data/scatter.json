@@ -2782,9 +2782,31 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "AURORA",
+      "title": "Dance On The Moon",
+      "text": "AURORA — Dance On The Moon",
+      "recognized_at": "2026-07-13T17:32:44Z",
+      "station_slug": "galil",
+      "station_color": "#a06ae3",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "GÅEL",
+      "title": "Now I See",
+      "text": "GÅEL — Now I See",
+      "recognized_at": "2026-07-13T17:32:51Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 253,
-  "returned": 253,
-  "updated_at": "2026-07-13T17:32:39Z"
+  "total": 255,
+  "returned": 255,
+  "updated_at": "2026-07-13T17:33:09Z"
 }

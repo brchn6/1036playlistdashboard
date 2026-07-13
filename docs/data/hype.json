@@ -177,6 +177,14 @@
       "last_seen": "2026-07-13T15:10:41Z"
     },
     {
+      "artist": "AURORA",
+      "title": "Dance On The Moon",
+      "text": "AURORA — Dance On The Moon",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:32:44Z",
+      "last_seen": "2026-07-13T17:32:44Z"
+    },
+    {
       "artist": "Avalanche",
       "title": "Johnny, Johnny Come Home (Remix '89)",
       "text": "Avalanche — Johnny, Johnny Come Home (Remix '89)",
@@ -697,6 +705,14 @@
       "last_seen": "2026-07-13T17:17:19Z"
     },
     {
+      "artist": "GÅEL",
+      "title": "Now I See",
+      "text": "GÅEL — Now I See",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:32:51Z",
+      "last_seen": "2026-07-13T17:32:51Z"
+    },
+    {
       "artist": "Ha'Eivrit",
       "title": "Mesibat Kita",
       "text": "Ha'Eivrit — Mesibat Kita",
@@ -783,23 +799,7 @@
       "play_count": 1,
       "first_seen": "2026-07-13T15:25:49Z",
       "last_seen": "2026-07-13T15:25:49Z"
-    },
-    {
-      "artist": "Jasmin Moallem",
-      "title": "תן לי את האששש",
-      "text": "Jasmin Moallem — תן לי את האששש",
-      "play_count": 1,
-      "first_seen": "2026-07-13T13:37:28Z",
-      "last_seen": "2026-07-13T13:37:28Z"
-    },
-    {
-      "artist": "Joe Bonamassa",
-      "title": "I Wonder Who (Live)",
-      "text": "Joe Bonamassa — I Wonder Who (Live)",
-      "play_count": 1,
-      "first_seen": "2026-07-13T17:31:46Z",
-      "last_seen": "2026-07-13T17:31:46Z"
     }
   ],
-  "updated_at": "2026-07-13T17:32:39Z"
+  "updated_at": "2026-07-13T17:33:09Z"
 }

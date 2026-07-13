@@ -188,6 +188,17 @@
       "station_color": "#6ab8e3"
     },
     {
+      "artist": "GÅEL",
+      "title": "Now I See",
+      "text": "GÅEL — Now I See",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:32:51Z",
+      "last_seen": "2026-07-13T17:32:51Z",
+      "station_slug": "99fm",
+      "station_name": "99FM",
+      "station_color": "#6ab8e3"
+    },
+    {
       "artist": "INXS",
       "title": "Never Tear Us Apart",
       "text": "INXS — Never Tear Us Apart",
@@ -408,5 +419,5 @@
       "station_color": "#6ab8e3"
     }
   ],
-  "updated_at": "2026-07-13T17:32:39Z"
+  "updated_at": "2026-07-13T17:33:09Z"
 }
