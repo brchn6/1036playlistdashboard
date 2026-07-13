@@ -179,7 +179,7 @@ def main() -> None:
     iteration = 0
     new_track_occurred = False
     last_push_time = 0.0
-    MIN_PUSH_INTERVAL = 300  # 5 minutes between git pushes
+    MIN_PUSH_INTERVAL = 0  # push every cycle (30s)
 
     while running:
         iteration += 1
@@ -227,19 +227,12 @@ def main() -> None:
             )
             new_track_occurred = True
 
-        # ── Generate data & push (throttled: max once per 5min) ──
-        should_generate = new_track_occurred or iteration % 5 == 0
-        if should_generate:
-            generate_static_data()
+        # ── Generate data every cycle, push every 30s ──
+        generate_static_data()
 
-        can_push = DEFAULT_GIT_AUTO_PUSH and (time.time() - last_push_time) >= MIN_PUSH_INTERVAL
-        if can_push:
-            if new_track_occurred:
-                git_commit_and_push(f"auto: multi-station update [{now_iso()}]")
-                last_push_time = time.time()
-            elif iteration % 60 == 0:  # keepalive every ~30min
-                git_commit_and_push(f"auto: keepalive [{now_iso()}]")
-                last_push_time = time.time()
+        if DEFAULT_GIT_AUTO_PUSH:
+            git_commit_and_push(f"auto: multi-station update [{now_iso()}]")
+            last_push_time = time.time()
 
         # ── Periodic cleanup ──
         if iteration % CLEANUP_INTERVAL == 0:
