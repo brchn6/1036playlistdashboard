@@ -1,0 +1,1180 @@
+{
+  "stations": [
+    {
+      "id": 50,
+      "slug": "glglz",
+      "name": "גלגלצ",
+      "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_mp3",
+      "category": "רדיו ישראלי",
+      "category_slug": "israeli",
+      "color": "#6ae3c1",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 51,
+      "slug": "galey-israel",
+      "name": "גלי ישראל",
+      "stream_url": "https://cdn.cybercdn.live/Galei_Israel/Live/icecast.audio",
+      "category": "רדיו ישראלי",
+      "category_slug": "israeli",
+      "color": "#6ae3c1",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 52,
+      "slug": "kan-88",
+      "name": "כאן 88",
+      "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_88.mp3",
+      "category": "רדיו ישראלי",
+      "category_slug": "israeli",
+      "color": "#6ae3c1",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 53,
+      "slug": "kan-b",
+      "name": "כאן ב' (רשת ב')",
+      "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_BET.mp3",
+      "category": "רדיו ישראלי",
+      "category_slug": "israeli",
+      "color": "#6ae3c1",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 54,
+      "slug": "glz",
+      "name": "גלי צה\"ל",
+      "stream_url": "https://glzwizzlv.bynetcdn.com/glz_mp3",
+      "category": "רדיו ישראלי",
+      "category_slug": "israeli",
+      "color": "#6ae3c1",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 55,
+      "slug": "kan-music",
+      "name": "כאן קול המוזיקה",
+      "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_KOL_HAMUSICA.mp3",
+      "category": "רדיו ישראלי",
+      "category_slug": "israeli",
+      "color": "#6ae3c1",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 56,
+      "slug": "kan-tarbut",
+      "name": "כאן תרבות (רשת א')",
+      "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_TARBUT.mp3",
+      "category": "רדיו ישראלי",
+      "category_slug": "israeli",
+      "color": "#6ae3c1",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 57,
+      "slug": "kan-makan",
+      "name": "כאן מכאן בערבית",
+      "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_MAKAN.mp3",
+      "category": "רדיו ישראלי",
+      "category_slug": "israeli",
+      "color": "#6ae3c1",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 58,
+      "slug": "glglz-sofshavua",
+      "name": "גלגלצ סופשבוע רגוע",
+      "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_sofshavua_mp3",
+      "category": "רדיו ישראלי",
+      "category_slug": "israeli",
+      "color": "#6ae3c1",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 59,
+      "slug": "90fm",
+      "name": "רדיו תשעים 90FM",
+      "stream_url": "https://cdn.cybercdn.live/Emtza_Haderech/Live_Audio/icecast.audio",
+      "category": "רדיו אזורי",
+      "category_slug": "regional",
+      "color": "#e36a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 60,
+      "slug": "91fm",
+      "name": "רדיו לב המדינה 91FM",
+      "stream_url": "https://cdn.cybercdn.live/Lev_Hamedina/Audio/icecast.audio",
+      "category": "רדיו אזורי",
+      "category_slug": "regional",
+      "color": "#e36a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 61,
+      "slug": "96fm",
+      "name": "רדיו קול רגע 96FM",
+      "stream_url": "https://cdn.cybercdn.live/Kol_Rega/Live_Audio/icecast.audio",
+      "category": "רדיו אזורי",
+      "category_slug": "regional",
+      "color": "#e36a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 62,
+      "slug": "radio-darom",
+      "name": "רדיו דרום 97FM",
+      "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio",
+      "category": "רדיו אזורי",
+      "category_slug": "regional",
+      "color": "#e36a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 63,
+      "slug": "eco99fm",
+      "name": "רדיו אקו 99FM",
+      "stream_url": "https://99.mediacast.co.il/99fm_aac",
+      "category": "רדיו אזורי",
+      "category_slug": "regional",
+      "color": "#e36a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 64,
+      "slug": "100fm",
+      "name": "רדיוס 100FM",
+      "stream_url": "https://cdn.cybercdn.live/Radios_100FM/Audio/icecast.audio",
+      "category": "רדיו אזורי",
+      "category_slug": "regional",
+      "color": "#e36a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 65,
+      "slug": "101fm",
+      "name": "רדיו ירושלים 101FM",
+      "stream_url": "https://cdn.cybercdn.live/JerusalemRadio/Live/icecast.audio",
+      "category": "רדיו אזורי",
+      "category_slug": "regional",
+      "color": "#e36a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 66,
+      "slug": "radio-darom-1015",
+      "name": "רדיו דרום 101.5FM",
+      "stream_url": "https://cdn.cybercdn.live/Darom_1015FM/Live/icecast.audio",
+      "category": "רדיו אזורי",
+      "category_slug": "regional",
+      "color": "#e36a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 67,
+      "slug": "102fm",
+      "name": "רדיו תל אביב 102FM",
+      "stream_url": "https://102.livecdn.biz/102fm_aac",
+      "category": "רדיו אזורי",
+      "category_slug": "regional",
+      "color": "#e36a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 68,
+      "slug": "103fm",
+      "name": "רדיו ללא הפסקה 103FM",
+      "stream_url": "https://cdn.cybercdn.live/103FM/Live/icecast.audio",
+      "category": "רדיו אזורי",
+      "category_slug": "regional",
+      "color": "#e36a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 69,
+      "slug": "radio-haifa",
+      "name": "רדיו חיפה 107.5FM",
+      "stream_url": "https://1075.livecdn.biz/radiohaifa",
+      "category": "רדיו אזורי",
+      "category_slug": "regional",
+      "color": "#e36a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 70,
+      "slug": "93fm",
+      "name": "רדיו קול חי",
+      "stream_url": "https://media2.93fm.co.il/live-new",
+      "category": "רדיו דתי",
+      "category_slug": "religious",
+      "color": "#6ab8e3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 71,
+      "slug": "kcm",
+      "name": "קול חי מיוזיק",
+      "stream_url": "https://live.kcm.fm/livemusic",
+      "category": "רדיו דתי",
+      "category_slug": "religious",
+      "color": "#6ab8e3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 72,
+      "slug": "kol-barama",
+      "name": "רדיו קול ברמה",
+      "stream_url": "https://cdn.cybercdn.live/Kol_Barama/Live_Audio/icecast.audio",
+      "category": "רדיו דתי",
+      "category_slug": "religious",
+      "color": "#6ab8e3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 73,
+      "slug": "kol-play",
+      "name": "קול פליי",
+      "stream_url": "https://cdn.cybercdn.live/Kol_Barama/Music/icecast.audio",
+      "category": "רדיו דתי",
+      "category_slug": "religious",
+      "color": "#6ab8e3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 74,
+      "slug": "inn",
+      "name": "ערוץ 7",
+      "stream_url": "https://radiolive.a7.org/a7live",
+      "category": "רדיו דתי",
+      "category_slug": "religious",
+      "color": "#6ab8e3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 75,
+      "slug": "kan-moreshet",
+      "name": "כאן מורשת",
+      "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_MORESHET.mp3",
+      "category": "רדיו דתי",
+      "category_slug": "religious",
+      "color": "#6ab8e3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 76,
+      "slug": "radio-breslev",
+      "name": "רדיו ברסלב",
+      "stream_url": "https://securestreams6.autopo.st:2294/mp3",
+      "category": "רדיו דתי",
+      "category_slug": "religious",
+      "color": "#6ab8e3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 77,
+      "slug": "tv2000",
+      "name": "ערוץ 2000",
+      "stream_url": "https://cdn.cybercdn.live/Radio2000/MP3/icecast.audio",
+      "category": "רדיו דתי",
+      "category_slug": "religious",
+      "color": "#6ab8e3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 78,
+      "slug": "idan-tshuva",
+      "name": "רדיו עידן תשובה",
+      "stream_url": "https://live.ecast.co.il/stream/radioneto2",
+      "category": "רדיו דתי",
+      "category_slug": "religious",
+      "color": "#6ab8e3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 79,
+      "slug": "kabbalah-radio",
+      "name": "רדיו קבלה",
+      "stream_url": "https://edge3.uk.kab.tv/live/tv66-heb-high/playlist.m3u8",
+      "category": "רדיו דתי",
+      "category_slug": "religious",
+      "color": "#6ab8e3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 80,
+      "slug": "toker",
+      "name": "הרדיו של מנחם טוקר",
+      "stream_url": "https://broadcast.adpronet.com/radio/6060/radio.mp3",
+      "category": "רדיו דתי",
+      "category_slug": "religious",
+      "color": "#6ab8e3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 81,
+      "slug": "mizrahit-fm",
+      "name": "רדיו נושמים מזרחית",
+      "stream_url": "https://rs.mizrahit.fm:7777/;stream/1",
+      "category": "רדיו מזרחית",
+      "category_slug": "mizrahit",
+      "color": "#e3c86a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 82,
+      "slug": "glglz-med",
+      "name": "גלגלצ ים תיכוני",
+      "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_med_mp3",
+      "category": "רדיו מזרחית",
+      "category_slug": "mizrahit",
+      "color": "#e3c86a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 83,
+      "slug": "idan-mizrah",
+      "name": "רדיו עידן המזרח",
+      "stream_url": "https://live.ecast.co.il/stream/radioneto1",
+      "category": "רדיו מזרחית",
+      "category_slug": "mizrahit",
+      "color": "#e3c86a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 84,
+      "slug": "radio-menta",
+      "name": "רדיו מנטה",
+      "stream_url": "https://menta-fm.co.il/radio/",
+      "category": "רדיו מזרחית",
+      "category_slug": "mizrahit",
+      "color": "#e3c86a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 85,
+      "slug": "radio-yasoo",
+      "name": "רדיו יאסו",
+      "stream_url": "https://liveradio.co.il/radioyasoo",
+      "category": "רדיו מזרחית",
+      "category_slug": "mizrahit",
+      "color": "#e3c86a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 86,
+      "slug": "diki-mizrahit",
+      "name": "רדיו שירי דיכאון",
+      "stream_url": "https://radio.diki-mizrahit.co.il/",
+      "category": "רדיו מזרחית",
+      "category_slug": "mizrahit",
+      "color": "#e3c86a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 87,
+      "slug": "alllove",
+      "name": "נושמים אהבה",
+      "stream_url": "https://radio.alllove.co.il/",
+      "category": "רדיו אינטרנט",
+      "category_slug": "internet",
+      "color": "#c86ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 88,
+      "slug": "radioezorit",
+      "name": "רדיו אזורית",
+      "stream_url": "http://wms01.video-streaming.co.il:8000/;stream/1",
+      "category": "רדיו אינטרנט",
+      "category_slug": "internet",
+      "color": "#c86ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 89,
+      "slug": "radiosol",
+      "name": "רדיו סול",
+      "stream_url": "https://radio.streamgates.net/stream/sol",
+      "category": "רדיו אינטרנט",
+      "category_slug": "internet",
+      "color": "#c86ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 90,
+      "slug": "beatfm",
+      "name": "BeatFM",
+      "stream_url": "https://securestreams2.autopo.st:1242/live",
+      "category": "רדיו אינטרנט",
+      "category_slug": "internet",
+      "color": "#c86ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 91,
+      "slug": "radio-eol",
+      "name": "רדיו מהות החיים",
+      "stream_url": "https://eol-live.cdnwiz.com/eol/eolsite/icecast.audio",
+      "category": "רדיו אינטרנט",
+      "category_slug": "internet",
+      "color": "#c86ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 92,
+      "slug": "kol-hayeladim",
+      "name": "רדיו קול הילדים",
+      "stream_url": "http://cast07.cdnwiz.com:8000/kol-hayeladim-mp3-128",
+      "category": "רדיו אינטרנט",
+      "category_slug": "internet",
+      "color": "#c86ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 93,
+      "slug": "mehiron",
+      "name": "רדיו המחירון",
+      "stream_url": "https://jointil.com/stream-reggae",
+      "category": "רדיו אינטרנט",
+      "category_slug": "internet",
+      "color": "#c86ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 94,
+      "slug": "radio-omemo",
+      "name": "רדיו אוממו",
+      "stream_url": "http://72.9.152.111:9994/;stream/1",
+      "category": "רדיו אינטרנט",
+      "category_slug": "internet",
+      "color": "#c86ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 95,
+      "slug": "anivoice",
+      "name": "רדיו קול החיות",
+      "stream_url": "http://shoutcast.ilcast.com:8022/;stream.mp3",
+      "category": "רדיו אינטרנט",
+      "category_slug": "internet",
+      "color": "#c86ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 96,
+      "slug": "campus",
+      "name": "קול הקמפוס",
+      "stream_url": "http://212.29.254.129:7075/;stream/1",
+      "category": "רדיו סטודנטים",
+      "category_slug": "student",
+      "color": "#e38a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 97,
+      "slug": "galilradio",
+      "name": "רדיו קול הגליל העליון",
+      "stream_url": "https://radio.streamgates.net/stream/galil",
+      "category": "רדיו סטודנטים",
+      "category_slug": "student",
+      "color": "#e38a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 98,
+      "slug": "1062fm",
+      "name": "הרדיו הבינתחומי הרצליה",
+      "stream_url": "http://192.117.143.154:8000/idc123.mp3",
+      "category": "רדיו סטודנטים",
+      "category_slug": "student",
+      "color": "#e38a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 99,
+      "slug": "kol-ramat-hasharon",
+      "name": "קול רמת השרון",
+      "stream_url": "http://106fm.livecast.co.il:8123/;stream/1",
+      "category": "רדיו סטודנטים",
+      "category_slug": "student",
+      "color": "#e38a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 100,
+      "slug": "kol-yizrael",
+      "name": "רדיו קול יזרעאל",
+      "stream_url": "https://radio.streamgates.net/stream/yezreel",
+      "category": "רדיו סטודנטים",
+      "category_slug": "student",
+      "color": "#e38a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 101,
+      "slug": "kolaher",
+      "name": "רדיו קול אחר",
+      "stream_url": "http://radio-tv-audio.procast.co.il:8010/ariel106fm",
+      "category": "רדיו סטודנטים",
+      "category_slug": "student",
+      "color": "#e38a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 102,
+      "slug": "oranim",
+      "name": "רדיו אורנים",
+      "stream_url": "http://oranim.cdnwz.net/oranim",
+      "category": "רדיו סטודנטים",
+      "category_slug": "student",
+      "color": "#e38a6a",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 103,
+      "slug": "kan-gimel",
+      "name": "כאן גימל (רשת ג')",
+      "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_GIMMEL.mp3",
+      "category": "מוזיקה ישראלית",
+      "category_slug": "israeli-music",
+      "color": "#a06ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 104,
+      "slug": "glglz-classicil",
+      "name": "גלגלצ גל עברי",
+      "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_classicil_mp3",
+      "category": "מוזיקה ישראלית",
+      "category_slug": "israeli-music",
+      "color": "#a06ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 105,
+      "slug": "israla",
+      "name": "ישראל LA",
+      "stream_url": "http://209.105.232.220:8777/;stream/1",
+      "category": "מוזיקה ישראלית",
+      "category_slug": "israeli-music",
+      "color": "#a06ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 106,
+      "slug": "clickil",
+      "name": "קליק ישראלי",
+      "stream_url": "http://listen.clickfm.co.il/clickil",
+      "category": "מוזיקה ישראלית",
+      "category_slug": "israeli-music",
+      "color": "#a06ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 107,
+      "slug": "nostal",
+      "name": "רדיו נוסטלגיה ישראלית",
+      "stream_url": "http://194.213.4.197:8000/;stream/1",
+      "category": "מוזיקה ישראלית",
+      "category_slug": "israeli-music",
+      "color": "#a06ae3",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 108,
+      "slug": "80s",
+      "name": "להיטי שנות ה-80",
+      "stream_url": "https://listen.181fm.com/181-awesome80s_128k.mp3",
+      "category": "רדיו מהעולם",
+      "category_slug": "world",
+      "color": "#e36ac8",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 109,
+      "slug": "70s",
+      "name": "להיטי שנות ה-70",
+      "stream_url": "https://listen.181fm.com/181-70s_128k.mp3",
+      "category": "רדיו מהעולם",
+      "category_slug": "world",
+      "color": "#e36ac8",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 110,
+      "slug": "classicfm",
+      "name": "Classic FM",
+      "stream_url": "https://media-ice.musicradio.com/ClassicFMMP3",
+      "category": "רדיו מהעולם",
+      "category_slug": "world",
+      "color": "#e36ac8",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 111,
+      "slug": "glglz-hits",
+      "name": "גלגלצ להיטים חמים",
+      "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_hits_mp3",
+      "category": "רדיו מהעולם",
+      "category_slug": "world",
+      "color": "#e36ac8",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 112,
+      "slug": "glglz-rock",
+      "name": "גלגלצ רוק קלאסי",
+      "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_rock_mp3",
+      "category": "רדיו מהעולם",
+      "category_slug": "world",
+      "color": "#e36ac8",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 113,
+      "slug": "glglz-alt",
+      "name": "גלגלצ עשורים",
+      "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_alt_mp3",
+      "category": "רדיו מהעולם",
+      "category_slug": "world",
+      "color": "#e36ac8",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 114,
+      "slug": "radiolove",
+      "name": "רדיו שירי אהבה",
+      "stream_url": "https://liveradio.co.il/radiolove",
+      "category": "רדיו מהעולם",
+      "category_slug": "world",
+      "color": "#e36ac8",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    },
+    {
+      "id": 115,
+      "slug": "beatles",
+      "name": "רדיו ביטלס",
+      "stream_url": "https://listen.181fm.com/181-beatles_128k.mp3",
+      "category": "רדיו מהעולם",
+      "category_slug": "world",
+      "color": "#e36ac8",
+      "enabled": 1,
+      "created_at": "2026-07-13"
+    }
+  ],
+  "categories": {
+    "רדיו ישראלי": {
+      "slug": "israeli",
+      "color": "#6ae3c1",
+      "channels": [
+        {
+          "id": "glglz",
+          "slug": "glglz",
+          "name": "גלגלצ",
+          "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_mp3"
+        },
+        {
+          "id": "galey-israel",
+          "slug": "galey-israel",
+          "name": "גלי ישראל",
+          "stream_url": "https://cdn.cybercdn.live/Galei_Israel/Live/icecast.audio"
+        },
+        {
+          "id": "kan-88",
+          "slug": "kan-88",
+          "name": "כאן 88",
+          "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_88.mp3"
+        },
+        {
+          "id": "kan-b",
+          "slug": "kan-b",
+          "name": "כאן ב' (רשת ב')",
+          "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_BET.mp3"
+        },
+        {
+          "id": "glz",
+          "slug": "glz",
+          "name": "גלי צה\"ל",
+          "stream_url": "https://glzwizzlv.bynetcdn.com/glz_mp3"
+        },
+        {
+          "id": "kan-music",
+          "slug": "kan-music",
+          "name": "כאן קול המוזיקה",
+          "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_KOL_HAMUSICA.mp3"
+        },
+        {
+          "id": "kan-tarbut",
+          "slug": "kan-tarbut",
+          "name": "כאן תרבות (רשת א')",
+          "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_TARBUT.mp3"
+        },
+        {
+          "id": "kan-makan",
+          "slug": "kan-makan",
+          "name": "כאן מכאן בערבית",
+          "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_MAKAN.mp3"
+        },
+        {
+          "id": "glglz-sofshavua",
+          "slug": "glglz-sofshavua",
+          "name": "גלגלצ סופשבוע רגוע",
+          "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_sofshavua_mp3"
+        }
+      ]
+    },
+    "רדיו אזורי": {
+      "slug": "regional",
+      "color": "#e36a6a",
+      "channels": [
+        {
+          "id": "90fm",
+          "slug": "90fm",
+          "name": "רדיו תשעים 90FM",
+          "stream_url": "https://cdn.cybercdn.live/Emtza_Haderech/Live_Audio/icecast.audio"
+        },
+        {
+          "id": "91fm",
+          "slug": "91fm",
+          "name": "רדיו לב המדינה 91FM",
+          "stream_url": "https://cdn.cybercdn.live/Lev_Hamedina/Audio/icecast.audio"
+        },
+        {
+          "id": "96fm",
+          "slug": "96fm",
+          "name": "רדיו קול רגע 96FM",
+          "stream_url": "https://cdn.cybercdn.live/Kol_Rega/Live_Audio/icecast.audio"
+        },
+        {
+          "id": "radio-darom",
+          "slug": "radio-darom",
+          "name": "רדיו דרום 97FM",
+          "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio"
+        },
+        {
+          "id": "eco99fm",
+          "slug": "eco99fm",
+          "name": "רדיו אקו 99FM",
+          "stream_url": "https://99.mediacast.co.il/99fm_aac"
+        },
+        {
+          "id": "100fm",
+          "slug": "100fm",
+          "name": "רדיוס 100FM",
+          "stream_url": "https://cdn.cybercdn.live/Radios_100FM/Audio/icecast.audio"
+        },
+        {
+          "id": "101fm",
+          "slug": "101fm",
+          "name": "רדיו ירושלים 101FM",
+          "stream_url": "https://cdn.cybercdn.live/JerusalemRadio/Live/icecast.audio"
+        },
+        {
+          "id": "radio-darom-1015",
+          "slug": "radio-darom-1015",
+          "name": "רדיו דרום 101.5FM",
+          "stream_url": "https://cdn.cybercdn.live/Darom_1015FM/Live/icecast.audio"
+        },
+        {
+          "id": "102fm",
+          "slug": "102fm",
+          "name": "רדיו תל אביב 102FM",
+          "stream_url": "https://102.livecdn.biz/102fm_aac"
+        },
+        {
+          "id": "103fm",
+          "slug": "103fm",
+          "name": "רדיו ללא הפסקה 103FM",
+          "stream_url": "https://cdn.cybercdn.live/103FM/Live/icecast.audio"
+        },
+        {
+          "id": "radio-haifa",
+          "slug": "radio-haifa",
+          "name": "רדיו חיפה 107.5FM",
+          "stream_url": "https://1075.livecdn.biz/radiohaifa"
+        }
+      ]
+    },
+    "רדיו דתי": {
+      "slug": "religious",
+      "color": "#6ab8e3",
+      "channels": [
+        {
+          "id": "93fm",
+          "slug": "93fm",
+          "name": "רדיו קול חי",
+          "stream_url": "https://media2.93fm.co.il/live-new"
+        },
+        {
+          "id": "kcm",
+          "slug": "kcm",
+          "name": "קול חי מיוזיק",
+          "stream_url": "https://live.kcm.fm/livemusic"
+        },
+        {
+          "id": "kol-barama",
+          "slug": "kol-barama",
+          "name": "רדיו קול ברמה",
+          "stream_url": "https://cdn.cybercdn.live/Kol_Barama/Live_Audio/icecast.audio"
+        },
+        {
+          "id": "kol-play",
+          "slug": "kol-play",
+          "name": "קול פליי",
+          "stream_url": "https://cdn.cybercdn.live/Kol_Barama/Music/icecast.audio"
+        },
+        {
+          "id": "inn",
+          "slug": "inn",
+          "name": "ערוץ 7",
+          "stream_url": "https://radiolive.a7.org/a7live"
+        },
+        {
+          "id": "kan-moreshet",
+          "slug": "kan-moreshet",
+          "name": "כאן מורשת",
+          "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_MORESHET.mp3"
+        },
+        {
+          "id": "radio-breslev",
+          "slug": "radio-breslev",
+          "name": "רדיו ברסלב",
+          "stream_url": "https://securestreams6.autopo.st:2294/mp3"
+        },
+        {
+          "id": "tv2000",
+          "slug": "tv2000",
+          "name": "ערוץ 2000",
+          "stream_url": "https://cdn.cybercdn.live/Radio2000/MP3/icecast.audio"
+        },
+        {
+          "id": "idan-tshuva",
+          "slug": "idan-tshuva",
+          "name": "רדיו עידן תשובה",
+          "stream_url": "https://live.ecast.co.il/stream/radioneto2"
+        },
+        {
+          "id": "kabbalah-radio",
+          "slug": "kabbalah-radio",
+          "name": "רדיו קבלה",
+          "stream_url": "https://edge3.uk.kab.tv/live/tv66-heb-high/playlist.m3u8"
+        },
+        {
+          "id": "toker",
+          "slug": "toker",
+          "name": "הרדיו של מנחם טוקר",
+          "stream_url": "https://broadcast.adpronet.com/radio/6060/radio.mp3"
+        }
+      ]
+    },
+    "רדיו מזרחית": {
+      "slug": "mizrahit",
+      "color": "#e3c86a",
+      "channels": [
+        {
+          "id": "mizrahit-fm",
+          "slug": "mizrahit-fm",
+          "name": "רדיו נושמים מזרחית",
+          "stream_url": "https://rs.mizrahit.fm:7777/;stream/1"
+        },
+        {
+          "id": "glglz-med",
+          "slug": "glglz-med",
+          "name": "גלגלצ ים תיכוני",
+          "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_med_mp3"
+        },
+        {
+          "id": "idan-mizrah",
+          "slug": "idan-mizrah",
+          "name": "רדיו עידן המזרח",
+          "stream_url": "https://live.ecast.co.il/stream/radioneto1"
+        },
+        {
+          "id": "radio-menta",
+          "slug": "radio-menta",
+          "name": "רדיו מנטה",
+          "stream_url": "https://menta-fm.co.il/radio/"
+        },
+        {
+          "id": "radio-yasoo",
+          "slug": "radio-yasoo",
+          "name": "רדיו יאסו",
+          "stream_url": "https://liveradio.co.il/radioyasoo"
+        },
+        {
+          "id": "diki-mizrahit",
+          "slug": "diki-mizrahit",
+          "name": "רדיו שירי דיכאון",
+          "stream_url": "https://radio.diki-mizrahit.co.il/"
+        }
+      ]
+    },
+    "רדיו אינטרנט": {
+      "slug": "internet",
+      "color": "#c86ae3",
+      "channels": [
+        {
+          "id": "alllove",
+          "slug": "alllove",
+          "name": "נושמים אהבה",
+          "stream_url": "https://radio.alllove.co.il/"
+        },
+        {
+          "id": "radioezorit",
+          "slug": "radioezorit",
+          "name": "רדיו אזורית",
+          "stream_url": "http://wms01.video-streaming.co.il:8000/;stream/1"
+        },
+        {
+          "id": "radiosol",
+          "slug": "radiosol",
+          "name": "רדיו סול",
+          "stream_url": "https://radio.streamgates.net/stream/sol"
+        },
+        {
+          "id": "beatfm",
+          "slug": "beatfm",
+          "name": "BeatFM",
+          "stream_url": "https://securestreams2.autopo.st:1242/live"
+        },
+        {
+          "id": "radio-eol",
+          "slug": "radio-eol",
+          "name": "רדיו מהות החיים",
+          "stream_url": "https://eol-live.cdnwiz.com/eol/eolsite/icecast.audio"
+        },
+        {
+          "id": "kol-hayeladim",
+          "slug": "kol-hayeladim",
+          "name": "רדיו קול הילדים",
+          "stream_url": "http://cast07.cdnwiz.com:8000/kol-hayeladim-mp3-128"
+        },
+        {
+          "id": "mehiron",
+          "slug": "mehiron",
+          "name": "רדיו המחירון",
+          "stream_url": "https://jointil.com/stream-reggae"
+        },
+        {
+          "id": "radio-omemo",
+          "slug": "radio-omemo",
+          "name": "רדיו אוממו",
+          "stream_url": "http://72.9.152.111:9994/;stream/1"
+        },
+        {
+          "id": "anivoice",
+          "slug": "anivoice",
+          "name": "רדיו קול החיות",
+          "stream_url": "http://shoutcast.ilcast.com:8022/;stream.mp3"
+        }
+      ]
+    },
+    "רדיו סטודנטים": {
+      "slug": "student",
+      "color": "#e38a6a",
+      "channels": [
+        {
+          "id": "campus",
+          "slug": "campus",
+          "name": "קול הקמפוס",
+          "stream_url": "http://212.29.254.129:7075/;stream/1"
+        },
+        {
+          "id": "galilradio",
+          "slug": "galilradio",
+          "name": "רדיו קול הגליל העליון",
+          "stream_url": "https://radio.streamgates.net/stream/galil"
+        },
+        {
+          "id": "1062fm",
+          "slug": "1062fm",
+          "name": "הרדיו הבינתחומי הרצליה",
+          "stream_url": "http://192.117.143.154:8000/idc123.mp3"
+        },
+        {
+          "id": "kol-ramat-hasharon",
+          "slug": "kol-ramat-hasharon",
+          "name": "קול רמת השרון",
+          "stream_url": "http://106fm.livecast.co.il:8123/;stream/1"
+        },
+        {
+          "id": "kol-yizrael",
+          "slug": "kol-yizrael",
+          "name": "רדיו קול יזרעאל",
+          "stream_url": "https://radio.streamgates.net/stream/yezreel"
+        },
+        {
+          "id": "kolaher",
+          "slug": "kolaher",
+          "name": "רדיו קול אחר",
+          "stream_url": "http://radio-tv-audio.procast.co.il:8010/ariel106fm"
+        },
+        {
+          "id": "oranim",
+          "slug": "oranim",
+          "name": "רדיו אורנים",
+          "stream_url": "http://oranim.cdnwz.net/oranim"
+        }
+      ]
+    },
+    "מוזיקה ישראלית": {
+      "slug": "israeli-music",
+      "color": "#a06ae3",
+      "channels": [
+        {
+          "id": "kan-gimel",
+          "slug": "kan-gimel",
+          "name": "כאן גימל (רשת ג')",
+          "stream_url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_GIMMEL.mp3"
+        },
+        {
+          "id": "glglz-classicil",
+          "slug": "glglz-classicil",
+          "name": "גלגלצ גל עברי",
+          "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_classicil_mp3"
+        },
+        {
+          "id": "israla",
+          "slug": "israla",
+          "name": "ישראל LA",
+          "stream_url": "http://209.105.232.220:8777/;stream/1"
+        },
+        {
+          "id": "clickil",
+          "slug": "clickil",
+          "name": "קליק ישראלי",
+          "stream_url": "http://listen.clickfm.co.il/clickil"
+        },
+        {
+          "id": "nostal",
+          "slug": "nostal",
+          "name": "רדיו נוסטלגיה ישראלית",
+          "stream_url": "http://194.213.4.197:8000/;stream/1"
+        }
+      ]
+    },
+    "רדיו מהעולם": {
+      "slug": "world",
+      "color": "#e36ac8",
+      "channels": [
+        {
+          "id": "80s",
+          "slug": "80s",
+          "name": "להיטי שנות ה-80",
+          "stream_url": "https://listen.181fm.com/181-awesome80s_128k.mp3"
+        },
+        {
+          "id": "70s",
+          "slug": "70s",
+          "name": "להיטי שנות ה-70",
+          "stream_url": "https://listen.181fm.com/181-70s_128k.mp3"
+        },
+        {
+          "id": "classicfm",
+          "slug": "classicfm",
+          "name": "Classic FM",
+          "stream_url": "https://media-ice.musicradio.com/ClassicFMMP3"
+        },
+        {
+          "id": "glglz-hits",
+          "slug": "glglz-hits",
+          "name": "גלגלצ להיטים חמים",
+          "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_hits_mp3"
+        },
+        {
+          "id": "glglz-rock",
+          "slug": "glglz-rock",
+          "name": "גלגלצ רוק קלאסי",
+          "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_rock_mp3"
+        },
+        {
+          "id": "glglz-alt",
+          "slug": "glglz-alt",
+          "name": "גלגלצ עשורים",
+          "stream_url": "https://glzwizzlv.bynetcdn.com/glglz_alt_mp3"
+        },
+        {
+          "id": "radiolove",
+          "slug": "radiolove",
+          "name": "רדיו שירי אהבה",
+          "stream_url": "https://liveradio.co.il/radiolove"
+        },
+        {
+          "id": "beatles",
+          "slug": "beatles",
+          "name": "רדיו ביטלס",
+          "stream_url": "https://listen.181fm.com/181-beatles_128k.mp3"
+        }
+      ]
+    }
+  },
+  "total_stations": 66,
+  "total_categories": 8,
+  "source": "https://fm1.co.il/data/data.json",
+  "parsed_at": "2026-07-13"
+}
