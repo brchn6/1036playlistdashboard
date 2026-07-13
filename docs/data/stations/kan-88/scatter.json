@@ -417,9 +417,20 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "The Derek Trucks Band",
+      "title": "Sweet Inspiration",
+      "text": "The Derek Trucks Band — Sweet Inspiration",
+      "recognized_at": "2026-07-13T17:07:06Z",
+      "station_slug": "kan-88",
+      "station_color": "#c86ae3",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 38,
-  "returned": 38,
-  "updated_at": "2026-07-13T17:06:39Z"
+  "total": 39,
+  "returned": 39,
+  "updated_at": "2026-07-13T17:07:09Z"
 }

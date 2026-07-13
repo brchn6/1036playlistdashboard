@@ -320,6 +320,17 @@
       "station_color": "#6ae3c1"
     },
     {
+      "artist": "Planet Funk",
+      "title": "Chase the Sun",
+      "text": "Planet Funk — Chase the Sun",
+      "play_count": 1,
+      "first_seen": "2026-07-13T17:07:07Z",
+      "last_seen": "2026-07-13T17:07:07Z",
+      "station_slug": "kol-hashfela",
+      "station_name": "קול השפלה 103FM",
+      "station_color": "#6ae3c1"
+    },
+    {
       "artist": "Queen",
       "title": "I Want To Break Free",
       "text": "Queen — I Want To Break Free",
@@ -518,5 +529,5 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "updated_at": "2026-07-13T17:06:39Z"
+  "updated_at": "2026-07-13T17:07:09Z"
 }

@@ -516,9 +516,20 @@
       "day_of_week": "1",
       "hour": "17",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Planet Funk",
+      "title": "Chase the Sun",
+      "text": "Planet Funk — Chase the Sun",
+      "recognized_at": "2026-07-13T17:07:07Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "17",
+      "date": "2026-07-13"
     }
   ],
-  "total": 47,
-  "returned": 47,
-  "updated_at": "2026-07-13T17:06:39Z"
+  "total": 48,
+  "returned": 48,
+  "updated_at": "2026-07-13T17:07:09Z"
 }
