@@ -14,15 +14,15 @@
     "station_color": "#6ae3c1"
   },
   {
-    "id": 174,
+    "id": 178,
     "station_id": 2,
-    "artist": "Ninet Tayeb",
-    "title": "בינתיים לך איתה",
-    "text": "Ninet Tayeb — בינתיים לך איתה",
-    "url": "https://www.shazam.com/track/878812413/%D7%91%D7%99%D7%A0%D7%AA%D7%99%D7%99%D7%9D-%D7%9C%D7%9A-%D7%90%D7%99%D7%AA%D7%94",
-    "shazam_key": "878812413",
-    "recognized_at": "2026-07-13T14:48:09Z",
-    "created_at": "2026-07-13 14:48:15",
+    "artist": "The Cardigans",
+    "title": "My Favourite Game",
+    "text": "The Cardigans — My Favourite Game",
+    "url": "https://www.shazam.com/track/247855/my-favourite-game",
+    "shazam_key": "247855",
+    "recognized_at": "2026-07-13T14:51:13Z",
+    "created_at": "2026-07-13 14:51:15",
     "station_slug": "galgalatz",
     "station_name": "גלגלצ",
     "station_color": "#e36a6a"

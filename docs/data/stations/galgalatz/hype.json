@@ -199,6 +199,17 @@
       "station_color": "#e36a6a"
     },
     {
+      "artist": "The Cardigans",
+      "title": "My Favourite Game",
+      "text": "The Cardigans — My Favourite Game",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:51:13Z",
+      "last_seen": "2026-07-13T14:51:13Z",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "artist": "The Pointer Sisters",
       "title": "I'm So Excited",
       "text": "The Pointer Sisters — I'm So Excited",
@@ -221,5 +232,5 @@
       "station_color": "#e36a6a"
     }
   ],
-  "updated_at": "2026-07-13T14:50:19Z"
+  "updated_at": "2026-07-13T14:51:15Z"
 }

@@ -219,9 +219,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "The Cardigans",
+      "title": "My Favourite Game",
+      "text": "The Cardigans — My Favourite Game",
+      "recognized_at": "2026-07-13T14:51:13Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 20,
-  "returned": 20,
-  "updated_at": "2026-07-13T14:50:19Z"
+  "total": 21,
+  "returned": 21,
+  "updated_at": "2026-07-13T14:51:15Z"
 }

@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 178,
+      "station_id": 2,
+      "artist": "The Cardigans",
+      "title": "My Favourite Game",
+      "text": "The Cardigans — My Favourite Game",
+      "url": "https://www.shazam.com/track/247855/my-favourite-game",
+      "shazam_key": "247855",
+      "recognized_at": "2026-07-13T14:51:13Z",
+      "created_at": "2026-07-13 14:51:15",
+      "station_slug": "galgalatz",
+      "station_name": "גלגלצ",
+      "station_color": "#e36a6a"
+    },
+    {
       "id": 174,
       "station_id": 2,
       "artist": "Ninet Tayeb",
@@ -281,6 +295,6 @@
       "station_color": "#e36a6a"
     }
   ],
-  "total": 20,
-  "updated_at": "2026-07-13T14:50:19Z"
+  "total": 21,
+  "updated_at": "2026-07-13T14:51:15Z"
 }
