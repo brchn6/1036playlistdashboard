@@ -529,6 +529,14 @@
       "last_seen": "2026-07-13T15:21:40Z"
     },
     {
+      "artist": "Jamie xx",
+      "title": "Loud Places (feat. Romy)",
+      "text": "Jamie xx — Loud Places (feat. Romy)",
+      "play_count": 1,
+      "first_seen": "2026-07-13T16:38:01Z",
+      "last_seen": "2026-07-13T16:38:01Z"
+    },
+    {
       "artist": "Jasmin Moallem",
       "title": "יהיה טוב",
       "text": "Jasmin Moallem — יהיה טוב",
@@ -791,15 +799,7 @@
       "play_count": 1,
       "first_seen": "2026-07-13T13:53:49Z",
       "last_seen": "2026-07-13T13:53:49Z"
-    },
-    {
-      "artist": "Olivia Rodrigo",
-      "title": "stupid song",
-      "text": "Olivia Rodrigo — stupid song",
-      "play_count": 1,
-      "first_seen": "2026-07-13T13:52:45Z",
-      "last_seen": "2026-07-13T13:52:45Z"
     }
   ],
-  "updated_at": "2026-07-13T16:38:00Z"
+  "updated_at": "2026-07-13T16:38:30Z"
 }
