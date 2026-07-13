@@ -28,7 +28,7 @@ STATIONS_CONFIG: list[dict[str, Any]] = [
     {"slug": "kan-88",       "name": "כאן 88",            "stream_url": "https://27953.live.streamtheworld.com/KAN_88.mp3", "website": "https://www.kan.org.il/radio/88.aspx", "proxy_port": 8765, "color": "#c86ae3"},
     {"slug": "kan-bet",      "name": "כאן ב",             "stream_url": "https://27913.live.streamtheworld.com/KAN_BET.mp3", "website": "https://www.kan.org.il/radio/bet.aspx", "proxy_port": 8766, "color": "#e38a6a"},
     {"slug": "galil",        "name": "קול הגליל העליון",   "stream_url": "https://radio.streamgates.net/stream/galil", "website": "",    "proxy_port": 8767, "color": "#a06ae3"},
-    {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "website": "", "proxy_port": 8768, "color": "#e36ac8"},
+    {"slug": "radio-darom",   "name": "רדיו דרום 97FM",     "stream_url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio", "website": "https://www.radiodarom.co.il/", "proxy_port": 8768, "color": "#e36ac8"},
 
 ]
 
