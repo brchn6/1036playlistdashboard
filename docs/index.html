@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="description" content="פלייליסט דשבורד — מעקב שירים אוטומטי בתחנות רדיו ישראליות"/>
-  <title>פלייליסט דשבורד — מעקב רדיו ישראלי</title>
+  <meta name="description" content="Radio Playlist Dashboard — automatic track monitoring across Israeli radio stations"/>
+  <title>Radio Playlist Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <style>
     :root {
@@ -113,13 +113,13 @@
 <body>
 <div class=container>
 <header>
-  <h1>🎧 פלייליסט דשבורד</h1>
-  <p>מעקב שירים אוטומטי ב־<span id=stationCount>8</span> תחנות רדיו ישראליות</p>
+  <h1>Radio Playlist Dashboard</h1>
+  <p>Live track monitoring across <span id=stationCount>8</span> Israeli radio stations</p>
   <div class=status-bar>
     <span class="dot off" id=statusDot></span>
-    <span id=statusText>טוען...</span>
+    <span id=statusText>Loading...</span>
     <span class=sep>·</span>
-    <span>עדכון אחרון:</span>
+    <span>Last updated:</span>
     <span id=lastUpdate>-</span>
   </div>
 </header>
@@ -127,11 +127,11 @@
 <div class=station-pills id=pills></div>
 
 <div class=tabs id=tabBar>
-  <button class="tab-btn active" data-tab=np>🎵 עכשיו</button>
-  <button class=tab-btn data-tab=history>📋 היסטוריה</button>
-  <button class=tab-btn data-tab=hype>🔥 לייקים</button>
-  <button class=tab-btn data-tab=scatter>📊 פיזור</button>
-  <button class=tab-btn data-tab=stats>📈 סטטיסטיקה</button>
+  <button class="tab-btn active" data-tab=np>Now Playing</button>
+  <button class=tab-btn data-tab=history>History</button>
+  <button class=tab-btn data-tab=hype>Most Played</button>
+  <button class=tab-btn data-tab=scatter>Timeline</button>
+  <button class=tab-btn data-tab=stats>Statistics</button>
 </div>
 
 <div class="tab-content active" id=tab-np>
@@ -140,17 +140,17 @@
 </div>
 
 <div class=tab-content id=tab-history>
-  <div class=card><div class=card-title>📋 היסטוריית השמעה</div><div id=historyList>טוען...</div></div>
+  <div class=card><div class=card-title>Play History</div><div id=historyList>טוען...</div></div>
 </div>
 
 <div class=tab-content id=tab-hype>
-  <div class=card><div class=card-title>🔥 השירים הכי מושמעים</div><div id=hypeList>טוען...</div></div>
+  <div class=card><div class=card-title>Most Played Tracks</div><div id=hypeList>טוען...</div></div>
 </div>
 
 <div class=tab-content id=tab-scatter>
   <div class=card>
-    <div class=card-title>📊 פיזור שירים לאורך זמן</div>
-    <div style="font-size:.76rem;color:var(--muted);margin-bottom:8px">ציר X = שעה ביום · ציר Y = תאריך · צבע = תחנה</div>
+    <div class=card-title>Tracks Over Time</div>
+    <div style="font-size:.76rem;color:var(--muted);margin-bottom:8px">X = hour of day · Y = date · Color = station</div>
     <div class=chart-wrap><canvas id=scatterChart></canvas></div>
     <div id=scatterLegend></div>
   </div>
@@ -158,20 +158,20 @@
 
 <div class=tab-content id=tab-stats>
   <div class=stat-row id=statsDetailRow></div>
-  <div class=card><div class=card-title>📈 שירים לפי תאריך</div><div class=chart-wrap><canvas id=dateChart></canvas></div></div>
-  <div class=card><div class=card-title>🎤 האמנים המושמעים ביותר</div><div id=topArtistsList></div></div>
-  <div class=card><div class=card-title>🔄 תזמון צולב — שירים שמושמעים ביותר מתחנה אחת</div><div id=crossStationList>טוען...</div></div>
+  <div class=card><div class=card-title>Tracks by Date</div><div class=chart-wrap><canvas id=dateChart></canvas></div></div>
+  <div class=card><div class=card-title>Top Artists</div><div id=topArtistsList></div></div>
+  <div class=card><div class=card-title>Cross-Station — Same track on multiple stations</div><div id=crossStationList>טוען...</div></div>
 </div>
 
 <footer>
   <div class=credits>
-    <span>🤖 <a href=https://github.com/dotX12/shazamio target=_blank>ShazamIO</a> מזהה שירים</span>
-    <span>📡 <a href=https://github.com/brchn6/shazamio-proxy target=_blank>shazamio-proxy</a> לוכד שמע</span>
-    <span>⚡ <a href=https://github.com/brchn6/1036playlistdashboard target=_blank>1036playlistdashboard</a> קוד מקור</span>
-    <span>💾 <span class=tag>45 ימים</span> שמירת היסטוריה</span>
+    <span><a href=https://github.com/dotX12/shazamio target=_blank>ShazamIO</a> recognition engine</span>
+    <span><a href=https://github.com/brchn6/shazamio-proxy target=_blank>shazamio-proxy</a> stream capture</span>
+    <span><a href=https://github.com/brchn6/1036playlistdashboard target=_blank>Source code</a></span>
+    <span><span class=tag>45 days</span> track history retention</span>
   </div>
   <div class=stations-attr>
-    <span>תחנות:</span>
+    <span>Stations:</span>
     <a href=https://1036kh.com target=_blank>103FM</a>
     <a href=https://glglz.co.il target=_blank>גלגלצ</a>
     <a href=https://99fm.co.il target=_blank>99FM</a>
@@ -181,7 +181,7 @@
     <a href=https://1036kh.com target=_blank>קול הגליל העליון</a>
     <a href=https://www.radiodarom.co.il/ target=_blank>רדיו דרום 97FM</a>
   </div>
-  <div style="font-size:.65rem;color:rgba(152,152,176,.35);margin-top:6px">מתעדכן כל 30 שניות · נתונים נשמרים 45 יום</div>
+  <div style="font-size:.65rem;color:rgba(152,152,176,.35);margin-top:6px">Updates every 30 seconds · 45-day data retention</div>
 </footer>
 </div>
 
@@ -234,7 +234,7 @@ function loadJSON(u){return fetch(u+'?_='+Date.now()).then(r=>r.ok?r.json():null
 function renderPills(cur){
   const el=document.getElementById('pills');
   const c=cur?cur.length:0;
-  let h='<button class="pill active" data-slug="">🇮🇱 הכל <span style=font-size:.68rem;opacity:.5>('+c+')</span></button>';
+  let h='<button class="pill active" data-slug="">All Stations <span style=font-size:.68rem;opacity:.5>('+c+')</span></button>';
   stations.forEach(s=>{
     h+='<button class="pill" data-slug="'+s.slug+'"><span class=dot-sm style=background:'+s.color+'></span>'+esc(s.name)+'</button>';
   });
@@ -251,7 +251,7 @@ function renderNowPlaying(cur){
   const el=document.getElementById('npGrid');
   const data=activeStation?(cur||[]).filter(t=>t.station_slug===activeStation):cur||[];
   if(!data||!data.length){
-    el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--muted)"><div style=font-size:2.2rem;margin-bottom:8px>📻</div><div>ממתין לנתונים...</div></div>';return;
+    el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--muted)"><div style=font-size:2.2rem;margin-bottom:8px>📻</div><div>Waiting for data...</div></div>';return;
   }
   el.innerHTML=data.map(t=>{
     const c=t.station_color||'#5ddbb5',slug=t.station_slug||'';
@@ -279,9 +279,9 @@ function renderStats(s){
 
 function renderHistory(hist){
   const el=document.getElementById('historyList');
-  if(!hist||!hist.history){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>אין נתונים</div>';return}
+  if(!hist||!hist.history){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>No data</div>';return}
   const d=hist.history;
-  if(!d.length){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>אין נתונים לתחנה זו</div>';return}
+  if(!d.length){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>No data for this station</div>';return}
   el.innerHTML=d.slice(0,150).map(t=>
     '<div class=history-item>'+
       '<div class=hs style=color:'+(t.station_color||'#666')+'>'+esc(t.station_name||'')+'</div>'+
@@ -293,9 +293,9 @@ function renderHistory(hist){
 
 function renderHype(hype){
   const el=document.getElementById('hypeList');
-  if(!hype||!hype.tracks){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>אין נתונים</div>';return}
+  if(!hype||!hype.tracks){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>No data</div>';return}
   const d=hype.tracks;
-  if(!d.length){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>אין נתונים</div>';return}
+  if(!d.length){el.innerHTML='<div style=text-align:center;padding:24px;color:var(--muted)>No data</div>';return}
   el.innerHTML=d.slice(0,30).map((t,i)=>
     '<div class=history-item>'+
       '<div style=width:28px;font-weight:700;color:var(--muted);font-size:.82rem>'+(i+1)+'</div>'+
@@ -308,11 +308,11 @@ function renderHype(hype){
 function renderScatter(scatter){
   const el=document.getElementById('scatterChart');
   if(!scatter||!scatter.points||!scatter.points.length){
-    el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>אין נתונים</div>';return;
+    el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>No data</div>';return;
   }
   let pts=scatter.points;
   if(activeStation)pts=pts.filter(p=>p.station_slug===activeStation);
-  if(!pts.length){el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>אין נתונים לתחנה זו</div>';return}
+  if(!pts.length){el.parentElement.innerHTML='<div style=text-align:center;padding:30px;color:var(--muted)>No data for this station</div>';return}
   const ds={};
   pts.forEach(p=>{
     const d=new Date(p.recognized_at.endsWith('Z')?p.recognized_at:p.recognized_at+'Z');
@@ -343,7 +343,7 @@ function renderDateChart(s){
   const el=document.getElementById('dateChart');
   if(dateChart)dateChart.destroy();
   if(!s||!s.tracks_by_date||!s.tracks_by_date.length){
-    el.parentElement.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>אין נתונים</div>';return;
+    el.parentElement.innerHTML='<div style=text-align:center;padding:20px;color:var(--muted)>No data</div>';return;
   }
   const dates=s.tracks_by_date;
   const ctx=el.getContext('2d');
@@ -360,7 +360,7 @@ function renderDateChart(s){
 
 function renderCrossStation(data){
   const el=document.getElementById('crossStationList');
-  if(!data||!data.tracks||!data.tracks.length){el.innerHTML='<div style=text-align:center;padding:16px;color:var(--muted)>עדיין אין שירים חוצים</div>';return;}
+  if(!data||!data.tracks||!data.tracks.length){el.innerHTML='<div style=text-align:center;padding:16px;color:var(--muted)>No cross-station tracks yet</div>';return;}
   el.innerHTML=data.tracks.map((t,i)=>
     '<div class=history-item cross-station>'+
       '<div class=hs style=color:var(--accent);font-size:.85rem>'+t.station_count+'×</div>'+
@@ -372,7 +372,7 @@ function renderCrossStation(data){
 
 function renderTopArtists(hist){
   const el=document.getElementById('topArtistsList');
-  if(!hist||!hist.history){el.innerHTML='<div style=padding:12px;color:var(--muted)>אין נתונים</div>';return;}
+  if(!hist||!hist.history){el.innerHTML='<div style=padding:12px;color:var(--muted)>No data</div>';return;}
   const data=hist.history||[];
   const cnt={};
   data.forEach(t=>{
@@ -408,12 +408,12 @@ async function fetchAll(){
     renderHistory(hist);renderHype(hype);renderTopArtists(hist||{history:[]});
 
     document.getElementById('statusDot').className='dot on';
-    document.getElementById('statusText').textContent='מחובר';
+    document.getElementById('statusText').textContent='Connected';
     document.getElementById('lastUpdate').textContent=timeAgo(stat?.updated_at)||'-';
   }catch(e){
     console.warn(e);
     document.getElementById('statusDot').className='dot off';
-    document.getElementById('statusText').textContent='שגיאה';
+    document.getElementById('statusText').textContent='Error';
   }
 }
 fetchAll();setInterval(fetchAll,POLL);
