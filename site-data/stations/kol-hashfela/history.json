@@ -1,6 +1,20 @@
 {
   "history": [
     {
+      "id": 276,
+      "station_id": 1,
+      "artist": "David Bowie",
+      "title": "Modern Love",
+      "text": "David Bowie — Modern Love",
+      "url": "https://www.shazam.com/track/54552265/modern-love",
+      "shazam_key": "54552265",
+      "recognized_at": "2026-07-13T16:52:50Z",
+      "created_at": "2026-07-13 16:52:51",
+      "station_slug": "kol-hashfela",
+      "station_name": "קול השפלה 103FM",
+      "station_color": "#6ae3c1"
+    },
+    {
       "id": 269,
       "station_id": 1,
       "artist": "Gali Atari",
@@ -603,6 +617,6 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "total": 43,
-  "updated_at": "2026-07-13T16:52:21Z"
+  "total": 44,
+  "updated_at": "2026-07-13T16:52:51Z"
 }

@@ -2177,9 +2177,31 @@
       "day_of_week": "1",
       "hour": "16",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Billie Eilish",
+      "title": "Therefore I Am",
+      "text": "Billie Eilish — Therefore I Am",
+      "recognized_at": "2026-07-13T16:52:37Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "16",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "David Bowie",
+      "title": "Modern Love",
+      "text": "David Bowie — Modern Love",
+      "recognized_at": "2026-07-13T16:52:50Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "16",
+      "date": "2026-07-13"
     }
   ],
-  "total": 198,
-  "returned": 198,
-  "updated_at": "2026-07-13T16:52:21Z"
+  "total": 200,
+  "returned": 200,
+  "updated_at": "2026-07-13T16:52:51Z"
 }
