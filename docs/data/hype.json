@@ -297,6 +297,14 @@
       "last_seen": "2026-07-13T14:14:16Z"
     },
     {
+      "artist": "Eve",
+      "title": "Who's That Girl?",
+      "text": "Eve — Who's That Girl?",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:58:15Z",
+      "last_seen": "2026-07-13T14:58:15Z"
+    },
+    {
       "artist": "feinsmecker",
       "title": "Come Again",
       "text": "feinsmecker — Come Again",
@@ -791,15 +799,7 @@
       "play_count": 1,
       "first_seen": "2026-07-13T13:57:54Z",
       "last_seen": "2026-07-13T13:57:54Z"
-    },
-    {
-      "artist": "The Pointer Sisters",
-      "title": "I'm So Excited",
-      "text": "The Pointer Sisters — I'm So Excited",
-      "play_count": 1,
-      "first_seen": "2026-07-13T13:33:44Z",
-      "last_seen": "2026-07-13T13:33:44Z"
     }
   ],
-  "updated_at": "2026-07-13T14:57:19Z"
+  "updated_at": "2026-07-13T14:58:15Z"
 }
