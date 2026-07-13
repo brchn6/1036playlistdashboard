@@ -73,6 +73,14 @@
       "last_seen": "2026-07-13T13:48:45Z"
     },
     {
+      "artist": "Arctic Monkeys",
+      "title": "Do I Wanna Know?",
+      "text": "Arctic Monkeys — Do I Wanna Know?",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:10:51Z",
+      "last_seen": "2026-07-13T14:10:51Z"
+    },
+    {
       "artist": "Asha Puthli & Say She She",
       "title": "Pawa!",
       "text": "Asha Puthli & Say She She — Pawa!",
@@ -151,6 +159,14 @@
       "play_count": 1,
       "first_seen": "2026-07-13T14:06:03Z",
       "last_seen": "2026-07-13T14:06:03Z"
+    },
+    {
+      "artist": "DNCE",
+      "title": "Cake By The Ocean",
+      "text": "DNCE — Cake By The Ocean",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:11:06Z",
+      "last_seen": "2026-07-13T14:11:06Z"
     },
     {
       "artist": "Ehud Banai",
@@ -297,6 +313,14 @@
       "last_seen": "2026-07-13T13:48:46Z"
     },
     {
+      "artist": "Roei Adam",
+      "title": "אבי הטחול",
+      "text": "Roei Adam — אבי הטחול",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:11:12Z",
+      "last_seen": "2026-07-13T14:11:12Z"
+    },
+    {
       "artist": "Sheygets",
       "title": "Hamilim Hachi Yafot (המילים הכי יפות)",
       "text": "Sheygets — Hamilim Hachi Yafot (המילים הכי יפות)",
@@ -393,5 +417,5 @@
       "last_seen": "2026-07-13T14:05:04Z"
     }
   ],
-  "updated_at": "2026-07-13T14:10:15Z"
+  "updated_at": "2026-07-13T14:11:15Z"
 }

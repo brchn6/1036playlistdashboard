@@ -109,9 +109,20 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Roei Adam",
+      "title": "אבי הטחול",
+      "text": "Roei Adam — אבי הטחול",
+      "recognized_at": "2026-07-13T14:11:12Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 10,
-  "returned": 10,
-  "updated_at": "2026-07-13T14:10:15Z"
+  "total": 11,
+  "returned": 11,
+  "updated_at": "2026-07-13T14:11:15Z"
 }

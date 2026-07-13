@@ -582,9 +582,42 @@
       "day_of_week": "1",
       "hour": "14",
       "date": "2026-07-13"
+    },
+    {
+      "artist": "Arctic Monkeys",
+      "title": "Do I Wanna Know?",
+      "text": "Arctic Monkeys — Do I Wanna Know?",
+      "recognized_at": "2026-07-13T14:10:51Z",
+      "station_slug": "99fm",
+      "station_color": "#6ab8e3",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "DNCE",
+      "title": "Cake By The Ocean",
+      "text": "DNCE — Cake By The Ocean",
+      "recognized_at": "2026-07-13T14:11:06Z",
+      "station_slug": "kol-hashfela",
+      "station_color": "#6ae3c1",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
+    },
+    {
+      "artist": "Roei Adam",
+      "title": "אבי הטחול",
+      "text": "Roei Adam — אבי הטחול",
+      "recognized_at": "2026-07-13T14:11:12Z",
+      "station_slug": "galgalatz",
+      "station_color": "#e36a6a",
+      "day_of_week": "1",
+      "hour": "14",
+      "date": "2026-07-13"
     }
   ],
-  "total": 53,
-  "returned": 53,
-  "updated_at": "2026-07-13T14:10:15Z"
+  "total": 56,
+  "returned": 56,
+  "updated_at": "2026-07-13T14:11:15Z"
 }

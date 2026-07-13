@@ -56,6 +56,17 @@
       "station_color": "#6ae3c1"
     },
     {
+      "artist": "DNCE",
+      "title": "Cake By The Ocean",
+      "text": "DNCE — Cake By The Ocean",
+      "play_count": 1,
+      "first_seen": "2026-07-13T14:11:06Z",
+      "last_seen": "2026-07-13T14:11:06Z",
+      "station_slug": "kol-hashfela",
+      "station_name": "קול השפלה 103FM",
+      "station_color": "#6ae3c1"
+    },
+    {
       "artist": "Gala",
       "title": "Let a Boy Cry",
       "text": "Gala — Let a Boy Cry",
@@ -122,5 +133,5 @@
       "station_color": "#6ae3c1"
     }
   ],
-  "updated_at": "2026-07-13T14:10:15Z"
+  "updated_at": "2026-07-13T14:11:15Z"
 }
