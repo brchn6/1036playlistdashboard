@@ -169,10 +169,10 @@
 <div class=tab-content id=tab-timeline>
   <div class=card>
     <div class=card-title>📊 Timeline — מה התנגן בכל תחנה?</div>
-    <div class=card-sub>ציר X = שעה (שעון ישראל) · כל רצועה = שיר (אורך משוער) · רווח = פרסומות/דיבור/שקט · ריחוף לפרטים</div>
+    <div class=card-sub>עוצמת צבע = כמות שירים · תא ריק = דיבור/פרסומות/שקט</div>
     <div class=controls id=timelineDays></div>
     <div class=controls id=timelineZoom></div>
-    <div class="chart-wrap tall"><canvas id=timelineChart></canvas></div>
+    <div id=timelineGrid style="overflow-x:auto;overflow-y:auto"></div>
     <div class=chart-legend id=timelineLegend></div>
   </div>
 </div>
@@ -486,7 +486,7 @@ function renderTimelineZoomButtons(){
 function renderTimeline(){
   renderTimelineDayButtons();
   renderTimelineZoomButtons();
-  const wrap=document.querySelector('#tab-timeline .chart-wrap');
+  const el=document.getElementById('timelineGrid');
   const legend=document.getElementById('timelineLegend');
   let pts=(D.timeline&&D.timeline.points)||[];
   if(activeStation)pts=pts.filter(p=>p.s===activeStation);
@@ -508,107 +508,93 @@ function renderTimeline(){
     xMin=Math.max(0,now.h*60+now.m-660);xMax=Math.min(1440,now.h*60+now.m+60);
   }
 
-  // ── Gantt-style lanes: each song = horizontal bar, gaps = talk/ads ──
-  const EST_SONG_MIN=3.5; // fallback duration for last song in view
-  const MAX_GAP_MIN=30;    // cap a bar at 30 min (avoids overnight gaps ruining scale)
+  // ── GitHub-style heatmap grid ──
+  const range=xMax-xMin;
+  // Bucket size: target ~24-48 columns
+  let bucketMin=30;
+  if(range<=60)bucketMin=2;
+  else if(range<=240)bucketMin=5;
+  else if(range<=480)bucketMin=10;
+  else if(range<=960)bucketMin=20;
+  const colCount=Math.ceil(range/bucketMin);
 
-  // Group events by station, sorted by time
-  const byStation={};
-  stations.forEach(s=>{byStation[s.slug]=[]});
+  // Count songs per station per bucket
+  const counts={};
+  stations.forEach(s=>{counts[s.slug]=new Array(colCount).fill(0)});
+  const maxVal={v:0,slug:'',idx:0};
   pts.forEach(p=>{
     const d=parseTs(p.ts);if(!d)return;
     const il=ilParts(d);
     if(timelineDay&&il.date!==timelineDay)return;
     const x=il.h*60+il.m;
     if(x<xMin||x>xMax)return;
-    if(!byStation[p.s])return;
-    byStation[p.s].push({x,artist:p.a,title:p.t,slug:p.s});
+    if(!counts[p.s])return;
+    const idx=Math.min(colCount-1,Math.floor((x-xMin)/bucketMin));
+    counts[p.s][idx]++;
+    if(counts[p.s][idx]>maxVal.v){maxVal.v=counts[p.s][idx];maxVal.slug=p.s;maxVal.idx=idx}
   });
 
-  // Sort stations by song count (most active first) — breaks symmetry
+  // Station order by activity
   const stationOrder=[...stations].sort((a,b)=>{
-    const ca=(byStation[b.slug]||[]).length,cb=(byStation[a.slug]||[]).length;
+    const ca=counts[b.slug].reduce((s,v)=>s+v,0);
+    const cb=counts[a.slug].reduce((s,v)=>s+v,0);
     return ca-cb;
   });
-  const yCats=stationOrder.map(s=>s.name);
 
-  // Build one dataset per station with horizontal floating bars
-  const datasets=[];
-  let totalBars=0;
-  stationOrder.forEach(s=>{
-    const events=(byStation[s.slug]||[]).sort((a,b)=>a.x-b.x);
-    if(!events.length)return;
-    const bars=events.map((e,i)=>{
-      const next=i<events.length-1?events[i+1].x:e.x+EST_SONG_MIN;
-      const end=Math.min(next,e.x+MAX_GAP_MIN);
-      return{x:[e.x,end],y:s.name,artist:e.artist,title:e.title};
-    });
-    datasets.push({
-      label:s.name,
-      backgroundColor:s.color+'88',
-      borderColor:s.color,
-      borderWidth:1,
-      borderRadius:3,
-      barPercentage:0.78,
-      categoryPercentage:0.9,
-      data:bars,
-    });
-    totalBars+=events.length;
-  });
-
-  destroyChart('timeline');
-  if(!totalBars){wrap.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">אין נתונים ליום/תחנה שנבחרו</div>';legend.innerHTML='';return}
-  if(!wrap.querySelector('canvas'))wrap.innerHTML='<canvas id=timelineChart></canvas>';
-
-  const xRange=xMax-xMin;
-  const tickStep=xRange<=120?30:xRange<=360?60:xRange<=720?120:180;
-
-  charts.timeline=new Chart(document.getElementById('timelineChart'),{
-    type:'bar',
-    data:{datasets},
-    options:{
-      indexAxis:'y',
-      responsive:true,maintainAspectRatio:false,animation:false,
-      plugins:{
-        legend:{display:false},
-        tooltip:{
-          callbacks:{
-            title:items=>{
-              const r=items[0].raw;
-              return esc(r.artist)+' — '+esc(r.title);
-            },
-            label:ctx=>{
-              const r=ctx.raw;
-              const sh=String(Math.floor(r.x[0]/60)).padStart(2,'0');
-              const sm=String(Math.round(r.x[0]%60)).padStart(2,'0');
-              const eh=String(Math.floor(r.x[1]/60)).padStart(2,'0');
-              const em=String(Math.round(r.x[1]%60)).padStart(2,'0');
-              const dur=(r.x[1]-r.x[0]).toFixed(1);
-              return sh+':'+sm+' → '+eh+':'+em+' ('+dur+' דק׳)';
-            }
-          }
-        }
-      },
-      scales:{
-        x:{
-          type:'linear',min:xMin,max:xMax,
-          ticks:{stepSize:tickStep,color:MUTED,
-            callback:v=>String(Math.floor(v/60)).padStart(2,'0')+':'+String(Math.round(v%60)).padStart(2,'0')
-          },
-          grid:{color:GRID},
-          title:{display:true,text:'שעה (שעון ישראל)',color:MUTED}
-        },
-        y:{
-          type:'category',labels:yCats,
-          ticks:{color:MUTED,callback:v=>v.length>14?v.slice(0,13)+'…':v},
-          grid:{display:false}
-        }
-      }
+  // Build column labels (show time strings for first of each hour)
+  const colLabels=[];
+  const colW=Math.max(18,Math.min(32,Math.floor(1040/colCount)));
+  for(let i=0;i<colCount;i++){
+    const minute=xMin+i*bucketMin;
+    const hh=String(Math.floor(minute/60)%24).padStart(2,'0');
+    const mm=String(Math.round(minute%60)).padStart(2,'0');
+    const prevMinute=xMin+(i-1)*bucketMin;
+    // Show label if this bucket starts a new hour or is the first/last
+    if(i===0||Math.floor(minute/60)!==Math.floor(prevMinute/60)||i===colCount-1){
+      colLabels.push(hh+':'+mm);
+    }else{
+      colLabels.push('');
     }
+  }
+
+  const maxValV=Math.max(1,maxVal.v);
+  const hasData=stationOrder.some(s=>counts[s.slug].reduce((a,b)=>a+b,0)>0);
+  if(!hasData){
+    el.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">אין נתונים ליום/תחנה שנבחרו</div>';
+    legend.innerHTML='';
+    return;
+  }
+
+  // Build the grid: header row + one row per station
+  let html='<table class=hm style="min-width:'+(colCount*colW+100)+'px"><tr><td class=rowlbl></td>';
+  colLabels.forEach((l,i)=>{
+    html+='<td class=hdr style="font-size:'+(l?'.62rem':'0')+';min-width:'+colW+'px;width:'+colW+'px;padding:2px 0">'+esc(l)+'</td>';
   });
+  html+='</tr>';
+
+  stationOrder.forEach(s=>{
+    const slug=s.slug;
+    const row=counts[slug];
+    const total=row.reduce((a,b)=>a+b,0);
+    if(!total)return;
+    html+='<tr><td class=rowlbl style="font-size:.7rem;padding:3px 6px;white-space:nowrap;max-width:80px;overflow:hidden;text-overflow:ellipsis">'+
+      '<span class=dot-sm style="display:inline-block;width:7px;height:7px;border-radius:50%;background:'+s.color+';margin-left:4px;vertical-align:middle"></span>'+
+      '<span style=vertical-align:middle>'+esc(name(slug).length>12?name(slug).slice(0,11)+'…':name(slug))+'</span>'+
+      '</td>';
+    row.forEach((v,i)=>{
+      const t=v/maxValV;
+      const titleStr=v+' שירים'+(v?' ('+Math.round(xMin+i*bucketMin)+'—'+Math.round(xMin+(i+1)*bucketMin)+' דק׳)':'');
+      html+='<td style="background:'+heatColor(t)+';color:'+heatText(t)+';min-width:'+colW+'px;width:'+colW+'px;height:'+Math.round(colW*0.7)+'px;padding:0;border-radius:3px;font-size:.6rem;font-weight:'+(v?'600':'400')+'" title="'+esc(name(slug))+': '+titleStr+'">'+(v||'')+'</td>';
+    });
+    html+='</tr>';
+  });
+  html+='</table>';
+  el.innerHTML=html;
+
+  // Legend: show stations and total songs in view
   legend.innerHTML=legendHtml(
-    stationOrder.filter(s=>byStation[s.slug]?.length)
-      .map(s=>({color:s.color,label:s.name+' ('+byStation[s.slug].length+' שירים)'}))
+    stationOrder.filter(s=>counts[s.slug].reduce((a,b)=>a+b,0)>0)
+      .map(s=>({color:s.color,label:s.name+' ('+counts[s.slug].reduce((a,b)=>a+b,0)+' שירים)'}))
   );
 }
 
