@@ -37,6 +37,7 @@ DB_PATH = PROJECT_ROOT / "data" / "playlist.db"
 IL_TZ = ZoneInfo("Asia/Jerusalem")
 
 TIMELINE_HOURS = 48
+CLUSTER_HOURS = 24
 TOP_LIMIT = 50                # per window; client re-ranks for station filter
 TOP_WINDOWS = [("1h", 1), ("24h", 24), ("7d", 168), ("30d", 720), ("all", None)]
 HEATMAP_STATION_DAYS = 7
@@ -211,7 +212,7 @@ def build_song_clusters(tracks: list[dict[str, Any]], now: datetime) -> dict[str
     """
     from collections import defaultdict
 
-    cutoff = now - timedelta(hours=TIMELINE_HOURS)
+    cutoff = now - timedelta(hours=CLUSTER_HOURS)
     recent = [t for t in tracks if t["_dt"] >= cutoff]
 
     # Group by station, sort by time
@@ -328,7 +329,7 @@ def build_song_clusters(tracks: list[dict[str, Any]], now: datetime) -> dict[str
         ],
         "ready": True,
         "total_songs": len(result_songs),
-        "window_hours": TIMELINE_HOURS,
+        "window_hours": CLUSTER_HOURS,
     }
 
 

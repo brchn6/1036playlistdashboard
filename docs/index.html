@@ -1022,6 +1022,249 @@ function renderRedundancy(){
   el.innerHTML=html;
 }
 
+/* ── BPM & Key ── */
+function renderBpmKey(){
+  const bk=D.bpmKey;
+  if(!bk||!bk.stations||!Object.keys(bk.stations).length){
+    ['bpmTrendCard','keyDistCard','bpmKeyScatterCard','bpmStatsCard'].forEach(function(id){
+      document.getElementById(id).style.display='none';
+    });
+    return;
+  }
+  ['bpmTrendCard','keyDistCard','bpmKeyScatterCard','bpmStatsCard'].forEach(function(id){
+    document.getElementById(id).style.display='';
+  });
+  renderBpmHourChart(bk);
+  renderKeyDistChart(bk);
+  renderBpmKeyScatter(bk);
+  renderBpmStats(bk);
+}
+
+function renderBpmHourChart(bk){
+  destroyChart('bpmHour');
+  const stations_data = bk.stations;
+  const active_slugs = activeStation ? [activeStation] : Object.keys(stations_data);
+  const datasets=[];
+  // Build 24h labels
+  const labels = Array.from({length:24}, function(_,i){return String(i).padStart(2,'0')+':00'});
+  active_slugs.forEach(function(slug){
+    const sd = stations_data[slug];
+    if(!sd||!sd.bpm||!sd.bpm.by_hour||!sd.bpm.by_hour.length) return;
+    const c = color(slug);
+    const hourMap = {};
+    sd.bpm.by_hour.forEach(function(h){hourMap[h.hour] = h.mean_bpm});
+    const data = Array.from({length:24}, function(_,i){return hourMap[i] !== undefined ? hourMap[i] : null});
+    const hasData = data.some(function(v){return v !== null});
+    if(!hasData) return;
+    datasets.push({
+      label: name(slug),
+      data: data,
+      borderColor: c,
+      backgroundColor: c+'33',
+      borderWidth: 2,
+      tension: 0.4,
+      pointRadius: 3,
+      pointHoverRadius: 6,
+      spanGaps: true,
+      fill: datasets.length === 0 ? {above: c+'15'} : false,
+    });
+  });
+  if(!datasets.length){
+    document.getElementById('bpmTrendCard').style.display='none';
+    return;
+  }
+  const wrap=document.querySelector('#tab-trends .chart-wrap');
+  if(!wrap.querySelector('canvas#bpmHourChart'))wrap.innerHTML+='<canvas id=bpmHourChart></canvas>';
+  charts.bpmHour=new Chart(document.getElementById('bpmHourChart'),{
+    type:'line',
+    data:{labels:labels,datasets:datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{title:function(items){return 'שעה '+items[0].label},label:function(ctx){return ctx.parsed.y+' BPM'}}}
+      },
+      scales:{
+        x:{ticks:{color:MUTED,maxRotation:45},grid:{display:false}},
+        y:{beginAtZero:false,min:60,max:200,ticks:{color:MUTED,precision:0},grid:{color:GRID},
+           title:{display:true,text:'BPM',color:MUTED}}
+      }
+    }
+  });
+  document.getElementById('bpmHourLegend').innerHTML = legendHtml(
+    datasets.map(function(ds,i){return {color:ds.borderColor,label:ds.label}})
+  );
+}
+
+function renderKeyDistChart(bk){
+  destroyChart('keyDist');
+  const stations_data = bk.stations;
+  const active_slugs = activeStation ? [activeStation] : Object.keys(stations_data);
+  // Collect all unique keys
+  const allKeys = new Set();
+  active_slugs.forEach(function(slug){
+    const sd = stations_data[slug];
+    if(sd&&sd.keys) Object.keys(sd.keys).forEach(function(k){allKeys.add(k)});
+  });
+  if(!allKeys.size){
+    document.getElementById('keyDistCard').style.display='none';
+    return;
+  }
+  // Sort keys: majors first (by pitch), then minors
+  const keyOrder = ['C major','C# major','D major','Eb major','E major','F major',
+    'F# major','G major','G# major','A major','Bb major','B major',
+    'C minor','C# minor','D minor','Eb minor','E minor','F minor',
+    'F# minor','G minor','G# minor','A minor','Bb minor','B minor'];
+  const sortedKeys = Array.from(allKeys).sort(function(a,b){
+    const ia = keyOrder.indexOf(a), ib = keyOrder.indexOf(b);
+    return (ia===-1?999:ia) - (ib===-1?999:ib);
+  });
+  const labels = sortedKeys;
+  const datasets = [];
+  active_slugs.forEach(function(slug){
+    const sd = stations_data[slug];
+    if(!sd||!sd.keys) return;
+    const c = color(slug);
+    const data = sortedKeys.map(function(k){return sd.keys[k] || 0});
+    if(data.every(function(v){return v===0})) return;
+    datasets.push({
+      label: name(slug),
+      data: data,
+      backgroundColor: c+'99',
+      borderColor: c,
+      borderWidth: 1,
+      borderRadius: 3,
+    });
+  });
+  if(!datasets.length){
+    document.getElementById('keyDistCard').style.display='none';
+    return;
+  }
+  const wrap=document.querySelector('#tab-trends .chart-wrap');
+  if(!wrap.querySelector('canvas#keyDistChart'))wrap.innerHTML+='<canvas id=keyDistChart></canvas>';
+  charts.keyDist=new Chart(document.getElementById('keyDistChart'),{
+    type:'bar',
+    data:{labels:labels,datasets:datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,animation:false,
+      indexAxis:'y',
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:function(ctx){return ctx.parsed.x+' שירים'}}}
+      },
+      scales:{
+        x:{beginAtZero:true,ticks:{color:MUTED,precision:0},grid:{color:GRID}},
+        y:{ticks:{color:MUTED,font:{size:9}},grid:{display:false}}
+      }
+    }
+  });
+  document.getElementById('keyDistLegend').innerHTML = legendHtml(
+    datasets.map(function(ds){return {color:ds.backgroundColor,label:ds.label}})
+  );
+}
+
+function renderBpmKeyScatter(bk){
+  destroyChart('bpmKeyScatter');
+  const stations_data = bk.stations;
+  if(!stations_data||!Object.keys(stations_data).length){
+    document.getElementById('bpmKeyScatterCard').style.display='none';
+    return;
+  }
+  // BPM-by-key cross-station data
+  const cross = bk.cross_station;
+  if(!cross||!cross.bpm_by_key||!Object.keys(cross.bpm_by_key).length){
+    document.getElementById('bpmKeyScatterCard').style.display='none';
+    return;
+  }
+  // Build scatter: y-axis = key index, x-axis = mean BPM
+  const keyOrder = ['C major','C# major','D major','Eb major','E major','F major',
+    'F# major','G major','G# major','A major','Bb major','B major',
+    'C minor','C# minor','D minor','Eb minor','E minor','F minor',
+    'F# minor','G minor','G# minor','A minor','Bb minor','B minor'];
+  const labels = keyOrder.filter(function(k){return cross.bpm_by_key[k]});
+  const data = labels.map(function(k,i){
+    const d = cross.bpm_by_key[k];
+    return {x: d.mean_bpm, y: i, key: k, count: d.count, r: Math.max(5, Math.min(20, Math.sqrt(d.count)*3))};
+  });
+  if(!data.length){
+    document.getElementById('bpmKeyScatterCard').style.display='none';
+    return;
+  }
+  const wrap=document.querySelector('#tab-trends .chart-wrap');
+  if(!wrap.querySelector('canvas#bpmKeyScatter'))wrap.innerHTML+='<canvas id=bpmKeyScatter></canvas>';
+  charts.bpmKeyScatter=new Chart(document.getElementById('bpmKeyScatter'),{
+    type:'scatter',
+    data:{
+      datasets:[{
+        label:'BPM × Key',
+        data:data,
+        backgroundColor:'#5ddbb5cc',
+        borderColor:'#5ddbb5',
+        borderWidth:1,
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{
+          label:function(ctx){
+            const r=ctx.raw;
+            return r.key+': '+r.x+' BPM ('+r.count+' songs)';
+          }
+        }}
+      },
+      scales:{
+        x:{title:{display:true,text:'BPM',color:MUTED},min:60,max:200,
+           ticks:{color:MUTED},grid:{color:GRID}},
+        y:{title:{display:true,text:'Key',color:MUTED},
+           ticks:{color:MUTED,font:{size:9},
+             callback:function(val){return labels[val]||''}},
+           grid:{display:false}}
+      }
+    }
+  });
+  document.getElementById('bpmKeyScatterLegend').innerHTML =
+    '<span>גודל נקודה = כמות שירים</span>';
+}
+
+function renderBpmStats(bk){
+  const el=document.getElementById('bpmStatsContent');
+  const stations_data = bk.stations;
+  if(!stations_data||!Object.keys(stations_data).length){
+    document.getElementById('bpmStatsCard').style.display='none';
+    return;
+  }
+  const active_slugs = activeStation ? [activeStation] : Object.keys(stations_data);
+  let html='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px">';
+  active_slugs.forEach(function(slug){
+    const sd = stations_data[slug];
+    if(!sd||!sd.bpm||!sd.bpm.count) return;
+    const c = color(slug);
+    const bpm = sd.bpm;
+    // Most common key
+    const keys = sd.keys;
+    let topKey = '—', topKeyCount = 0;
+    if(keys){
+      Object.keys(keys).forEach(function(k){
+        if(keys[k] > topKeyCount){topKey = k; topKeyCount = keys[k]}
+      });
+    }
+    html+='<div class=card style="margin-bottom:0;padding:12px;border-color:'+c+'33">'+
+      '<div style="font-weight:600;font-size:.82rem;margin-bottom:6px"><span class=dot-sm style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+c+';margin-left:5px"></span>'+esc(name(slug))+'</div>'+
+      '<table style="font-size:.75rem;width:100%;border-collapse:collapse">'+
+      '<tr><td style=color:var(--muted);padding:2px 4px>ממוצע BPM</td><td style=text-align:left;font-weight:600;padding:2px 4px><strong>'+bpm.mean+'</strong></td></tr>'+
+      '<tr><td style=color:var(--muted);padding:2px 4px>חציון BPM</td><td style=text-align:left;font-weight:600;padding:2px 4px><strong>'+bpm.median+'</strong></td></tr>'+
+      '<tr><td style=color:var(--muted);padding:2px 4px>טווח BPM</td><td style=text-align:left;padding:2px 4px>'+bpm.min+' – '+bpm.max+'</td></tr>'+
+      '<tr><td style=color:var(--muted);padding:2px 4px>סטיית תקן</td><td style=text-align:left;padding:2px 4px>±'+bpm.std+'</td></tr>'+
+      '<tr><td style=color:var(--muted);padding:2px 4px>שירים עם נתונים</td><td style=text-align:left;padding:2px 4px>'+bpm.count+'</td></tr>'+
+      '<tr><td style=color:var(--muted);padding:2px 4px>סולם נפוץ</td><td style=text-align:left;padding:2px 4px;font-weight:600>'+esc(topKey)+' ('+topKeyCount+'×)</td></tr>'+
+      '</table></div>';
+  });
+  html+='</div>';
+  el.innerHTML = html;
+}
+
 /* ── History ── */
 function historyData(){
   if(activeStation&&D.stationHistory&&D.stationHistory.slug===activeStation)
@@ -1368,7 +1611,7 @@ function renderAll(){
   if(t==='timeline')renderTimeline();
   if(t==='heatmap')renderHeatmaps();
   if(t==='top'){renderTop();renderCrossStation()}
-  if(t==='trends')renderTrends();
+  if(t==='trends'){renderTrends();renderBpmKey()}
   if(t==='history')renderHistory();
   if(t==='clusters')renderClusters();
 }
@@ -1394,14 +1637,14 @@ async function fetchAll(){
     // moved. Everything unchanged is served from fileCache without a request.
     manifest=(await loadJSON('manifest.json')||{}).files||{};
 
-    const[st,cur,stats,timeline,heatmap,trends,top,cross,hist,nonMusic,clusters]=await Promise.all([
+    const[st,cur,stats,timeline,heatmap,trends,top,cross,hist,nonMusic,clusters,bpmKey]=await Promise.all([
       loadTracked('stations.json'),loadTracked('current.json'),loadTracked('stats.json'),
       loadTracked('timeline.json'),loadTracked('heatmap.json'),loadTracked('trends.json'),
       loadTracked('top.json'),loadTracked('cross_station.json'),loadTracked('history.json'),
-      loadTracked('non_music.json'),loadTracked('clusters.json'),
+      loadTracked('non_music.json'),loadTracked('clusters.json'),loadTracked('bpm_key.json'),
     ]);
     if(st)stations=st;
-    Object.assign(D,{current:cur,stats,timeline,heatmap,trends,top,cross,history:hist,nonMusic,clusters});
+    Object.assign(D,{current:cur,stats,timeline,heatmap,trends,top,cross,history:hist,nonMusic,clusters,bpmKey});
     document.getElementById('stationCount').textContent=stations.length||'8';
     await fetchLive();
     if(!document.getElementById('pills').innerHTML)renderPills();
