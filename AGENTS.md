@@ -164,6 +164,34 @@ propagate — always-collecting is the whole point of the project.
    (every-30s pushes triggering Pages builds) is gone, because the collector no longer
    pushes at all. `deploy.yml` now fires only on real code commits. The v2 record is
    kept in `.planning/DEPLOY-ARCHITECTURE.md` for history.
+9. **Broken JS from Python string escaping** — 2026-07-14: `\n` inside a Python
+   heredoc was interpreted as an actual newline, producing `.join('` + newline + `')`
+   instead of `.join('\n')`. The entire dashboard JS failed to parse. Fix was to
+   double-escape or use raw strings when generating JS from Python.
+
+## ⚠️ JS Syntax Check — MUST run before every push
+
+**Run this before every push to `docs/index.html`:**
+
+```bash
+node -e '
+const fs=require("fs");
+const html=fs.readFileSync("docs/index.html","utf-8");
+const m=html.match(/<script>([\s\S]*?)<\/script>/);
+if(m)try{new Function(m[1]);console.log("✅ JS syntax OK")}catch(e){console.error("❌ JS SYNTAX ERROR:",e.message);process.exit(1)}
+'
+```
+
+If this fails, **do not push**. The site goes down entirely because no JS
+executes at all. The CI workflow also runs this check before deploying.
+
+## ⚠️ Python → JS string escaping
+
+When generating JavaScript code from Python (e.g. in scripts or heredocs):
+- `'\n'` in a Python string becomes an **actual newline** in the output
+- Use raw strings `r'''...'''` or double-escape `'\\n'` to get literal `\n` in JS
+- This applies to ANY escape sequence (`\t`, `\"`, `\\`, etc.)
+- When in doubt, write the output to a file first and inspect it
 
 ## Memory File
 Full project memory at `~/.memory/radio-playlist-dashboard.md` — **READ BEFORE making any changes**.

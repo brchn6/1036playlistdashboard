@@ -17,7 +17,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JS syntax in docs/index.html
+        run: |
+          node -e '
+          const fs=require("fs");
+          const html=fs.readFileSync("docs/index.html","utf-8");
+          const m=html.match(/<script>([\s\S]*?)<\/script>/);
+          if(!m){console.error("❌ No <script> block found");process.exit(1)}
+          try{new Function(m[1]);console.log("✅ JS syntax OK")}
+          catch(e){console.error("❌ JS SYNTAX ERROR:",e.message);process.exit(1)}
+          '
   deploy:
+    needs: validate
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
