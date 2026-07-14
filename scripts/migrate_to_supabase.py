@@ -120,9 +120,17 @@ def main() -> int:
     # ── tracks ──
     # station_slug is denormalized in (it is not a SQLite column) so public reads
     # never need a join, matching the shape the generated JSON already had.
+    #
+    # NOTE: no "id". Do not send one, and do not upsert on it.
+    #
+    # updater.py mirrors each new track into Postgres WITHOUT an id, so Postgres
+    # assigns its own from its sequence — which means SQLite ids and Postgres ids
+    # diverge the moment the collector runs. Upserting on id therefore tries to
+    # INSERT an existing play under a fresh id and trips uq_tracks_natural_key.
+    # Nothing references tracks.id, so it is not worth preserving; the natural key
+    # (station_id, shazam_key, recognized_at) is the real identity of a play.
     track_payload = [
         {
-            "id": t["id"],
             "station_id": t["station_id"],
             "station_slug": slug_by_id.get(t["station_id"], ""),
             "artist": t["artist"],
@@ -162,15 +170,24 @@ def main() -> int:
                 print(f"  {label}: {payload[0]}")
         return 0
 
-    # Upsert on the primary key: re-running overwrites rather than duplicating.
-    for label, table, payload in (
-        ("stations", "stations", station_payload),
-        ("tracks", "tracks", track_payload),
-        ("non_music_log", "non_music_log", non_music_payload),
+    # Each table gets the conflict target that is actually its identity:
+    #
+    #   stations       "slug"  — ids ARE preserved (tracks.station_id points at them),
+    #                            but slug is what makes a station the same station.
+    #   tracks         the natural key. NOT id: see the comment on track_payload —
+    #                  SQLite ids and Postgres ids diverge once the collector runs,
+    #                  so upserting on id resurrects plays under new ids and trips
+    #                  the unique constraint.
+    #   non_music_log  "id"    — updater.py does not mirror this table to Postgres,
+    #                            so its ids only ever come from here and stay aligned.
+    for label, table, payload, conflict in (
+        ("stations", "stations", station_payload, "slug"),
+        ("tracks", "tracks", track_payload, "station_id,shazam_key,recognized_at"),
+        ("non_music_log", "non_music_log", non_music_payload, "id"),
     ):
         done = 0
         for batch in chunked(payload, args.batch):
-            client.table(table).upsert(batch, on_conflict="id").execute()
+            client.table(table).upsert(batch, on_conflict=conflict).execute()
             done += len(batch)
             print(f"  {label}: {done}/{len(payload)}", flush=True)
         print(f"{label}: {done} rows upserted")
@@ -181,6 +198,10 @@ def main() -> int:
     print("identity sequences reset")
 
     # Verify against the source rather than trusting the writes.
+    #
+    # supabase < sqlite is a real failure: rows did not land.
+    # supabase > sqlite is fine and expected — Postgres is the union of every host
+    # that ever collected, while this SQLite file is only what THIS host saw.
     print("\nVerifying row counts in Supabase:")
     ok = True
     for table, expected in (
@@ -189,9 +210,12 @@ def main() -> int:
         ("non_music_log", len(non_music_payload)),
     ):
         got = client.table(table).select("id", count="exact").limit(1).execute().count
-        mark = "ok" if got == expected else "MISMATCH"
-        if got != expected:
-            ok = False
+        if got < expected:
+            mark, ok = "MISSING ROWS", False
+        elif got > expected:
+            mark = f"ok (+{got - expected} not in this host's SQLite)"
+        else:
+            mark = "ok"
         print(f"  {table:<15} sqlite={expected:<6} supabase={got:<6} {mark}")
 
     return 0 if ok else 1
