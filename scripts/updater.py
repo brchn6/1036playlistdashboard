@@ -107,6 +107,8 @@ def extract_track(state: dict[str, Any] | None) -> dict[str, Any] | None:
         "url": result.get("url") or "",
         "shazam_key": result.get("shazam_key") or "",
         "isrc": result.get("isrc") or "",
+        "bpm": result.get("bpm"),
+        "musical_key": result.get("musical_key"),
         "recognized_at": result.get("recognized_at") or now_iso(),
     }
 
@@ -195,6 +197,8 @@ def main() -> None:
                 url=track.get("url", ""),
                 shazam_key=track.get("shazam_key", ""),
                 isrc=track.get("isrc", ""),
+                bpm=track.get("bpm"),
+                musical_key=track.get("musical_key"),
                 recognized_at=recognized_at,
             )
 
@@ -211,6 +215,8 @@ def main() -> None:
                 "url": track.get("url", ""),
                 "shazam_key": track.get("shazam_key", ""),
                 "isrc": track.get("isrc") or None,
+                "bpm": track.get("bpm"),
+                "musical_key": track.get("musical_key"),
                 "recognized_at": recognized_at,
             })
 

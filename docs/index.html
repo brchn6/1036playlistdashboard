@@ -266,6 +266,31 @@
     <div class=card-sub>שירים ואמנים שמושמעים שוב באותה תחנה</div>
     <div id=redundancyContent></div>
   </div>
+
+  <!-- ── BPM & Key ── -->
+  <div class=card id=bpmTrendCard style=display:none>
+    <div class=card-title>🎵 BPM לאורך שעות היום</div>
+    <div class=card-sub>ממוצע BPM לפי שעה (שעון ישראל) — קו חלק מראה איך הקצב משתנה לאורך היממה</div>
+    <div class=chart-wrap><canvas id=bpmHourChart></canvas></div>
+    <div class=chart-legend id=bpmHourLegend></div>
+  </div>
+  <div class=card id=keyDistCard style=display:none>
+    <div class=card-title>🎹 התפלגות סולמות</div>
+    <div class=card-sub>כמה שירים זוהו בכל סולם מוזיקלי, לפי תחנה</div>
+    <div class=chart-wrap><canvas id=keyDistChart></canvas></div>
+    <div class=chart-legend id=keyDistLegend></div>
+  </div>
+  <div class=card id=bpmKeyScatterCard style=display:none>
+    <div class=card-title>🎵 BPM × סולם</div>
+    <div class=card-sub>פיזור BPM מול סולם מוזיקלי — גודל נקודה = כמות שירים, צבע = תחנה</div>
+    <div class=chart-wrap class=tall><canvas id=bpmKeyScatter></canvas></div>
+    <div class=chart-legend id=bpmKeyScatterLegend></div>
+  </div>
+  <div class=card id=bpmStatsCard style=display:none>
+    <div class=card-title>📊 סטטיסטיקת BPM לפי תחנה</div>
+    <div class=card-sub>ממוצע, טווח וסולם נפוץ לכל תחנה</div>
+    <div id=bpmStatsContent></div>
+  </div>
 </div>
 
 <!-- ── History ── -->
@@ -298,10 +323,9 @@
 <!-- ── Clusters ── -->
 <div class=tab-content id=tab-clusters>
   <div class=card>
-    <div class=card-title>🎵 Song Clusters — What plays together?</div>
-    <div class=card-sub>Each point = a song · Proximity = co-occurrence (same station within 30 min, or same time across stations) · Size = play count · <strong>Last 48 hours</strong></div>
-    <div class="chart-wrap tall" id=clusterChartWrap><canvas id=clusterChart></canvas></div>
-    <div class=chart-legend id=clusterLegend style=margin-bottom:6px></div>
+    <div class=card-title>🔗 מה מתנגן עם מה?</div>
+    <div class=card-sub>שירים שמתנגנים בסמיכות — באותה תחנה תוך 30 דקות, או במקביל בתחנות שונות. לחץ על שיר כדי לראות אילו שירים מופיעים לידו. <strong id=clusterWindowLabel></strong></div>
+    <div id=clusterGrid></div>
     <div id=clusterDetail style=margin-top:8px></div>
   </div>
 </div>
@@ -1197,178 +1221,126 @@ async function exportToSpotify(){
     alert('שגיאה בחיבור לשרת ספוטיפיי: '+e.message);
   }
 }
-/* ── Clusters (song co-occurrence scatter) ── */
+/* ── Clusters (song co-occurrence explorer) ── */
 let clusterSelectedKey=null;
 
 function renderClusters(){
   const cl=D.clusters;
   const el=document.getElementById('clusterDetail');
-  if(!cl||!cl.songs||!cl.songs.length){
-    document.getElementById('clusterChartWrap').innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">Need more data — check back soon</div>';
+  const grid=document.getElementById('clusterGrid');
+  if(!cl||!cl.groups||!cl.groups.length||!cl.ready){
+    grid.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">צריך עוד נתונים — בדוק שוב מאוחר יותר</div>';
     el.innerHTML='';return
   }
 
-  const data=cl.songs;
-  const wrap=document.querySelector('#tab-clusters .chart-wrap');
-  destroyChart('cluster');
+  document.getElementById('clusterWindowLabel').textContent=
+    'חלון: '+cl.window_hours+' שעות אחרונות · '+cl.total_songs+' שירים';
 
-  if(!wrap.querySelector('canvas'))wrap.innerHTML='<canvas id=clusterChart></canvas>';
+  clusterSelectedKey=null;
 
-  // Color by primary station (most frequent)
-  const defColor='#5ddbb5';
-  function songColor(s){
-    const sts=s.stations||[];
-    if(sts.length===1){const st=stationBySlug(sts[0]);return st?st.color:defColor}
-    return sts.length?('#5ddbb5'):defColor;
-  }
+  let html='';
+  cl.groups.forEach(g=>{
+    const isCross=g.slug==='cross-station';
+    const st=isCross?null:stationBySlug(g.slug);
+    const col=isCross?'#5ddbb5':(st?st.color:'#5ddbb5');
+    const label=isCross?'🎯 חוצה תחנות ('+g.songs.length+')':(st?st.name:g.slug)+' ('+g.songs.length+')';
 
-  // Build datasets: one per station for legend, but all in one for simplicity
-  // Actually: split by number of stations for meaningful legend
-  const byCat={};
-  data.forEach(s=>{
-    const sts=s.stations||[];
-    const cat=sts.length===1?sts[0]:'multi';
-    if(!byCat[cat])byCat[cat]=[];
-    byCat[cat].push(s);
-  });
+    html+='<div style="margin-bottom:12px">'+
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;padding:4px 0">'+
+        '<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:'+col+'"></span>'+
+        '<span style="font-weight:700;font-size:.85rem">'+esc(label)+'</span>'+
+      '</div>';
 
-  const datasets=[];
-  Object.entries(byCat).forEach(([cat,songs]) => {
-    const col=cat==='multi'?'#5ddbb5':(stationBySlug(cat)?.color||defColor);
-    const lbl=cat==='multi'?'(multiple)'+(songs.length>3?' — '+songs.length:'eclectic'):name(cat);
-    datasets.push({
-      label:lbl,
-      data:songs.map(s=>({
-        x:s.x,y:s.y,artist:s.artist,title:s.title,
-        plays:s.plays,stations:s.stations,
-        matchKey:songMatchKey(s.artist,s.title),
-        r:Math.max(3,Math.min(12,2+Math.sqrt(s.plays)*2)),
-      })),
-      backgroundColor:songs.map(s=>songColor(s)+'cc'),
-      borderColor:songs.map(s=>songColor(s)),
-      borderWidth:1,
-      pointRadius:songs.map(s=>Math.max(3,Math.min(12,2+Math.sqrt(s.plays)*2))),
-      pointHoverRadius:songs.map(s=>Math.max(5,Math.min(16,4+Math.sqrt(s.plays)*2.5))),
+    g.songs.forEach((s,i)=>{
+      const mk=songMatchKey(s.artist,s.title);
+      const expandId='cl-exp-'+mk.replace(/[^a-z0-9]/g,'');
+      const sts=Object.keys(s.stations||{});
+      const stLabel=sts.length===1?name(sts[0]):sts.map(slug=>name(slug)).join(', ');
+      const connCount=s.top?s.top.length:0;
+
+      html+='<div style="display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;cursor:pointer;transition:background .1s;border-bottom:1px solid rgba(37,41,64,.4)" '+
+        'onclick="toggleClusterSong(\''+esc(s.artist)+'\',\''+esc(s.title)+'\')" '+
+        'id="'+expandId+'-row">'+
+        '<span style="font-size:.68rem;color:var(--muted);width:24px;flex-shrink:0;text-align:right">'+(i+1)+'</span>'+
+        '<span style="flex:1;min-width:0"><strong>'+esc(s.artist)+'</strong> <span style=opacity:.7>— '+esc(s.title)+'</span></span>'+
+        '<span style="font-size:.7rem;color:var(--muted);white-space:nowrap;margin:0 6px">'+esc(stLabel)+'</span>'+
+        '<span style="font-size:.78rem;font-weight:700;color:var(--accent);direction:ltr">'+s.plays+'×</span>'+
+        (connCount?'<span style="font-size:.65rem;color:var(--muted)">🔗'+connCount+'</span>':'')+
+        '<span class="cl-arrow" style="font-size:.7rem;color:var(--muted);transition:transform .2s">▶</span>'+
+      '</div>'+
+      '<div id="'+expandId+'" style="display:none;padding:6px 8px 10px 32px;background:rgba(21,24,41,.5);border-radius:0 0 6px 6px;margin-bottom:2px"></div>';
     });
+
+    html+='</div>';
   });
 
-  charts.cluster=new Chart(document.getElementById('clusterChart'),{
-    type:'scatter',
-    data:{datasets},
-    options:{
-      responsive:true,maintainAspectRatio:false,animation:false,
-      plugins:{
-        legend:{display:false},
-        tooltip:{
-          callbacks:{
-            label:ctx=>{
-              const r=ctx.raw;
-              return r.artist+' — '+r.title+' ('+r.plays+'×, '+r.stations.length+' stations)';
-            }
-          }
-        }
-      },
-      onClick:(e,items)=>{
-        if(!items.length)return;
-        const idx=items[0].datasetIndex;
-        const pt=items[0].raw;
-        if(!pt||!pt.matchKey)return;
-        clusterSelectedKey=pt.matchKey;
-        // Highlight selected point
-        Chart.getChart('clusterChart').setActiveElements(items);
-        Chart.getChart('clusterChart').draw();
-        // Show details
-        showClusterDetail(pt);
-      },
-      scales:{
-        x:{ticks:{color:MUTED,font:{size:9}},grid:{color:GRID}},
-        y:{ticks:{color:MUTED,font:{size:9}},grid:{color:GRID}},
-      }
-    }
-  });
+  grid.innerHTML=html;
+  el.innerHTML='<div style="text-align:center;padding:12px;color:var(--muted);font-size:.82rem">👆 לחץ על שיר כדי לראות אילו שירים מתנגנים לידו</div>';
+}
 
-  // Legend — one entry per station colour + cross-station
-  const legendItems=Object.entries(byCat).map(([cat,songs])=>{
-    const col=cat==='multi'?'#5ddbb5':(stationBySlug(cat)?.color||defColor);
-    const label=cat==='multi'?songs.length+' stations':name(cat)+' ('+songs.length+')';
-    return{color:col,label};
-  });
-  document.getElementById('clusterLegend').innerHTML=legendHtml(legendItems);
+function toggleClusterSong(artist,title){
+  const mk=songMatchKey(artist,title);
+  const expandId='cl-exp-'+mk.replace(/[^a-z0-9]/g,'');
+  const div=document.getElementById(expandId);
+  const row=document.getElementById(expandId+'-row');
+  const arrow=row&&row.querySelector('.cl-arrow');
 
-  // If a song was selected before, restore; else show default hint
-  if(clusterSelectedKey){
-    const found=data.find(s=>songMatchKey(s.artist,s.title)===clusterSelectedKey);
-    if(found)showClusterDetail(found);
-  }else{
+  if(!div)return;
+
+  const isOpen=div.style.display!=='none';
+  if(isOpen){
+    div.style.display='none';
+    if(arrow)arrow.style.transform='rotate(0deg)';
+    clusterSelectedKey=null;
     document.getElementById('clusterDetail').innerHTML=
-      '<div style="text-align:center;padding:16px;color:var(--muted);font-size:.82rem">👆 Click a point on the chart to see which songs play together</div>';
-  }
-}
-
-function showClusterDetail(pt){
-  const el=document.getElementById('clusterDetail');
-  const top=pt.top||[];
-  const stNames=(pt.stations||[]).map(slug=>name(slug)).join(', ');
-  const timeLabel='48h window';
-  let html='<div class=card style="margin-bottom:0;padding:12px">'+
-    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:12px;flex-wrap:wrap">'+
-      '<div style="font-size:.78rem;color:var(--muted)">Selected: <strong>'+esc(pt.artist)+'</strong> — '+esc(pt.title)+'</div>'+
-      '<div style="font-size:.68rem;color:var(--muted);white-space:nowrap">'+esc(stNames)+' · '+timeLabel+'</div>'+
-    '</div>';
-  if(top.length){
-    html+='<div style="font-size:.72rem;color:var(--muted);margin-bottom:4px">Also plays with:</div>'+
-      top.map(t=>'<div style="display:flex;justify-content:space-between;font-size:.78rem;padding:3px 6px;border-radius:4px;cursor:pointer;transition:background .1s"'+
-        ' onmouseenter="hoverClusterSong(\''+esc(t.artist)+'\',\''+esc(t.title)+'\')"'+
-        ' onmouseleave="hoverClusterSong(null,null)"'+
-        ' onclick="clickClusterSong(\''+esc(t.artist)+'\',\''+esc(t.title)+'\')">'+
-        '<span>'+esc(t.artist)+' — '+esc(t.title)+'</span>'+
-        '<span style=color:var(--accent);font-weight:600;white-space:nowrap>'+t.count+'× together</span></div>'
-      ).join('')+'</div>';
-  }else{
-    html+='<div style="font-size:.75rem;color:var(--muted)">No strong connections yet</div>';
-  }
-  html+='</div>';
-  el.innerHTML=html;
-}
-
-function hoverClusterSong(artist,title){
-  const chart=Chart.getChart('clusterChart');
-  if(!chart)return;
-  if(!artist||!title){
-    chart.setActiveElements([]);
-    chart.draw();
+      '<div style="text-align:center;padding:12px;color:var(--muted);font-size:.82rem">👆 לחץ על שיר כדי לראות אילו שירים מתנגנים לידו</div>';
     return;
   }
-  const mk=songMatchKey(artist,title);
-  // Find matching elements across all datasets
-  const els=[];
-  chart.data.datasets.forEach((ds,i)=>{
-    ds.data.forEach((pt,j)=>{
-      if(pt.matchKey===mk)els.push({datasetIndex:i,index:j});
-    });
-  });
-  chart.setActiveElements(els);
-  chart.draw();
-}
 
-function clickClusterSong(artist,title){
-  clusterSelectedKey=songMatchKey(artist,title);
-  const data=(D.clusters&&D.clusters.songs)||[];
-  const found=data.find(s=>songMatchKey(s.artist,s.title)===clusterSelectedKey);
-  if(found)showClusterDetail(found);
-  // Highlight in chart
-  const chart=Chart.getChart('clusterChart');
-  if(!chart)return;
-  const els=[];
-  chart.data.datasets.forEach((ds,i)=>{
-    ds.data.forEach((pt,j)=>{
-      if(pt.matchKey===clusterSelectedKey)els.push({datasetIndex:i,index:j});
-    });
-  });
-  chart.setActiveElements(els);
-  chart.draw();
-}
+  // Close all other expanded details
+  document.querySelectorAll('[id^=cl-exp-]').forEach(d=>{d.style.display='none'});
+  document.querySelectorAll('.cl-arrow').forEach(a=>{a.style.transform='rotate(0deg)'});
 
+  // Find this song in the data
+  const cl=D.clusters;
+  if(!cl||!cl.groups)return;
+  let song=null;
+  cl.groups.some(g=>{
+    song=g.songs.find(s=>songMatchKey(s.artist,s.title)===mk);
+    return !!song;
+  });
+  if(!song){div.style.display='block';return}
+
+  clusterSelectedKey=mk;
+  const top=song.top||[];
+  const sts=Object.keys(song.stations||{});
+  const stNames=sts.map(slug=>name(slug)).join(', ');
+
+  // Detail panel
+  let detailHtml='<div style="margin-bottom:6px">'+
+    '<div style="font-size:.78rem;font-weight:600">'+esc(song.artist)+' — '+esc(song.title)+'</div>'+
+    '<div style="font-size:.68rem;color:var(--muted)">'+esc(stNames)+' · '+song.plays+' ניגונים</div>'+
+    '</div>';
+
+  if(top.length){
+    detailHtml+='<div style="font-size:.72rem;color:var(--muted);margin-bottom:4px">מתנגן יחד עם:</div>'+
+      top.map(t=>'<div style="display:flex;justify-content:space-between;align-items:center;font-size:.78rem;padding:3px 8px;border-radius:4px;cursor:pointer;transition:background .1s"'+
+        ' onclick="toggleClusterSong(\''+esc(t.artist)+'\',\''+esc(t.title)+'\')" '+
+        ' onmouseenter="this.style.background=\'var(--card-hover)\';" onmouseleave="this.style.background=\'transparent\'">'+
+        '<span>'+esc(t.artist)+' — '+esc(t.title)+'</span>'+
+        '<span style=color:var(--accent);font-weight:600;white-space:nowrap>'+t.count+'× ביחד</span></div>'
+      ).join('');
+  }else{
+    detailHtml+='<div style="font-size:.75rem;color:var(--muted)">אין קשרים חזקים עדיין</div>';
+  }
+
+  div.innerHTML=detailHtml;
+  div.style.display='block';
+  if(arrow)arrow.style.transform='rotate(90deg)';
+
+  // Also update the detail card
+  document.getElementById('clusterDetail').innerHTML='<div class=card style="margin-bottom:0;padding:12px">'+detailHtml+'</div>';
+}
 /* ── status ── */
 function renderStatus(){
   const s=D.stats;

@@ -80,6 +80,8 @@ class PlaylistDB:
                 url           TEXT,
                 shazam_key    TEXT,
                 isrc          TEXT,
+                bpm           REAL,
+                musical_key   TEXT,
                 recognized_at TEXT NOT NULL,
                 created_at    TEXT DEFAULT (datetime('now'))
             );
@@ -115,6 +117,11 @@ class PlaylistDB:
         # before then have NULL and cannot be backfilled without re-recognition.
         if "isrc" not in cols:
             self.conn.execute("ALTER TABLE tracks ADD COLUMN isrc TEXT")
+        # Migration: BPM & musical key — added 2026-07-14. Rows before now have NULL.
+        if "bpm" not in cols:
+            self.conn.execute("ALTER TABLE tracks ADD COLUMN bpm REAL")
+        if "musical_key" not in cols:
+            self.conn.execute("ALTER TABLE tracks ADD COLUMN musical_key TEXT")
         # Create indexes safely (IF NOT EXISTS on indexes requires separate ALTER TABLE check)
         existing_idx = {r["name"] for r in self.conn.execute("SELECT name FROM sqlite_master WHERE type='index'").fetchall()}
         for idx_sql in [
@@ -188,14 +195,16 @@ class PlaylistDB:
 
     def insert_track(self, station_id: int, artist: str, title: str,
                      text: str = "", url: str = "", shazam_key: str = "",
-                     recognized_at: str = "", isrc: str = "") -> int:
+                     recognized_at: str = "", isrc: str = "",
+                     bpm: float | None = None,
+                     musical_key: str | None = None) -> int:
         """Insert a track for a specific station. Returns row ID."""
         cur = self.conn.execute(
             """INSERT INTO tracks (station_id, artist, title, text, url, shazam_key,
-                                   isrc, recognized_at)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                                   isrc, bpm, musical_key, recognized_at)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             (station_id, artist, title, text, url, shazam_key,
-             isrc or None, recognized_at),
+             isrc or None, bpm, musical_key, recognized_at),
         )
         self.conn.commit()
         return cur.lastrowid

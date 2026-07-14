@@ -139,6 +139,8 @@ def main() -> int:
             "url": t.get("url") or "",
             "shazam_key": t.get("shazam_key") or "",
             "isrc": t.get("isrc") or None,   # NULL on the 387 pre-epoch rows; not backfillable
+            "bpm": t.get("bpm"),              # NULL for pre-epoch rows; populated by new proxy
+            "musical_key": t.get("musical_key"),  # same as bpm
             "song_image": None,              # nothing in the pipeline produces this yet
             "recognized_at": to_iso(t["recognized_at"]),
             "created_at": to_iso(t.get("created_at")),

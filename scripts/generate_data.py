@@ -199,22 +199,18 @@ def build_non_music(db: PlaylistDB, slugs: list[str], now: datetime) -> dict[str
 
 
 def build_song_clusters(tracks: list[dict[str, Any]], now: datetime) -> dict[str, Any]:
-    """Co-occurrence-based song clustering via MDS.
+    """Song co-occurrence graph — which songs play together?
 
     Two songs co-occur if they:
     1. Play within 30 min on the same station (sequential programming)
     2. Play at the same time on different stations (simultaneous)
 
-    MDS projects the distance matrix (1 / (1 + co-occurrences)) to 2D
-    so that songs that frequently co-occur end up close together.
+    Songs are grouped by their primary station (the station where they
+    play most often). Songs that play on multiple stations appear under
+    "cross-station". Each song carries its top co-occurring partners.
     """
-    import numpy as np
-    import warnings
-    warnings.filterwarnings('ignore', category=FutureWarning, module='sklearn')
-    from sklearn.manifold import MDS
     from collections import defaultdict
 
-    # Only use last 48h for bounded computation
     cutoff = now - timedelta(hours=TIMELINE_HOURS)
     recent = [t for t in tracks if t["_dt"] >= cutoff]
 
@@ -233,21 +229,21 @@ def build_song_clusters(tracks: list[dict[str, Any]], now: datetime) -> dict[str
         if key not in song_to_idx:
             song_to_idx[key] = len(songs)
             songs.append({"key": key, "artist": t["artist"], "title": t["title"],
-                          "plays": 0, "stations": set()})
+                          "plays": 0, "stations": defaultdict(int)})
         return song_to_idx[key]
 
-    # First pass: register all songs (count plays once per track)
+    # Register all songs, counting plays per station
     for slug, st in by_station.items():
         for t in st:
             idx = get_or_create(t)
             songs[idx]["plays"] += 1
-            songs[idx]["stations"].add(t["station_slug"])
+            songs[idx]["stations"][slug] += 1
 
     # Count co-occurrences (sparse)
     cooccur: dict[int, dict[int, int]] = defaultdict(lambda: defaultdict(int))
 
-    # 1. Same-station sequential: walk through each station
-    SAME_WIN = 30  # minutes
+    # 1. Same-station sequential: window of 30 min
+    SAME_WIN = 30
     for slug, st in by_station.items():
         for i in range(len(st)):
             idx_i = get_or_create(st[i])
@@ -261,12 +257,11 @@ def build_song_clusters(tracks: list[dict[str, Any]], now: datetime) -> dict[str
                 cooccur[idx_j][idx_i] += 1
 
     # 2. Cross-station simultaneous: 5-min buckets
-    CROSS_WIN = 5  # minutes
+    CROSS_WIN = 5
     bucketed: dict[str, list[int]] = defaultdict(list)
     for t in recent:
-        bucket_key = t["_il"].strftime("%Y-%m-%dT%H") + "_" + str(t["_il"].minute // CROSS_WIN)
-        bucketed[bucket_key].append(get_or_create(t))
-
+        key = t["_il"].strftime("%Y-%m-%dT%H") + "_" + str(t["_il"].minute // CROSS_WIN)
+        bucketed[key].append(get_or_create(t))
     for bucket, idxs in bucketed.items():
         if len(idxs) < 2:
             continue
@@ -275,62 +270,66 @@ def build_song_clusters(tracks: list[dict[str, Any]], now: datetime) -> dict[str
                 cooccur[idxs[i]][idxs[j]] += 1
                 cooccur[idxs[j]][idxs[i]] += 1
 
-    # Filter to songs with >= 2 plays (isolated songs aren't interesting)
+    # Filter to songs with >= 2 plays
     min_plays = 2
     filtered = [(i, s) for i, s in enumerate(songs) if s["plays"] >= min_plays]
     if len(filtered) < 5:
-        return {"songs": [], "ready": False, "n": len(songs)}
+        return {"groups": [], "ready": False, "total_songs": len(songs)}
 
-    n = len(filtered)
-    orig_indices = [fi[0] for fi in filtered]
-    filtered_songs = [fi[1] for fi in filtered]
+    # Build per-song result with top co-occurrences
+    def primary_station(s):
+        """Return the station slug where this song plays most."""
+        sts = s["stations"]
+        return max(sts, key=sts.get)
 
-    # Build distance matrix
-    eps = 0.001
-    dist = np.ones((n, n)) * 1.0
-    for a in range(n):
-        dist[a][a] = 0.0
-        orig_a = orig_indices[a]
-        for b in range(a + 1, n):
-            orig_b = orig_indices[b]
-            c = max(cooccur[orig_a].get(orig_b, 0), cooccur[orig_b].get(orig_a, 0))
-            if c > 0:
-                d = 1.0 / (1.0 + c) + eps
-            else:
-                d = 1.0
-            dist[a][b] = dist[b][a] = d
+    def station_count(s):
+        return len(s["stations"])
 
-    # MDS: 2D
-    mds = MDS(n_components=2, dissimilarity="precomputed",
-              random_state=42, normalized_stress=False, max_iter=100, n_init=1)
-    try:
-        coords = mds.fit_transform(dist)
-    except Exception:
-        return {"songs": [], "ready": False, "n": len(songs)}
-
-    # Build top co-occurrence list for each song (top 5)
     result_songs = []
-    for i, s in enumerate(filtered_songs):
+    for orig_idx, s in filtered:
         # Top co-occurring songs
-        orig_i = orig_indices[i]
         neighbors = sorted([
-            (cooccur[orig_i].get(orig_indices[j], 0), filtered_songs[j])
-            for j in range(n) if j != i
+            (cooccur[orig_idx].get(fi, 0), fs)
+            for fi, fs in filtered if fi != orig_idx
         ], key=lambda x: -x[0])
         top = [{"artist": ns["artist"], "title": ns["title"], "count": c}
                for c, ns in neighbors[:5] if c > 0]
 
+        sts = dict(s["stations"])
+        primary = primary_station(s)
+        group = "cross-station" if station_count(s) > 1 else primary
+
         result_songs.append({
             "artist": s["artist"],
             "title": s["title"],
-            "x": round(float(coords[i][0]), 3),
-            "y": round(float(coords[i][1]), 3),
             "plays": s["plays"],
-            "stations": list(s["stations"]),
+            "stations": sts,
+            "primary_station": primary,
+            "group": group,
             "top": top,
         })
 
-    return {"songs": result_songs, "ready": True, "n": len(result_songs)}
+    # Sort by plays descending
+    result_songs.sort(key=lambda x: -x["plays"])
+
+    # Group by station (or cross-station)
+    groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for s in result_songs:
+        groups[s["group"]].append(s)
+
+    # Sort groups: cross-station first, then by size descending
+    group_order = sorted(groups.keys(), key=lambda g: (
+        0 if g == "cross-station" else 1, -len(groups[g])))
+
+    return {
+        "groups": [
+            {"slug": g, "songs": groups[g]}
+            for g in group_order
+        ],
+        "ready": True,
+        "total_songs": len(result_songs),
+        "window_hours": TIMELINE_HOURS,
+    }
 
 
 def build_trends(tracks: list[dict[str, Any]], now: datetime) -> dict[str, Any]:
@@ -386,6 +385,129 @@ def build_trends(tracks: list[dict[str, Any]], now: datetime) -> dict[str, Any]:
     rising.sort(key=lambda r: (-r["delta"], -r["count"]))
 
     return {"days": TRENDS_DAYS, "daily": daily_out, "rising_artists": rising[:15]}
+
+
+def build_bpm_key(tracks: list[dict[str, Any]],
+                   slugs: list[str]) -> dict[str, Any]:
+    """Build BPM and musical-key aggregates per station.
+
+    Only considers tracks where bpm IS NOT NULL (the rest are older tracks
+    collected before BPM/key detection was added on 2026-07-14).
+
+    Returns:
+        dict with:
+          - stations: {slug: {bpm: {mean, min, max, histogram, by_hour},
+                              keys: {key_name: count}},
+          - cross_station: {bpm_by_key: {key_name: {mean_bpm, count}},
+                            bpm_by_hour: [{hour, mean_bpm, count}]}
+    """
+    # Filter to tracks with BPM data
+    with_bpm = [t for t in tracks if t.get("bpm") is not None]
+    if not with_bpm:
+        return {"stations": {}, "cross_station": {}}
+
+    # Per-station grouping
+    by_slug: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for t in with_bpm:
+        by_slug[t["station_slug"]].append(t)
+
+    stations_out: dict[str, Any] = {}
+    for slug in slugs:
+        st = by_slug.get(slug, [])
+        if not st:
+            continue
+
+        bpm_vals = np.array([t["bpm"] for t in st if t["bpm"] is not None], dtype=float)
+        if len(bpm_vals) == 0:
+            continue
+
+        # BPM stats
+        mean_bpm = float(np.mean(bpm_vals))
+        median_bpm = float(np.median(bpm_vals))
+        min_bpm = float(np.min(bpm_vals))
+        max_bpm = float(np.max(bpm_vals))
+        std_bpm = float(np.std(bpm_vals))
+
+        # Histogram: 10-BPM bins from 60 to 200
+        bins = list(range(60, 210, 10))
+        hist_counts, _ = np.histogram(bpm_vals, bins=bins)
+        histogram = [
+            {"lo": int(bins[i]), "hi": int(bins[i + 1]), "count": int(hist_counts[i])}
+            for i in range(len(hist_counts))
+        ]
+
+        # BPM by hour (IL time)
+        hour_map: dict[int, list[float]] = defaultdict(list)
+        for t in st:
+            il_hour = t["_il"].hour
+            if t["bpm"] is not None:
+                hour_map[il_hour].append(t["bpm"])
+        by_hour = []
+        for h in range(24):
+            vals = hour_map.get(h, [])
+            if vals:
+                by_hour.append({
+                    "hour": h,
+                    "mean_bpm": round(float(np.mean(vals)), 1),
+                    "median_bpm": round(float(np.median(vals)), 1),
+                    "count": len(vals),
+                })
+
+        # Key distribution
+        keys: dict[str, int] = defaultdict(int)
+        for t in st:
+            k = t.get("musical_key")
+            if k:
+                keys[k] += 1
+        keys_sorted = dict(sorted(keys.items(), key=lambda x: -x[1]))
+
+        stations_out[slug] = {
+            "bpm": {
+                "mean": round(mean_bpm, 1),
+                "median": round(median_bpm, 1),
+                "min": round(min_bpm, 1),
+                "max": round(max_bpm, 1),
+                "std": round(std_bpm, 1),
+                "count": len(bpm_vals),
+                "histogram": histogram,
+                "by_hour": by_hour,
+            },
+            "keys": keys_sorted,
+        }
+
+    # Cross-station: BPM by key
+    bpm_by_key: dict[str, list[float]] = defaultdict(list)
+    cross_by_hour: dict[int, list[float]] = defaultdict(list)
+    for t in with_bpm:
+        k = t.get("musical_key")
+        if k:
+            bpm_by_key[k].append(t["bpm"])
+        cross_by_hour[t["_il"].hour].append(t["bpm"])
+
+    bpm_by_key_out = {}
+    for key_name, vals in sorted(bpm_by_key.items(), key=lambda x: -len(x[1])):
+        bpm_by_key_out[key_name] = {
+            "mean_bpm": round(float(np.mean(vals)), 1),
+            "count": len(vals),
+        }
+
+    cross_hour_out = []
+    for h in range(24):
+        vals = cross_by_hour.get(h, [])
+        if vals:
+            cross_hour_out.append({
+                "hour": h,
+                "mean_bpm": round(float(np.mean(vals)), 1),
+                "count": len(vals),
+            })
+
+    return {
+        "stations": stations_out,
+        "cross_station": {
+            "bpm_by_key": bpm_by_key_out,
+            "bpm_by_hour": cross_hour_out,
+        },
+    }
 
 
 def generate_all(output_dir: Path = DATA_DIR) -> dict[str, int]:
@@ -486,6 +608,7 @@ def generate_all(output_dir: Path = DATA_DIR) -> dict[str, int]:
     write_json(output_dir / "cross_station.json",
                {"tracks": db.get_cross_station_tracks()}, sizes, "cross_station.json")
     write_json(output_dir / "clusters.json", build_song_clusters(tracks, now), sizes, "clusters.json")
+    write_json(output_dir / "bpm_key.json", build_bpm_key(tracks, slugs), sizes, "bpm_key.json")
 
     # headline stats — the only file that always changes (updated_at heartbeat)
     stats = db.get_stats()

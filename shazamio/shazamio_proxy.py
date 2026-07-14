@@ -7,6 +7,7 @@ import asyncio
 import json
 import os
 import random
+import sys
 import tempfile
 import time
 from pathlib import Path
@@ -14,6 +15,11 @@ from typing import Any
 
 from aiohttp import web
 from shazamio import Shazam
+
+# Allow import of scripts/audio_analysis.py from the project root
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+from audio_analysis import analyze as analyze_audio  # noqa: E402
 
 DEFAULT_STREAM_URL = "https://radio.streamgates.net/stream/1036kh"
 
@@ -123,6 +129,17 @@ async def recognize_file(path: Path) -> dict[str, Any]:
                 shazam.recognize(str(path)), timeout=RECOGNIZE_TIMEOUT
             )
             result = parse_shazam_result(raw)
+            # Run librosa analysis on the same WAV file for BPM and key.
+            # This is fast (~160ms) and best-effort — failure leaves fields null.
+            try:
+                audio = analyze_audio(path)
+                if audio:
+                    result["bpm"] = audio.get("bpm")
+                    result["musical_key"] = audio.get("musical_key")
+            except Exception as exc:
+                # BPM/key are best-effort; never let analysis break recognition.
+                print(json.dumps({"event": "audio_analysis_error",
+                                  "error": str(exc)}, ensure_ascii=False), flush=True)
             STATE["last_result"] = result
             STATE["last_finished_at"] = now_iso()
             print(json.dumps({"event": "recognized", **result}, ensure_ascii=False), flush=True)
