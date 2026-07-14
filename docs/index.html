@@ -171,6 +171,7 @@
     <div class=card-title>📊 Timeline — מה התנגן בכל תחנה?</div>
     <div class=card-sub>ציר X = שעה (שעון ישראל) · כל נקודה = שיר שזוהה · ריחוף לפרטים</div>
     <div class=controls id=timelineDays></div>
+    <div class=controls id=timelineZoom></div>
     <div class="chart-wrap tall"><canvas id=timelineChart></canvas></div>
     <div class=chart-legend id=timelineLegend></div>
   </div>
@@ -297,6 +298,7 @@ let stations=[],activeStation=null;
 let charts={};       // chart.js instances by id
 let D={};            // all loaded data files
 let timelineDay=null; // selected IL date string
+let timelineWindow='6h'; // '2h','6h','12h','24h', or 'hour:N'
 let historyShown=100;
 
 const STATION_WEBSITES={
@@ -440,6 +442,15 @@ function timelineDates(){
   pts.forEach(p=>{const d=parseTs(p.ts);if(d)seen.add(ilParts(d).date)});
   return[...seen].sort().reverse();
 }
+
+// deterministic jitter: same artist+title always gets same offset
+function jitterOffset(artist,title){
+  let h=0;
+  const s=(artist||'')+'|'+(title||'');
+  for(let i=0;i<s.length;i++)h=((h<<5)-h)+s.charCodeAt(i),h|=0;
+  return((h%100)/100-0.5)*0.7; // ±0.35 within station band
+}
+
 function renderTimelineDayButtons(){
   const days=timelineDates();
   const el=document.getElementById('timelineDays');
@@ -455,27 +466,89 @@ function renderTimelineDayButtons(){
     timelineDay=b.dataset.day;renderTimeline();
   };
 }
+
+function renderTimelineZoomButtons(){
+  const el=document.getElementById('timelineZoom');
+  const isHour=timelineWindow.startsWith('hour:');
+  const selHour=isHour?+timelineWindow.split(':')[1]:null;
+  el.innerHTML=
+    '<span class=lbl>טווח:</span>'+
+    ['2h','6h','12h','24h'].map(w=>
+      '<button class="ctrl-btn'+(timelineWindow===w?' active':'')+'" data-zoom="'+w+'">'+
+        (w==='2h'?'שעתיים':w==='6h'?'6 ש׳':w==='12h'?'12 ש׳':'24 ש׳')+
+      '</button>'
+    ).join('')+
+    '<span style=opacity:.3;margin:0 4px>|</span>'+
+    Array.from({length:24},(_,h)=>'<button class="ctrl-btn'+(selHour===h?' active':'')+'" data-zoom="hour:'+h+'">'+String(h).padStart(2,'0')+':00</button>').join('');
+  el.onclick=e=>{
+    const b=e.target.closest('[data-zoom]');if(!b)return;
+    timelineWindow=b.dataset.zoom;renderTimeline();
+  };
+}
+
 function renderTimeline(){
   renderTimelineDayButtons();
+  renderTimelineZoomButtons();
   const wrap=document.querySelector('#tab-timeline .chart-wrap');
   const legend=document.getElementById('timelineLegend');
   let pts=(D.timeline&&D.timeline.points)||[];
   if(activeStation)pts=pts.filter(p=>p.s===activeStation);
-  const order=stations.map(s=>s.slug);
+
+  // Compute station order by activity (most songs first) — breaks symmetry
+  const slugCounts={};
+  pts.forEach(p=>{slugCounts[p.s]=(slugCounts[p.s]||0)+1});
+  const order=[...stations].sort((a,b)=>(slugCounts[b.slug]||0)-(slugCounts[a.slug]||0)).map(s=>s.slug);
+
+  // Parse time window bounds
+  const isHour=timelineWindow.startsWith('hour:');
+  let xMin=0,xMax=1440;
+  if(isHour){
+    const h=+timelineWindow.split(':')[1];
+    xMin=h*60;xMax=(h+1)*60;
+  }else if(timelineWindow==='2h'){
+    const now=ilParts(new Date());
+    xMin=Math.max(0,now.h*60+now.m-120);xMax=Math.min(1440,now.h*60+now.m+30);
+  }else if(timelineWindow==='6h'){
+    const now=ilParts(new Date());
+    xMin=Math.max(0,now.h*60+now.m-300);xMax=Math.min(1440,now.h*60+now.m+60);
+  }else if(timelineWindow==='12h'){
+    const now=ilParts(new Date());
+    xMin=Math.max(0,now.h*60+now.m-660);xMax=Math.min(1440,now.h*60+now.m+60);
+  }
+
   const ds={};
   let n=0;
   pts.forEach(p=>{
     const d=parseTs(p.ts);if(!d)return;
     const il=ilParts(d);
     if(timelineDay&&il.date!==timelineDay)return;
+    const x=il.h*60+il.m;
+    if(x<xMin||x>xMax)return;
     const yIdx=order.indexOf(p.s);if(yIdx<0)return;
-    if(!ds[p.s])ds[p.s]={label:name(p.s),data:[],backgroundColor:color(p.s),borderColor:SURFACE,borderWidth:1,pointRadius:5,pointHoverRadius:9};
-    ds[p.s].data.push({x:il.h*60+il.m,y:yIdx,artist:p.a,title:p.t,station:name(p.s)});
+    // deterministic jitter so same-minute points separate
+    const jit=jitterOffset(p.a,p.t);
+    const yPos=yIdx+jit;
+    if(!ds[p.s])ds[p.s]={
+      label:name(p.s),
+      data:[],
+      backgroundColor:color(p.s),
+      borderColor:'rgba(11,14,26,.4)',
+      borderWidth:1,
+      pointRadius:4,
+      pointHoverRadius:8,
+      pointHitRadius:10,
+    };
+    ds[p.s].data.push({x,y:yPos,artist:p.a,title:p.t,station:name(p.s)});
     n++;
   });
   destroyChart('timeline');
   if(!n){wrap.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">אין נתונים ליום/תחנה שנבחרו</div>';legend.innerHTML='';return}
   if(!wrap.querySelector('canvas'))wrap.innerHTML='<canvas id=timelineChart></canvas>';
+
+  // Tick interval adapts to zoom level
+  const xRange=xMax-xMin;
+  const tickStep=xRange<=120?30:xRange<=360?60:xRange<=720?120:180;
+
   charts.timeline=new Chart(document.getElementById('timelineChart'),{
     type:'scatter',data:{datasets:Object.values(ds)},
     options:{
@@ -485,8 +558,25 @@ function renderTimeline(){
         return r.station+': '+r.artist+' — '+r.title+' ('+hh+':'+mm+')';
       }}}},
       scales:{
-        x:{type:'linear',min:0,max:1440,ticks:{stepSize:120,color:MUTED,callback:v=>String(Math.floor(v/60)).padStart(2,'0')+':00'},grid:{color:GRID},title:{display:true,text:'שעה (שעון ישראל)',color:MUTED}},
-        y:{type:'linear',min:-0.5,max:stations.length-0.5,ticks:{stepSize:1,color:MUTED,callback:v=>{const i=Math.round(v);return i>=0&&i<order.length?name(order[i]):''}},grid:{color:GRID}}
+        x:{
+          type:'linear',min:xMin,max:xMax,
+          ticks:{stepSize:tickStep,color:MUTED,callback:v=>String(Math.floor(v/60)).padStart(2,'0')+':'+String(Math.round(v%60)).padStart(2,'0')},
+          grid:{color:GRID},
+          title:{display:true,text:'שעה (שעון ישראל)',color:MUTED}
+        },
+        y:{
+          type:'linear',min:-0.5,max:order.length-0.5,
+          ticks:{stepSize:1,color:MUTED,
+            callback:v=>{
+              const i=Math.round(v);
+              if(i<0||i>=order.length)return'';
+              const sn=name(order[i]);
+              // abbreviate long names
+              return sn.length>12?sn.slice(0,11)+'…':sn;
+            }
+          },
+          grid:{color:GRID}
+        }
       }
     }
   });
