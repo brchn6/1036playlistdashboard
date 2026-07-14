@@ -73,8 +73,9 @@ def _detect_bpm(y: np.ndarray, sr: float) -> float | None:
     """
     try:
         onset_env = librosa.onset.onset_strength(y=y, sr=sr, hop_length=512)
-        tempi = librosa.feature.rhythm.tempo(
-            onset_envelope=onset_env.flatten(),
+        # librosa.feature.tempo works on both 0.10+ and 0.11 installed versions
+        tempi = librosa.feature.tempo(
+            onset_envelope=onset_env,
             sr=sr,
             aggregate=np.median,
         )
