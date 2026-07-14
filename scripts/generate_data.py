@@ -10,7 +10,7 @@ Files written to docs/data/:
   stations.json        station registry
   current.json         latest track per station
   stats.json           headline stats (only file carrying updated_at)
-  history.json         most recent HISTORY_LIMIT tracks
+  history.json         all tracks (SQLite retention is the only cap)
   top.json             top artists/songs per time window, with prev-window counts
   timeline.json        compact points for the last TIMELINE_HOURS
   heatmap.json         station×hour (7d) and day-of-week×hour (30d) matrices
@@ -36,8 +36,6 @@ DB_PATH = PROJECT_ROOT / "data" / "playlist.db"
 
 IL_TZ = ZoneInfo("Asia/Jerusalem")
 
-HISTORY_LIMIT = 5000          # global history entries served to the page
-STATION_HISTORY_LIMIT = 300   # per-station history entries
 TIMELINE_HOURS = 48
 TOP_LIMIT = 50                # per window; client re-ranks for station filter
 TOP_WINDOWS = [("1h", 1), ("24h", 24), ("7d", 168), ("30d", 720), ("all", None)]
@@ -418,9 +416,9 @@ def generate_all(output_dir: Path = DATA_DIR) -> dict[str, int]:
     write_json(output_dir / "current.json", db.get_all_current_tracks(), sizes, "current.json")
 
     write_json(output_dir / "history.json", {
-        "history": [public(t) for t in tracks[:HISTORY_LIMIT]],
+        "history": [public(t) for t in tracks],
         "total": total_count,
-        "returned": min(len(tracks), HISTORY_LIMIT),
+        "returned": len(tracks),
     }, sizes, "history.json")
 
     write_json(output_dir / "top.json", {"windows": build_top(tracks, now)}, sizes, "top.json")
@@ -531,7 +529,7 @@ def generate_all(output_dir: Path = DATA_DIR) -> dict[str, int]:
                    public(s_tracks[0]) if s_tracks else None,
                    sizes, f"stations/{s['slug']}/current.json")
         write_json(sdir / "history.json", {
-            "history": [public(t) for t in s_tracks[:STATION_HISTORY_LIMIT]],
+            "history": [public(t) for t in s_tracks],
             "total": len(s_tracks),
         }, sizes, f"stations/{s['slug']}/history.json")
 
