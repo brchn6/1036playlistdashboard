@@ -271,19 +271,19 @@
   <div class=card id=bpmTrendCard style=display:none>
     <div class=card-title>🎵 BPM לאורך שעות היום</div>
     <div class=card-sub>ממוצע BPM לפי שעה (שעון ישראל) — קו חלק מראה איך הקצב משתנה לאורך היממה</div>
-    <div class=chart-wrap><canvas id=bpmHourChart></canvas></div>
+    <div class=chart-wrap id=bpmHourWrap><canvas id=bpmHourChart></canvas></div>
     <div class=chart-legend id=bpmHourLegend></div>
   </div>
   <div class=card id=keyDistCard style=display:none>
     <div class=card-title>🎹 התפלגות סולמות</div>
     <div class=card-sub>כמה שירים זוהו בכל סולם מוזיקלי, לפי תחנה</div>
-    <div class=chart-wrap><canvas id=keyDistChart></canvas></div>
+    <div class=chart-wrap id=keyDistWrap><canvas id=keyDistChart></canvas></div>
     <div class=chart-legend id=keyDistLegend></div>
   </div>
   <div class=card id=bpmKeyScatterCard style=display:none>
     <div class=card-title>🎵 BPM × סולם</div>
     <div class=card-sub>פיזור BPM מול סולם מוזיקלי — גודל נקודה = כמות שירים, צבע = תחנה</div>
-    <div class=chart-wrap class=tall><canvas id=bpmKeyScatter></canvas></div>
+    <div class="chart-wrap tall" id=bpmKeyScatterWrap><canvas id=bpmKeyScatter></canvas></div>
     <div class=chart-legend id=bpmKeyScatterLegend></div>
   </div>
   <div class=card id=bpmStatsCard style=display:none>
@@ -917,7 +917,8 @@ function renderTrends(){
   const labels=days.map(d=>new Date(d.date+'T00:00:00').toLocaleDateString('he-IL',{day:'numeric',month:'short'}));
   // stacked daily per station (fixed station order, 2px surface gap between segments)
   const wraps=document.querySelectorAll('#tab-trends .chart-wrap');
-  if(!wraps[0].querySelector('canvas'))wraps[0].innerHTML='<canvas id=dailyChart></canvas>';
+  // Always reset — clears any leftover canvases from previous buggy renders
+  wraps[0].innerHTML='<canvas id=dailyChart></canvas>';
   charts.daily=new Chart(document.getElementById('dailyChart'),{
     type:'bar',
     data:{labels,datasets:stations
@@ -932,7 +933,8 @@ function renderTrends(){
   document.getElementById('dailyLegend').innerHTML=legendHtml(
     stations.filter(s=>!activeStation||s.slug===activeStation).map(s=>({color:s.color,label:s.name})));
   // discovery: unique vs new songs per day
-  if(!wraps[1].querySelector('canvas'))wraps[1].innerHTML='<canvas id=discoveryChart></canvas>';
+  // Always reset — clears any leftover canvases
+  wraps[1].innerHTML='<canvas id=discoveryChart></canvas>';
   charts.discovery=new Chart(document.getElementById('discoveryChart'),{
     type:'bar',
     data:{labels,datasets:[
@@ -1073,8 +1075,8 @@ function renderBpmHourChart(bk){
     document.getElementById('bpmTrendCard').style.display='none';
     return;
   }
-  const wrap=document.querySelector('#tab-trends .chart-wrap');
-  if(!wrap.querySelector('canvas#bpmHourChart'))wrap.innerHTML+='<canvas id=bpmHourChart></canvas>';
+  const el=document.getElementById('bpmHourChart');
+  if(!el) return;
   charts.bpmHour=new Chart(document.getElementById('bpmHourChart'),{
     type:'line',
     data:{labels:labels,datasets:datasets},
@@ -1140,8 +1142,8 @@ function renderKeyDistChart(bk){
     document.getElementById('keyDistCard').style.display='none';
     return;
   }
-  const wrap=document.querySelector('#tab-trends .chart-wrap');
-  if(!wrap.querySelector('canvas#keyDistChart'))wrap.innerHTML+='<canvas id=keyDistChart></canvas>';
+  const el=document.getElementById('keyDistChart');
+  if(!el) return;
   charts.keyDist=new Chart(document.getElementById('keyDistChart'),{
     type:'bar',
     data:{labels:labels,datasets:datasets},
@@ -1190,8 +1192,8 @@ function renderBpmKeyScatter(bk){
     document.getElementById('bpmKeyScatterCard').style.display='none';
     return;
   }
-  const wrap=document.querySelector('#tab-trends .chart-wrap');
-  if(!wrap.querySelector('canvas#bpmKeyScatter'))wrap.innerHTML+='<canvas id=bpmKeyScatter></canvas>';
+  const el=document.getElementById('bpmKeyScatter');
+  if(!el) return;
   charts.bpmKeyScatter=new Chart(document.getElementById('bpmKeyScatter'),{
     type:'scatter',
     data:{
