@@ -252,6 +252,11 @@
     <div class=card-sub>7 הימים האחרונים מול 7 הימים שלפניהם</div>
     <div id=risingList>טוען...</div>
   </div>
+  <div class=card id=redundancyCard>
+    <div class=card-title>🔁 חזרתיות — האם התחנה חוזרת על עצמה?</div>
+    <div class=card-sub>שירים ואמנים שמושמעים שוב באותה תחנה</div>
+    <div id=redundancyContent></div>
+  </div>
 </div>
 
 <!-- ── History ── -->
@@ -715,6 +720,7 @@ function renderTrends(){
   const tr=D.trends;
   const dailyWrap=document.querySelector('#tab-trends .chart-wrap');
   destroyChart('daily');destroyChart('discovery');
+  renderRedundancy();
   if(!tr||!tr.daily||!tr.daily.length){
     emptyMsg(dailyWrap);document.getElementById('risingList').innerHTML='';return;
   }
@@ -759,6 +765,72 @@ function renderTrends(){
     '<div class=hi><div class=ha>'+esc(r.artist)+'</div>'+
     '<div style="font-size:.66rem;color:var(--muted)">'+r.prev+' → '+r.count+' השמעות</div></div>'+
     trendHtml(r.count,r.prev)+'</div>').join('');
+}
+
+function renderRedundancy(){
+  const el=document.getElementById('redundancyContent');
+  const red=D.trends&&D.trends.redundancy;
+  if(!red||!red.stations||!Object.keys(red.stations).length){
+    emptyMsg(el,'עדיין אין מספיק נתונים');return;
+  }
+  if(!red.ready){
+    const h=red.hours_collected||0,rq=red.hours_required||48;
+    el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted)">'+
+      '<div style="font-size:1.5rem;margin-bottom:6px">⏳</div>'+
+      '<div>עדיין נאספים נתונים לניתוח חזרתיות</div>'+
+      '<div style="font-size:.8rem;margin-top:6px;color:var(--muted)">'+
+        h+' / '+rq+' שעות נדרשות</div>'+
+      '<div style="margin-top:10px;background:var(--tab-bg);border-radius:6px;overflow:hidden;height:6px;max-width:300px;margin-left:auto;margin-right:auto">'+
+        '<div style="background:var(--accent);height:100%;width:'+Math.min(100,h/rq*100)+'%;transition:width .5s"></div>'+
+      '</div>'+
+    '</div>';
+    return;
+  }
+
+  const stations=Object.entries(red.stations).sort((a,b)=>b[1].plays-a[1].plays);
+  let html='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px">';
+  stations.forEach(([slug,data]) => {
+    const c=color(slug);
+    const barW=Math.min(100,data.song_repeat_pct*3);
+    html+='<div class=card style="margin-bottom:0;padding:12px;border-color:'+c+'33">'+
+      '<div style="font-weight:700;font-size:.85rem;margin-bottom:6px"><span style=display:inline-block;width:8px;height:8px;border-radius:50%;background:'+c+';margin-left:5px></span>'+esc(name(slug))+'</div>'+
+      '<div style="display:flex;gap:0 12px;flex-wrap:wrap;font-size:.78rem;margin-bottom:6px">'+
+        '<span><span style=color:var(--muted)>השמעות:</span> <strong>'+data.plays+'</strong></span>'+
+        '<span><span style=color:var(--muted)>שירים:</span> <strong>'+data.unique_songs+'</strong></span>'+
+        '<span><span style=color:var(--muted)>אמנים:</span> <strong>'+data.unique_artists+'</strong></span>'+
+      '</div>'+
+      '<div style="margin-bottom:4px">'+
+        '<div style="display:flex;justify-content:space-between;font-size:.7rem">'+
+          '<span style=color:var(--muted)>חזרתיות שירים</span>'+
+          '<strong>'+(data.song_repeat_pct||'0')+'%</strong></div>'+
+        '<div style="background:var(--tab-bg);border-radius:4px;height:5px;overflow:hidden">'+
+          '<div style="background:'+c+';height:100%;width:'+barW+'%;border-radius:4px"></div></div>'+
+      '</div>'+
+      '<div style="margin-bottom:6px">'+
+        '<div style="display:flex;justify-content:space-between;font-size:.7rem">'+
+          '<span style=color:var(--muted)>חזרתיות אמנים</span>'+
+          '<strong>'+(data.artist_repeat_pct||'0')+'%</strong></div>'+
+        '<div style="background:var(--tab-bg);border-radius:4px;height:5px;overflow:hidden">'+
+          '<div style="background:'+c+';height:100%;width:'+Math.min(100,data.artist_repeat_pct*1.5)+'%;border-radius:4px"></div></div>'+
+      '</div>';
+    // Top repeated songs
+    if(data.top_repeated_songs&&data.top_repeated_songs.length){
+      html+='<div style="font-size:.68rem;color:var(--muted);margin-bottom:2px">שירים חוזרים:</div>';
+      data.top_repeated_songs.forEach(s=>{
+        html+='<div style="font-size:.72rem;display:flex;justify-content:space-between"><span>'+esc(s.artist.substr(0,18))+' — '+esc(s.title.substr(0,22))+'</span><span style=color:'+c+';font-weight:700>×'+s.plays+'</span></div>';
+      });
+    }
+    // Top repeated artists
+    if(data.top_repeated_artists&&data.top_repeated_artists.length){
+      html+='<div style="font-size:.68rem;color:var(--muted);margin-top:4px;margin-bottom:2px">אמנים חוזרים:</div>';
+      data.top_repeated_artists.forEach(a=>{
+        html+='<div style="font-size:.72rem;display:flex;justify-content:space-between"><span>'+esc(a.artist.substr(0,22))+'</span><span style=color:'+c+';font-weight:700>×'+a.plays+'</span></div>';
+      });
+    }
+    html+='</div>';
+  });
+  html+='</div>';
+  el.innerHTML=html;
 }
 
 /* ── History ── */

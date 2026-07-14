@@ -300,7 +300,56 @@ def generate_all(output_dir: Path = DATA_DIR) -> dict[str, int]:
 
     write_json(output_dir / "heatmap.json", build_heatmap(tracks, slugs, now), sizes, "heatmap.json")
     write_json(output_dir / "non_music.json", build_non_music(db, slugs, now), sizes, "non_music.json")
-    write_json(output_dir / "trends.json", build_trends(tracks, now), sizes, "trends.json")
+    trends = build_trends(tracks, now)
+
+    # ── Per-station redundancy (repeat-safe tracks only) ──
+    trusted = repeat_safe(tracks)
+    hours_since = (now - REPEAT_DATA_EPOCH).total_seconds() / 3600
+    ready = hours_since >= MIN_EPOCH_HOURS and len(trusted) > 0
+    by_slug: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for t in trusted:
+        by_slug[t["station_slug"]].append(t)
+    station_rep: dict[str, dict[str, Any]] = {}
+    for s in stations:
+        slug = s["slug"]
+        st = by_slug.get(slug, [])
+        if not st:
+            continue
+        total = len(st)
+        song_map: dict[str, dict[str, Any]] = {}
+        art_map: dict[str, int] = defaultdict(int)
+        art_name: dict[str, str] = {}
+        for t in st:
+            key = song_key(t)
+            if key not in song_map:
+                song_map[key] = {"artist": t["artist"], "title": t["title"], "plays": 0}
+            song_map[key]["plays"] += 1
+            al = t["artist"].lower()
+            art_map[al] += 1
+            art_name[al] = t["artist"]
+        unique_songs = len(song_map)
+        unique_artists = len(art_map)
+        top_songs = sorted(song_map.values(), key=lambda x: -x["plays"])[:5]
+        top_songs = [s for s in top_songs if s["plays"] > 1]
+        top_artists = [{"artist": art_name[k], "plays": c}
+                       for k, c in sorted(art_map.items(), key=lambda x: -x[1])[:5]
+                       if c > 1]
+        station_rep[slug] = {
+            "plays": total,
+            "unique_songs": unique_songs,
+            "unique_artists": unique_artists,
+            "song_repeat_pct": round((total - unique_songs) / total * 100, 1),
+            "artist_repeat_pct": round((total - unique_artists) / total * 100, 1),
+            "top_repeated_songs": top_songs,
+            "top_repeated_artists": top_artists,
+        }
+    trends["redundancy"] = {
+        "ready": ready,
+        "hours_collected": round(max(0.0, hours_since), 1),
+        "hours_required": MIN_EPOCH_HOURS,
+        "stations": station_rep,
+    }
+    write_json(output_dir / "trends.json", trends, sizes, "trends.json")
     write_json(output_dir / "cross_station.json",
                {"tracks": db.get_cross_station_tracks()}, sizes, "cross_station.json")
 
