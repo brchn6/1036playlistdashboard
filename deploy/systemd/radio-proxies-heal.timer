@@ -1,0 +1,9 @@
+[Unit]
+Description=Radio Dashboard — proxy health sweep every 2 min
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=2min
+
+[Install]
+WantedBy=timers.target

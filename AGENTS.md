@@ -51,34 +51,69 @@ been **removed**. The data layer is now Supabase.
 scripted push loop. If data needs to reach the web, it goes to Supabase.
 `git push` is for source code, written by a human.
 
+## 🚫 EXACTLY ONE COLLECTOR, AND IT LIVES ON head1
+
+**The collector runs on `head1` (100.93.8.110), under systemd. Not on the
+workstation.** Moved there 2026-07-14.
+
+**Never run a second collector anywhere.** Two hosts collecting in parallel keep
+separate SQLite files, so their dedupe windows cannot see each other. They sample
+the same song at slightly different timestamps, so the
+`(station_id, shazam_key, recognized_at)` natural key does not collide and nothing
+catches it — you get **duplicate plays in Postgres**, which silently corrupts play
+counts and every repetition metric. This already happened once during the head1
+cutover and 9 rows had to be removed by hand.
+
+If you migrate the collector to another host: stop the old one FIRST, then copy
+`data/playlist.db` over (`sqlite3 .backup`, not `cp` — it is a WAL database), then
+start the new one. Copying the DB before stopping the old collector leaves the new
+host blind to whatever was logged in between, and it re-logs it.
+
 ## Quick Reference
 
 | Item | Value |
 |------|-------|
 | **Repo** | `brchn6/radio-playlist-dashboard` |
-| **Local** | `/home/barc/dev/radio-playlist-dashboard/` |
+| **Collector** | **`head1` (100.93.8.110)** — `~/dev/radio-playlist-dashboard`, systemd user units |
 | **Dashboard** | `https://brchn6.github.io/radio-playlist-dashboard/` |
 | **Data** | Supabase — Postgres (`tracks`) + public Storage bucket (`dashboard`) |
-| **Deploy** | Actions workflow on push (Pages `build_type=workflow`). Ships the **frontend only** — data no longer travels through git. Manual: `gh workflow run "Deploy to Pages"` |
-| **Secrets** | `.env`: `SUPABASE_URL`, `SUPABASE_SECRET_KEY`. Service key bypasses RLS — never put it in `docs/`. |
+| **Deploy** | Actions workflow on push (Pages `build_type=workflow`). Ships the **frontend only** — data no longer travels through git. |
+| **Secrets** | `.env` on head1 (mode 600): `SUPABASE_URL`, `SUPABASE_SECRET_KEY`. The secret key bypasses RLS — never put it in `docs/`, never commit it. |
 
-## Running the Services
+## Running the Services (on head1)
 
 ```bash
-# Start collector + all proxies
+ssh 100.93.8.110
 cd ~/dev/radio-playlist-dashboard
-bash scripts/manage.sh start        # no GIT_AUTO_PUSH — it no longer exists
 
-# Check everything
-python scripts/proxy_manager.py health
-pgrep -f updater.py
+systemctl --user status radio-updater radio-proxies
+journalctl --user -u radio-updater -f          # live collector log
+tail -f logs/updater.log
+
+systemctl --user restart radio-updater         # safe any time
+.venv/bin/python scripts/proxy_manager.py health
 
 # Regenerate + publish the dashboard data by hand
-python scripts/publish.py
+.venv/bin/python scripts/publish.py
 
-# One-time / repair: reconcile SQLite into Supabase (idempotent upserts)
-python scripts/migrate_to_supabase.py
+# Reconcile SQLite into Supabase (idempotent upserts — safe to re-run)
+.venv/bin/python scripts/migrate_to_supabase.py
 ```
+
+Fresh install on a new host: `bash deploy/install.sh` (see `deploy/`).
+
+### The collector is supervised — keep it that way
+
+`radio-updater.service` sets `Restart=always`. This is not decoration: on
+2026-07-14 the collector was running under `nohup`, died on its own, and **stayed
+dead for 58 minutes**. Radio is live, so that hour of songs is unrecoverable —
+Shazam cannot identify audio after the fact. `radio-proxies-heal.timer` does the
+same job for the proxies every 2 minutes (`proxy_manager start` is idempotent: it
+skips healthy proxies, so it cannot fire 8 simultaneous Shazam calls).
+
+**Never redirect the log with `>`.** Use `>>`. A restart with `>` truncated
+`logs/updater.log` and destroyed the only record of why the collector died, so
+that outage could never be diagnosed.
 
 ## Architecture
 
@@ -96,8 +131,11 @@ python scripts/migrate_to_supabase.py
   API key** — the bucket is public.
 - **Pages deploy**: `deploy.yml` on push. It serves the static frontend only.
   Keep it — it *is* the Pages deployer; deleting it takes the site down.
-- **Now Playing** tab still fetches live from local proxies (30s fresh on this
-  machine; fails silently and falls back to `current.json` for everyone else)
+- **Now Playing** tab fetches `http://127.0.0.1:<proxy_port>/current`. That only
+  resolves on the collector host — i.e. on head1 now, not on the workstation. For
+  everyone else it fails silently and falls back to `current.json` (~30s via
+  Supabase), which is the intended behaviour. To get the live path back on your
+  laptop you would have to expose the proxy ports over Tailscale.
 - **non_music_log** table is owned by the separate talk/ads-segment agent;
   generate_data.py reads it defensively (tolerates absence/schema change)
 

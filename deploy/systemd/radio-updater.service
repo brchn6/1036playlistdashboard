@@ -1,0 +1,26 @@
+[Unit]
+Description=Radio Dashboard — collector daemon (SQLite + Supabase)
+After=network-online.target radio-proxies.service
+Wants=network-online.target
+Requires=radio-proxies.service
+
+[Service]
+Type=simple
+WorkingDirectory=%h/dev/radio-playlist-dashboard
+
+# Append (>>), never truncate. On 2026-07-14 the collector died on its own and a
+# restart with `>` wiped the log, destroying the only record of why — so a 58 min
+# collection gap could never be diagnosed.
+ExecStart=/bin/sh -c "exec %h/dev/radio-playlist-dashboard/.venv/bin/python scripts/updater.py >> %h/dev/radio-playlist-dashboard/logs/updater.log 2>&1"
+
+# THE POINT OF THIS UNIT. The collector previously ran under nohup: when it died
+# it stayed dead and nobody noticed for 58 minutes. Radio is live — every second
+# down is data that can never be recovered.
+Restart=always
+RestartSec=10
+
+# No GIT_AUTO_PUSH. The collector must never push to git; data goes to Supabase.
+Environment=RETENTION_DAYS=45
+
+[Install]
+WantedBy=default.target

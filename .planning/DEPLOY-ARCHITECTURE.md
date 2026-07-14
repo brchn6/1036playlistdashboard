@@ -1,8 +1,77 @@
 # Deployment Architecture — Decision Record
 
-> **v3 (2026-07-14) supersedes v2.** The data layer moved off git and onto
-> Supabase. v2 is preserved below, unedited, because its findings about Pages
-> build types are still true and still worth not relearning.
+> **v4 (2026-07-14) is CURRENT** — collector moved to a supervised always-on host.
+> **v3** moved the data layer off git and onto Supabase.
+> **v2** is kept for its findings about Pages build types.
+
+---
+
+# v4 — Collector on head1, supervised (2026-07-14, CURRENT)
+
+## Why: an hour of radio was lost
+
+On 2026-07-14 the collector — running under `nohup` on the workstation — died on
+its own at 15:37 IDT. Nothing restarted it. Nobody noticed for 58 minutes.
+
+**Radio is live. That hour is gone permanently**: nothing captured the audio and
+Shazam cannot identify a broadcast after the fact. The lesson is not "watch the
+daemon more carefully," it is that an unsupervised collector is a data-loss bug.
+
+Two things made it worse, both worth encoding:
+
+1. **`nohup` has no supervision.** When it died it stayed dead. `Restart=always`
+   turns a 58-minute outage into a 10-second one.
+2. **The crash log was destroyed by the restart.** The daemon was restarted with
+   `> logs/updater.log`, which truncated the file — so the only record of *why* it
+   died was overwritten. **Always `>>`, never `>`.** Both `manage.sh` and the
+   systemd unit now append, and both say why.
+
+## What changed
+
+The collector now runs on **head1 (100.93.8.110)** — always-on, systemd, linger
+enabled, Israeli egress IP (the streams are not geo-blocked from it).
+
+| Unit | Role |
+|------|------|
+| `radio-updater.service` | the collector. **`Restart=always`**, `RestartSec=10` |
+| `radio-proxies.service` | the 8 ShazamIO proxies; starts at boot |
+| `radio-proxies-heal.timer` | every 2 min re-runs `proxy_manager start` |
+
+The heal timer is safe *because* `start_all()` is idempotent: it returns
+`already_running` for healthy proxies and staggers the rest by 0.5s. So it revives
+only dead proxies and can never fire 8 simultaneous Shazam calls — the hazard that
+hung all 8 proxies for 11 minutes on 2026-07-13 (see AGENTS.md).
+
+Reproducible via `deploy/install.sh`; units are vendored in `deploy/systemd/`.
+
+Verified by killing the collector with `kill -9`: systemd brought it back in 15s.
+
+## The cutover mistake — read this before migrating hosts again
+
+Moving the collector produced **9 duplicate plays in Postgres**. The mechanism is
+subtle and will repeat if the ordering is wrong:
+
+- Two collectors keep **separate SQLite files**, so their 30-minute dedupe windows
+  cannot see each other. They sample the same song at slightly different
+  timestamps, so the `(station_id, shazam_key, recognized_at)` natural key does
+  **not** collide — nothing catches the duplicate.
+- The DB was snapshotted at 17:14 but the old collector kept running until 17:22.
+  head1 never learned about those 8 minutes, so it re-logged them.
+- Then head1's SQLite was overwritten with the old snapshot *after head1 had
+  already written to it*, discarding head1's own rows — so its next run re-logged
+  those too. One desync fixed by creating another.
+
+**Correct order:** stop the old collector → `sqlite3 .backup` the DB (never `cp`,
+it is WAL) → copy it → start the new collector. Never overwrite a running
+collector's SQLite.
+
+## Still open
+
+- `non_music_log`'s toggle bug (owned by a separate agent) is untouched.
+- The workstation's `docs/index.html` "Now Playing" tab reads
+  `http://127.0.0.1:<port>` — that now only resolves on head1. Everyone else falls
+  back to `current.json` (~30s), which is fine. Exposing the proxy ports over
+  Tailscale would restore the live path.
 
 ---
 

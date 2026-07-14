@@ -20,8 +20,14 @@ case "$cmd" in
     cd "$ROOT"
     # No GIT_AUTO_PUSH: the updater no longer touches git. It writes to SQLite
     # and publishes to Supabase. See .planning/DEPLOY-ARCHITECTURE.md (v3).
+    #
+    # APPEND (>>), never truncate (>). On 2026-07-14 the collector died on its own
+    # and a restart with `>` wiped the log, destroying the only record of why —
+    # so a ~58 min collection gap could never be diagnosed. The crash output of
+    # the run that died is the whole point of this file.
+    echo "=== updater start $(date -Is) ===" >> "$LOG_DIR/updater.log"
     RETENTION_DAYS=45 nohup python scripts/updater.py \
-      > "$LOG_DIR/updater.log" 2>&1 &
+      >> "$LOG_DIR/updater.log" 2>&1 &
     echo "[OK] Updater PID: $!"
 
     echo ""

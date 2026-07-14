@@ -1,0 +1,11 @@
+[Unit]
+Description=Radio Dashboard — revive any dead proxy
+After=radio-proxies.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/dev/radio-playlist-dashboard
+# start_all() is idempotent: it SKIPS already-running proxies and staggers the rest
+# by 0.5s. So this revives only dead ones and cannot fire 8 simultaneous Shazam
+# calls — the hazard AGENTS.md warns about.
+ExecStart=%h/dev/radio-playlist-dashboard/.venv/bin/python scripts/proxy_manager.py start

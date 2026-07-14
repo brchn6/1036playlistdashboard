@@ -18,46 +18,60 @@ A live dashboard that recognizes and logs every song playing on Israeli radio �
 
 ## 🚀 Quick start
 
+Run the collector on an **always-on Linux box with systemd** — not a laptop. Radio
+is live: every minute the collector is down is songs you can never get back.
+
 ```bash
 git clone https://github.com/brchn6/radio-playlist-dashboard.git
 cd radio-playlist-dashboard
-pip install -r requirements.txt
 
-# 1. Create a free Supabase project, then run supabase_schema.sql
-#    in its SQL Editor (creates the tables, RLS policies, and the public bucket).
+# 1. ffmpeg — the proxies capture stream audio with it
+sudo apt install -y ffmpeg
 
-# 2. Add your Supabase credentials
+# 2. Create a free Supabase project, then run supabase_schema.sql in its
+#    SQL Editor (tables + RLS). Create a public Storage bucket named "dashboard".
+
+# 3. Credentials (never committed — .env is gitignored)
 cp .env.example .env
 #    SUPABASE_URL=https://<your-project>.supabase.co
-#    SUPABASE_SECRET_KEY=<service_role key>   # secret; never commit, never ship to the browser
+#    SUPABASE_SECRET_KEY=sb_secret_...      # bypasses RLS; never ship to a browser
 
-# 3. Point the frontend at your project — edit SUPABASE_URL near the top of
-#    the <script> block in docs/index.html. No API key goes here: the bucket is public.
+# 4. Point the frontend at your project — edit SUPABASE_URL near the top of the
+#    <script> block in docs/index.html. No API key goes there: the bucket is public.
 
-# 4. Copy any existing local history up (safe to re-run)
-python scripts/migrate_to_supabase.py
+# 5. Install venvs + systemd units, enable linger, and start everything
+bash deploy/install.sh
 
-# 5. Go
-bash scripts/manage.sh start
+# 6. Import any existing history (idempotent — safe to re-run any time)
+.venv/bin/python scripts/migrate_to_supabase.py
 ```
+
+The collector is supervised (`Restart=always`) and survives reboots. Watch it with
+`journalctl --user -u radio-updater -f`.
+
+⚠️ **Only ever run one collector.** Two hosts collecting at once produce duplicate
+plays in Postgres — their dedupe windows can't see each other. See `AGENTS.md`.
 
 ## 🏗️ Architecture at a glance
 
 ```
-8× ShazamIO proxies (ports 8761-8768, one per station)
-        │  polled every 20s
-        ▼
-   updater.py ──► SQLite (data/playlist.db — source of truth)
-        │
-        ├──► new tracks ────────────► Supabase Postgres  (durable history + REST API)
-        │
-        └──► generate_data.py ──► precomputed aggregates
-                                        │
-                                        ▼
-                              Supabase Storage (public bucket, gzipped)
-                                        │
-                                        ▼  fetched by the browser
-   GitHub Pages ──► docs/index.html (static frontend only)
+  ┌─ head1 (always-on Linux box, systemd, Restart=always) ──────────────┐
+  │                                                                     │
+  │  8× ShazamIO proxies (ports 8761-8768, one per station)             │
+  │          │  polled every 20s                                        │
+  │          ▼                                                          │
+  │     updater.py ──► SQLite (data/playlist.db — local source of truth)│
+  │          │                                                          │
+  │          ├──► new tracks ───────────► Supabase Postgres (tracks)    │
+  │          │                                                          │
+  │          └──► generate_data.py ──► precomputed aggregates           │
+  │                              │                                      │
+  └──────────────────────────────┼──────────────────────────────────────┘
+                                 ▼
+                    Supabase Storage (public bucket, CDN-gzipped)
+                                 │
+                                 ▼  fetched directly by the browser
+        GitHub Pages ──► docs/index.html (static frontend only)
 ```
 
 **The collector never touches git.** It used to `git commit && git push` every 2
