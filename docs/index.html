@@ -169,7 +169,7 @@
 <div class=tab-content id=tab-timeline>
   <div class=card>
     <div class=card-title>📊 Timeline — מה התנגן בכל תחנה?</div>
-    <div class=card-sub>ציר X = שעה (שעון ישראל) · כל נקודה = שיר שזוהה · ריחוף לפרטים</div>
+    <div class=card-sub>ציר X = שעה (שעון ישראל) · כל רצועה = שיר (אורך משוער) · רווח = פרסומות/דיבור/שקט · ריחוף לפרטים</div>
     <div class=controls id=timelineDays></div>
     <div class=controls id=timelineZoom></div>
     <div class="chart-wrap tall"><canvas id=timelineChart></canvas></div>
@@ -443,14 +443,6 @@ function timelineDates(){
   return[...seen].sort().reverse();
 }
 
-// deterministic jitter: same artist+title always gets same offset
-function jitterOffset(artist,title){
-  let h=0;
-  const s=(artist||'')+'|'+(title||'');
-  for(let i=0;i<s.length;i++)h=((h<<5)-h)+s.charCodeAt(i),h|=0;
-  return((h%100)/100-0.5)*0.7; // ±0.35 within station band
-}
-
 function renderTimelineDayButtons(){
   const days=timelineDates();
   const el=document.getElementById('timelineDays');
@@ -494,11 +486,6 @@ function renderTimeline(){
   let pts=(D.timeline&&D.timeline.points)||[];
   if(activeStation)pts=pts.filter(p=>p.s===activeStation);
 
-  // Compute station order by activity (most songs first) — breaks symmetry
-  const slugCounts={};
-  pts.forEach(p=>{slugCounts[p.s]=(slugCounts[p.s]||0)+1});
-  const order=[...stations].sort((a,b)=>(slugCounts[b.slug]||0)-(slugCounts[a.slug]||0)).map(s=>s.slug);
-
   // Parse time window bounds
   const isHour=timelineWindow.startsWith('hour:');
   let xMin=0,xMax=1440;
@@ -516,71 +503,108 @@ function renderTimeline(){
     xMin=Math.max(0,now.h*60+now.m-660);xMax=Math.min(1440,now.h*60+now.m+60);
   }
 
-  const ds={};
-  let n=0;
+  // ── Gantt-style lanes: each song = horizontal bar, gaps = talk/ads ──
+  const EST_SONG_MIN=3.5; // fallback duration for last song in view
+  const MAX_GAP_MIN=30;    // cap a bar at 30 min (avoids overnight gaps ruining scale)
+
+  // Group events by station, sorted by time
+  const byStation={};
+  stations.forEach(s=>{byStation[s.slug]=[]});
   pts.forEach(p=>{
     const d=parseTs(p.ts);if(!d)return;
     const il=ilParts(d);
     if(timelineDay&&il.date!==timelineDay)return;
     const x=il.h*60+il.m;
     if(x<xMin||x>xMax)return;
-    const yIdx=order.indexOf(p.s);if(yIdx<0)return;
-    // deterministic jitter so same-minute points separate
-    const jit=jitterOffset(p.a,p.t);
-    const yPos=yIdx+jit;
-    if(!ds[p.s])ds[p.s]={
-      label:name(p.s),
-      data:[],
-      backgroundColor:color(p.s),
-      borderColor:'rgba(11,14,26,.4)',
-      borderWidth:1,
-      pointRadius:4,
-      pointHoverRadius:8,
-      pointHitRadius:10,
-    };
-    ds[p.s].data.push({x,y:yPos,artist:p.a,title:p.t,station:name(p.s)});
-    n++;
+    if(!byStation[p.s])return;
+    byStation[p.s].push({x,artist:p.a,title:p.t,slug:p.s});
   });
+
+  // Sort stations by song count (most active first) — breaks symmetry
+  const stationOrder=[...stations].sort((a,b)=>{
+    const ca=(byStation[b.slug]||[]).length,cb=(byStation[a.slug]||[]).length;
+    return ca-cb;
+  });
+  const yCats=stationOrder.map(s=>s.name);
+
+  // Build one dataset per station with horizontal floating bars
+  const datasets=[];
+  let totalBars=0;
+  stationOrder.forEach(s=>{
+    const events=(byStation[s.slug]||[]).sort((a,b)=>a.x-b.x);
+    if(!events.length)return;
+    const bars=events.map((e,i)=>{
+      const next=i<events.length-1?events[i+1].x:e.x+EST_SONG_MIN;
+      const end=Math.min(next,e.x+MAX_GAP_MIN);
+      return{x:[e.x,end],y:s.name,artist:e.artist,title:e.title};
+    });
+    datasets.push({
+      label:s.name,
+      backgroundColor:s.color+'88',
+      borderColor:s.color,
+      borderWidth:1,
+      borderRadius:3,
+      barPercentage:0.78,
+      categoryPercentage:0.9,
+      data:bars,
+    });
+    totalBars+=events.length;
+  });
+
   destroyChart('timeline');
-  if(!n){wrap.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">אין נתונים ליום/תחנה שנבחרו</div>';legend.innerHTML='';return}
+  if(!totalBars){wrap.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">אין נתונים ליום/תחנה שנבחרו</div>';legend.innerHTML='';return}
   if(!wrap.querySelector('canvas'))wrap.innerHTML='<canvas id=timelineChart></canvas>';
 
-  // Tick interval adapts to zoom level
   const xRange=xMax-xMin;
   const tickStep=xRange<=120?30:xRange<=360?60:xRange<=720?120:180;
 
   charts.timeline=new Chart(document.getElementById('timelineChart'),{
-    type:'scatter',data:{datasets:Object.values(ds)},
+    type:'bar',
+    data:{datasets},
     options:{
+      indexAxis:'y',
       responsive:true,maintainAspectRatio:false,animation:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{
-        const r=c.raw,hh=String(Math.floor(r.x/60)).padStart(2,'0'),mm=String(Math.round(r.x%60)).padStart(2,'0');
-        return r.station+': '+r.artist+' — '+r.title+' ('+hh+':'+mm+')';
-      }}}},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{
+            title:items=>{
+              const r=items[0].raw;
+              return esc(r.artist)+' — '+esc(r.title);
+            },
+            label:ctx=>{
+              const r=ctx.raw;
+              const sh=String(Math.floor(r.x[0]/60)).padStart(2,'0');
+              const sm=String(Math.round(r.x[0]%60)).padStart(2,'0');
+              const eh=String(Math.floor(r.x[1]/60)).padStart(2,'0');
+              const em=String(Math.round(r.x[1]%60)).padStart(2,'0');
+              const dur=(r.x[1]-r.x[0]).toFixed(1);
+              return sh+':'+sm+' → '+eh+':'+em+' ('+dur+' דק׳)';
+            }
+          }
+        }
+      },
       scales:{
         x:{
           type:'linear',min:xMin,max:xMax,
-          ticks:{stepSize:tickStep,color:MUTED,callback:v=>String(Math.floor(v/60)).padStart(2,'0')+':'+String(Math.round(v%60)).padStart(2,'0')},
+          ticks:{stepSize:tickStep,color:MUTED,
+            callback:v=>String(Math.floor(v/60)).padStart(2,'0')+':'+String(Math.round(v%60)).padStart(2,'0')
+          },
           grid:{color:GRID},
           title:{display:true,text:'שעה (שעון ישראל)',color:MUTED}
         },
         y:{
-          type:'linear',min:-0.5,max:order.length-0.5,
-          ticks:{stepSize:1,color:MUTED,
-            callback:v=>{
-              const i=Math.round(v);
-              if(i<0||i>=order.length)return'';
-              const sn=name(order[i]);
-              // abbreviate long names
-              return sn.length>12?sn.slice(0,11)+'…':sn;
-            }
-          },
-          grid:{color:GRID}
+          type:'category',labels:yCats,
+          ticks:{color:MUTED,callback:v=>v.length>14?v.slice(0,13)+'…':v},
+          grid:{display:false}
         }
       }
     }
   });
-  legend.innerHTML=legendHtml(stations.filter(s=>ds[s.slug]).map(s=>({color:s.color,label:s.name})));
+  legend.innerHTML=legendHtml(
+    stationOrder.filter(s=>byStation[s.slug]?.length)
+      .map(s=>({color:s.color,label:s.name+' ('+byStation[s.slug].length+' שירים)'}))
+  );
 }
 
 /* ── Heatmaps ── */
