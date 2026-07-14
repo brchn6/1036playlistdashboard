@@ -2,9 +2,18 @@
 """
 1036 Playlist Dashboard — Multi-Station Updater Daemon.
 
-Polls ALL ShazamIO proxy instances every 30 seconds, stores new
-tracks in SQLite (tagged by station_id), generates static JSON for
-GitHub Pages, and optionally auto-commits & pushes.
+Polls ALL ShazamIO proxy instances, stores new tracks in SQLite (tagged by
+station_id), mirrors them into Supabase Postgres, and publishes the precomputed
+aggregates to Supabase Storage for the dashboard to read.
+
+This daemon does NOT touch git. It used to `git commit && git push` docs/data
+every 120s — ~720 commits/day — which is what put the GitHub account at risk.
+The data layer now lives in Supabase; GitHub Pages only serves the static
+frontend, deployed by .github/workflows/deploy.yml on real code commits.
+
+SQLite remains the source of truth. Supabase is a published mirror, and every
+call into it is best-effort: if Supabase is down, collection continues and
+`scripts/migrate_to_supabase.py` reconciles the gap afterwards.
 """
 
 from __future__ import annotations
@@ -13,7 +22,6 @@ import argparse
 import json
 import os
 import signal
-import subprocess
 import sys
 import time
 import urllib.error
@@ -26,15 +34,15 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 from db import PlaylistDB, STATIONS_CONFIG, STATIONS_BY_PORT  # noqa: E402
+from publish import generate_and_publish  # noqa: E402
+from supabase_client import insert_track as supabase_insert_track  # noqa: E402
 
 DB_PATH = PROJECT_ROOT / "data" / "playlist.db"
 
 # ── defaults ───────────────────────────────────────────────────────────
 DEFAULT_INTERVAL = 20
-DEFAULT_GIT_AUTO_PUSH = os.environ.get("GIT_AUTO_PUSH", "").lower() in ("1", "true", "yes")
 RETENTION_DAYS = int(os.environ.get("RETENTION_DAYS", "45"))
 CLEANUP_INTERVAL = int(os.environ.get("CLEANUP_INTERVAL", "720"))  # every 6h at 30s poll
-PUSH_EVERY_SECONDS = int(os.environ.get("PUSH_EVERY_SECONDS", "120"))  # min gap between pushes
 # A song longer than this window would be logged twice; a replay sooner than it
 # would be missed. 30 min clears the longest tracks and is well under how soon
 # radio repeats a hit.
@@ -53,81 +61,20 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-# ── env helpers ────────────────────────────────────────────────────────
+# ── publishing ─────────────────────────────────────────────────────────
 
-def load_env() -> dict[str, str]:
-    """Load .env from project root."""
-    env_path = PROJECT_ROOT / ".env"
-    env_vars: dict[str, str] = {}
-    if env_path.exists():
-        for line in env_path.read_text("utf-8").splitlines():
-            line = line.strip()
-            if not line or line.startswith("#"):
-                continue
-            if "=" in line:
-                k, _, v = line.partition("=")
-                env_vars[k.strip()] = v.strip().strip("'\"")
-    return env_vars
+def publish() -> None:
+    """Regenerate the aggregates and push the changed ones to Supabase Storage.
 
-
-# ── git helpers ────────────────────────────────────────────────────────
-
-def git_commit_and_push(message: str) -> None:
-    """Commit and push the generated data. Uses token from .env, never stored.
-
-    Only docs/data is staged: `git add -A` would sweep an in-progress source
-    edit into an "auto: multi-station update" commit.
+    Best-effort by contract: publishing is downstream of collection, so a
+    Supabase or network failure logs and returns rather than killing the loop.
+    publish.py only records a file's hash once its upload succeeds, so a failed
+    file is simply retried on the next cycle.
     """
     try:
-        result = subprocess.run(
-            ["git", "status", "--porcelain", "--", "docs/data"],
-            capture_output=True, text=True, timeout=15,
-        )
-        if not result.stdout.strip():
-            return
-
-        subprocess.run(["git", "add", "--", "docs/data"],
-                       check=True, capture_output=True, timeout=15)
-        subprocess.run(
-            ["git", "commit", "-m", message],
-            check=True, capture_output=True, timeout=15,
-        )
-        subprocess.run(["git", "pull", "--rebase"], check=True, capture_output=True, timeout=30)
-
-        env = load_env()
-        token = env.get("GIT_TOKEN") or os.environ.get("GIT_TOKEN", "")
-        if token:
-            repo_url = f"https://brchn6:{token}@github.com/brchn6/radio-playlist-dashboard.git"
-            subprocess.run(
-                ["git", "push", repo_url, "main"],
-                check=True, capture_output=True, timeout=60,
-            )
-        else:
-            subprocess.run(["git", "push"], check=True, capture_output=True, timeout=60)
-
-        print(f"[updater] Git push: {message}", flush=True)
-    except subprocess.TimeoutExpired:
-        print("[updater] Git push timed out", flush=True)
-    except subprocess.CalledProcessError as exc:
-        print(f"[updater] Git error: {exc}", flush=True)
-
-
-# ── data generation ────────────────────────────────────────────────────
-
-def generate_static_data() -> None:
-    """Run generate_data.py."""
-    gen = PROJECT_ROOT / "scripts" / "generate_data.py"
-    try:
-        result = subprocess.run(
-            [sys.executable, str(gen)],
-            capture_output=True, text=True, timeout=30,
-        )
-        if result.stdout:
-            print(result.stdout.strip(), flush=True)
-        if result.stderr:
-            print(f"[updater] gen stderr: {result.stderr.strip()}", flush=True)
-    except Exception as e:
-        print(f"[updater] gen error: {e}", flush=True)
+        generate_and_publish()
+    except Exception as exc:  # noqa: BLE001 - collection must survive anything here
+        print(f"[updater] publish failed (data is safe in SQLite): {exc}", flush=True)
 
 
 # ── proxy polling ──────────────────────────────────────────────────────
@@ -188,13 +135,10 @@ def main() -> None:
     }), flush=True)
 
     iteration = 0
-    new_track_occurred = False
-    last_push = 0.0
 
     while running:
         iteration += 1
         loop_start = time.time()
-        new_track_occurred = False
 
         # ── Poll each proxy ──
         for s in stations:
@@ -239,6 +183,10 @@ def main() -> None:
                 "port": port,
             }), flush=True)
 
+            recognized_at = track.get("recognized_at", now_iso())
+
+            # SQLite first — it is the source of truth and the dedupe window
+            # (db.track_exists, above) reads from it.
             db.insert_track(
                 station_id=station_id,
                 artist=track["artist"],
@@ -247,25 +195,36 @@ def main() -> None:
                 url=track.get("url", ""),
                 shazam_key=track.get("shazam_key", ""),
                 isrc=track.get("isrc", ""),
-                recognized_at=track.get("recognized_at", now_iso()),
+                recognized_at=recognized_at,
             )
-            new_track_occurred = True
 
-        # ── Generate data every cycle, push at most every PUSH_EVERY_SECONDS ──
-        generate_static_data()
+            # Then mirror to Postgres. Best-effort: supabase_insert_track never
+            # raises, so a Supabase outage cannot stop us collecting. The row is
+            # already durable in SQLite, and migrate_to_supabase.py is an
+            # idempotent upsert, so re-running it later fills any gap.
+            supabase_insert_track({
+                "station_id": station_id,
+                "station_slug": s["slug"],
+                "artist": track["artist"],
+                "title": track["title"],
+                "text": track.get("text", ""),
+                "url": track.get("url", ""),
+                "shazam_key": track.get("shazam_key", ""),
+                "isrc": track.get("isrc") or None,
+                "recognized_at": recognized_at,
+            })
 
-        if DEFAULT_GIT_AUTO_PUSH and (time.time() - last_push >= PUSH_EVERY_SECONDS or args.once):
-            git_commit_and_push(f"auto: multi-station update [{now_iso()}]")
-            last_push = time.time()
+        # ── Regenerate + publish the aggregates ──
+        # No git anywhere. publish() uploads only the files whose content hash
+        # actually changed, so an idle cycle costs ~3 KB instead of 1.5 MB.
+        publish()
 
         # ── Periodic cleanup ──
         if iteration % CLEANUP_INTERVAL == 0:
             deleted = db.cleanup_old_tracks(days=RETENTION_DAYS)
             if deleted:
                 print(json.dumps({"event": "cleanup", "deleted": deleted}), flush=True)
-                generate_static_data()
-                if DEFAULT_GIT_AUTO_PUSH:
-                    git_commit_and_push(f"auto: cleanup {deleted} old tracks [{now_iso()}]")
+                publish()
 
         if args.once:
             break

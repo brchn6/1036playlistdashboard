@@ -10,38 +10,69 @@ A live dashboard that recognizes and logs every song playing on Israeli radio �
 
 ## ✨ What it does
 
-8 radio stations. 8 Shazam proxies. One SQLite database. A GitHub Pages dashboard that stays fresh within 3 minutes — all running on a machine at home, costing **exactly $0/month**.
+8 radio stations. 8 Shazam proxies. A local SQLite database mirrored into Supabase. A GitHub Pages dashboard that stays fresh within a minute — collector running on a machine at home, costing **exactly $0/month**.
 
 | 🇮🇱 Stations | 🎵 Songs logged | ⏱️ Dashboard refresh | 💸 Monthly cost |
 |---|---|---|---|
-| קול השפלה, גלגלצ, 99FM, רדיו תל אביב, כאן 88, כאן ב, קול הגליל, רדיו דרום | Every recognized track | ~3 min (GitHub Pages) | **$0** |
+| קול השפלה, גלגלצ, 99FM, רדיו תל אביב, כאן 88, כאן ב, קול הגליל, רדיו דרום | Every recognized track | ~30s (Supabase) | **$0** (free tiers) |
 
 ## 🚀 Quick start
 
 ```bash
 git clone https://github.com/brchn6/radio-playlist-dashboard.git
 cd radio-playlist-dashboard
-cp .env.example .env   # add GIT_TOKEN for auto-push
 pip install -r requirements.txt
+
+# 1. Create a free Supabase project, then run supabase_schema.sql
+#    in its SQL Editor (creates the tables, RLS policies, and the public bucket).
+
+# 2. Add your Supabase credentials
+cp .env.example .env
+#    SUPABASE_URL=https://<your-project>.supabase.co
+#    SUPABASE_SECRET_KEY=<service_role key>   # secret; never commit, never ship to the browser
+
+# 3. Point the frontend at your project — edit SUPABASE_URL near the top of
+#    the <script> block in docs/index.html. No API key goes here: the bucket is public.
+
+# 4. Copy any existing local history up (safe to re-run)
+python scripts/migrate_to_supabase.py
+
+# 5. Go
 bash scripts/manage.sh start
 ```
-
-That's it. Proxies spin up, the daemon starts polling, data flows to GitHub Pages.
 
 ## 🏗️ Architecture at a glance
 
 ```
 8× ShazamIO proxies (ports 8761-8768, one per station)
+        │  polled every 20s
+        ▼
+   updater.py ──► SQLite (data/playlist.db — source of truth)
         │
-        ▼  polled every 20s
-updater.py ──► SQLite ──► generate_data.py ──► docs/data/*.json
-        │                                              │
-        └── git push (every 2 min, only docs/data/)    │
-                        │                              ▼
-        GitHub Actions ──► GitHub Pages (always fresh, always free)
+        ├──► new tracks ────────────► Supabase Postgres  (durable history + REST API)
+        │
+        └──► generate_data.py ──► precomputed aggregates
+                                        │
+                                        ▼
+                              Supabase Storage (public bucket, gzipped)
+                                        │
+                                        ▼  fetched by the browser
+   GitHub Pages ──► docs/index.html (static frontend only)
 ```
 
-The auto-push pipeline, deploy reasoning, and all tuning knobs are documented in [`.planning/DEPLOY-ARCHITECTURE.md`](.planning/DEPLOY-ARCHITECTURE.md).
+**The collector never touches git.** It used to `git commit && git push` every 2
+minutes — ~720 commits/day — which risks a GitHub ToS strike. Data now flows to
+Supabase; GitHub Pages serves only the static page, deployed by Actions when a
+human pushes code.
+
+The aggregates stay precomputed rather than becoming live queries because things
+like the station×hour heatmap, the MDS song-cluster embedding, and the windowed
+leaderboards with trend deltas aren't expressible as a PostgREST query.
+`publish.py` uploads only the files whose content hash changed and writes a
+`manifest.json` of those hashes; the page refetches a file only when its hash
+moves, which keeps an idle tab at ~1 KB per poll instead of ~750 KB.
+
+Full reasoning and tuning knobs: [`.planning/DEPLOY-ARCHITECTURE.md`](.planning/DEPLOY-ARCHITECTURE.md).
 
 ## 📋 Commands
 
@@ -50,8 +81,9 @@ The auto-push pipeline, deploy reasoning, and all tuning knobs are documented in
 | `bash scripts/manage.sh start` | Start all proxies + daemon |
 | `bash scripts/manage.sh stop` | Stop everything |
 | `bash scripts/manage.sh status` | Health check |
-| `GIT_AUTO_PUSH=1 python scripts/updater.py` | Run daemon with auto-push |
-| `python scripts/generate_data.py` | Generate static JSON manually |
+| `python scripts/publish.py` | Regenerate aggregates + publish to Supabase once |
+| `python scripts/publish.py --local` | Generate into `site-data/`, upload nothing (dev) |
+| `python scripts/migrate_to_supabase.py` | Reconcile SQLite → Supabase (idempotent) |
 
 ## 📻 Stations
 
@@ -69,9 +101,12 @@ The auto-push pipeline, deploy reasoning, and all tuning knobs are documented in
 ## 📦 Project structure
 
 ```
-├── docs/                  # GitHub Pages root (index.html + data/)
-├── scripts/               # updater.py, generate_data.py, db.py, proxy_manager.py
-├── data/                  # SQLite database (gitignored)
+├── docs/                  # GitHub Pages root — index.html only (the static frontend)
+├── scripts/               # updater.py, generate_data.py, publish.py,
+│                          # supabase_client.py, migrate_to_supabase.py, db.py, proxy_manager.py
+├── data/                  # SQLite database (gitignored — source of truth)
+├── site-data/             # generated aggregates staged for upload (gitignored)
+├── supabase_schema.sql    # tables, RLS policies, public Storage bucket
 ├── .planning/             # Architecture decisions & design notes
 └── README.md
 ```
@@ -81,10 +116,16 @@ The auto-push pipeline, deploy reasoning, and all tuning knobs are documented in
 | Instead of… | We use… | Because… |
 |---|---|---|
 | A cloud VPS | A machine at home | Always-on, already paid for |
-| PostgreSQL | SQLite | Tiny dataset, single writer, zero config |
-| A backend server | Precomputed JSON + git push | Static hosting is free, git is transport |
+| A hosted collector | Local SQLite + a Supabase mirror | SQLite keeps collecting even when the network is down; Supabase makes the history durable and public |
+| A backend server | Precomputed aggregates in object storage | Nothing to run: the browser reads static gzipped JSON straight from a CDN |
 | A paid recognition API | [ShazamIO](https://github.com/dotX12/shazamio) | Free Python wrapper, no API key |
 | A private repo | A public repo | GitHub Actions minutes are unlimited on public repos |
+
+**On staying inside the free tier.** Supabase's free plan caps egress, and a
+dashboard that re-downloads everything on a timer will eat it. Two things keep it
+cheap: files are stored gzipped (~5× smaller, measured), and the page only
+refetches a file whose content hash actually changed. An idle tab costs ~1 KB per
+30s poll; a tab watching live updates costs a few MB/hour.
 
 ## 🔗 Related
 

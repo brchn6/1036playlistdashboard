@@ -41,6 +41,16 @@ Tracks carry an `isrc` (global recording id) from Shazam as of the epoch above;
 it is the reliable key for matching to Spotify. Rows older than that have
 `isrc = NULL` and **cannot be backfilled** without re-recognising.
 
+## 🚫 THE COLLECTOR MUST NEVER PUSH TO GIT
+
+Until 2026-07-14 the updater ran `git commit && git push` every 2 minutes —
+~720 commits/day, 888 in total. That pattern risks a GitHub ToS strike and has
+been **removed**. The data layer is now Supabase.
+
+**Do not reintroduce it.** No `GIT_AUTO_PUSH`, no `git add` in a daemon, no
+scripted push loop. If data needs to reach the web, it goes to Supabase.
+`git push` is for source code, written by a human.
+
 ## Quick Reference
 
 | Item | Value |
@@ -48,49 +58,74 @@ it is the reliable key for matching to Spotify. Rows older than that have
 | **Repo** | `brchn6/radio-playlist-dashboard` |
 | **Local** | `/home/barc/dev/radio-playlist-dashboard/` |
 | **Dashboard** | `https://brchn6.github.io/radio-playlist-dashboard/` |
-| **Deploy** | Actions workflow on every push (Pages `build_type=workflow`). Manual: `gh workflow run "Deploy to Pages"` |
+| **Data** | Supabase — Postgres (`tracks`) + public Storage bucket (`dashboard`) |
+| **Deploy** | Actions workflow on push (Pages `build_type=workflow`). Ships the **frontend only** — data no longer travels through git. Manual: `gh workflow run "Deploy to Pages"` |
+| **Secrets** | `.env`: `SUPABASE_URL`, `SUPABASE_SECRET_KEY`. Service key bypasses RLS — never put it in `docs/`. |
 
 ## Running the Services
 
 ```bash
 # Start collector + all proxies
 cd ~/dev/radio-playlist-dashboard
-GIT_AUTO_PUSH=1 nohup python scripts/updater.py > logs/updater.log 2>&1 &
-python scripts/proxy_manager.py start
+bash scripts/manage.sh start        # no GIT_AUTO_PUSH — it no longer exists
 
 # Check everything
 python scripts/proxy_manager.py health
 pgrep -f updater.py
 
-# Deploy dashboard to Pages
-gh workflow run "Deploy to Pages" --repo brchn6/radio-playlist-dashboard
+# Regenerate + publish the dashboard data by hand
+python scripts/publish.py
+
+# One-time / repair: reconcile SQLite into Supabase (idempotent upserts)
+python scripts/migrate_to_supabase.py
 ```
 
 ## Architecture
 
 - **8 proxies** (ports 8761-8768), one per station
-- **Collector** polls all 8 every 30s → SQLite
-- **Git pusher** commits+pushes at most every 2 min (`PUSH_EVERY_SECONDS=120`, no `[skip ci]`)
-- **Data files** in `docs/data/` — precomputed bounded aggregates
-  (top.json, timeline.json, heatmap.json, trends.json, non_music.json, capped history.json)
-- **Pages deploy**: `deploy.yml` runs on every push; concurrency queue
-  (`cancel-in-progress: false`) so the newest data always deploys; repo is
-  public so Actions minutes are free and unlimited
-- **Now Playing** tab fetches live from local proxies (30s fresh on this machine)
-- **Other tabs** load deployed Pages JSON (fresh within ~3 min)
+- **Collector** polls all 8 every 20s → **SQLite** (`data/playlist.db`, still the
+  source of truth) → mirrors each new track into **Supabase Postgres**
+- **generate_data.py** builds the precomputed aggregates (heatmap matrices, MDS
+  cluster embedding, windowed leaderboards, redundancy) into `site-data/`
+  (gitignored). These are NOT expressible as a PostgREST query — that is why
+  they stay precomputed files rather than becoming table reads.
+- **publish.py** uploads only the aggregates whose content hash changed, gzipped,
+  to the public Supabase Storage bucket, plus a `manifest.json` of those hashes.
+- **Frontend** (`docs/index.html`) polls `manifest.json` and refetches a file only
+  when its hash moves. Idle cost ~3 KB/poll instead of ~750 KB. It embeds **no
+  API key** — the bucket is public.
+- **Pages deploy**: `deploy.yml` on push. It serves the static frontend only.
+  Keep it — it *is* the Pages deployer; deleting it takes the site down.
+- **Now Playing** tab still fetches live from local proxies (30s fresh on this
+  machine; fails silently and falls back to `current.json` for everyone else)
 - **non_music_log** table is owned by the separate talk/ads-segment agent;
   generate_data.py reads it defensively (tolerates absence/schema change)
+
+### Supabase is best-effort, SQLite is not
+
+Every call into Supabase (track insert, file upload) is wrapped and **never
+raises**. If Supabase is down the collector keeps writing to SQLite and logs the
+failure; `migrate_to_supabase.py` is an idempotent upsert, so re-running it
+backfills whatever was missed. Do not "fix" this by letting a network error
+propagate — always-collecting is the whole point of the project.
 
 ## Critical Bugs Already Fixed
 
 1. Shared temp dir → per-station `/tmp/1036-proxy-{slug}/`
 2. Systemd zombie on port 8765 → disabled
-3. Dashboard cache buster missing `?`
+3. ~~Dashboard cache buster missing `?`~~ — **obsolete.** The cache-buster is gone
+   entirely: it forced a full ~750 KB re-download every 30s, which is affordable on
+   Pages but not on Supabase egress. Files are now revalidated by ETag and gated on
+   a content-hash manifest. Do not add one back.
 4. DOM IDs corrupted by text replacement
 5. Scatter Y-axis flat → station categories
 6. Pages build collisions → manual deploy only
-7. Collector not pushing → needs `GIT_AUTO_PUSH=1`
-8. **Pages auto-build collapsing** — Every 30s push triggered a legacy Pages build that canceled the previous one. **Final fix (v2):** Pages switched to Actions-based deploys (`build_type=workflow`) with a non-cancelling concurrency queue, pushes batched to every 2 min. Note: `[skip ci]` never suppressed legacy builds, and legacy builds have a 10/hour soft quota — see `.planning/DEPLOY-ARCHITECTURE.md` for the full corrected record.
+7. ~~Collector not pushing → needs `GIT_AUTO_PUSH=1`~~ — **obsolete and now harmful.**
+   The collector must never push. See the rule at the top of this file.
+8. ~~**Pages auto-build collapsing**~~ — **moot as of v3.** The whole class of problem
+   (every-30s pushes triggering Pages builds) is gone, because the collector no longer
+   pushes at all. `deploy.yml` now fires only on real code commits. The v2 record is
+   kept in `.planning/DEPLOY-ARCHITECTURE.md` for history.
 
 ## Memory File
 Full project memory at `~/.memory/radio-playlist-dashboard.md` — **READ BEFORE making any changes**.

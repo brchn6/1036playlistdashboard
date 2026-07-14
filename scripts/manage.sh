@@ -18,7 +18,9 @@ case "$cmd" in
     echo ""
     echo "[2/2] Starting multi-station updater..."
     cd "$ROOT"
-    GIT_AUTO_PUSH=1 RETENTION_DAYS=45 nohup python scripts/updater.py \
+    # No GIT_AUTO_PUSH: the updater no longer touches git. It writes to SQLite
+    # and publishes to Supabase. See .planning/DEPLOY-ARCHITECTURE.md (v3).
+    RETENTION_DAYS=45 nohup python scripts/updater.py \
       > "$LOG_DIR/updater.log" 2>&1 &
     echo "[OK] Updater PID: $!"
 
@@ -62,8 +64,8 @@ case "$cmd" in
     ;;
 
   generate)
-    echo "=== Generating static data ==="
-    cd "$ROOT" && python scripts/generate_data.py
+    echo "=== Generating aggregates + publishing to Supabase ==="
+    cd "$ROOT" && python scripts/publish.py
     ;;
 
   proxy)
@@ -87,7 +89,7 @@ case "$cmd" in
     echo "  stop       Stop everything"
     echo "  status     Health check all services"
     echo "  restart    Stop + start"
-    echo "  generate   Run data generator once"
+    echo "  generate   Regenerate aggregates and publish to Supabase once"
     echo "  proxy      Proxy manager subcommand"
     echo "  logs       Show recent logs"
     exit 1

@@ -13,3 +13,6 @@ logs/
 test123.txt
 test.env
 /site-data/
+
+# Dashboard data lives in Supabase Storage now, never in git.
+docs/data/

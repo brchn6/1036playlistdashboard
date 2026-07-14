@@ -1,2 +1,12 @@
-# No extra dependencies needed for the updater (uses stdlib only)
-# The shazamio-proxy has its own requirements.
+# Collector daemon + data pipeline.
+# The shazamio proxies have their own deps in shazamio/requirements.txt.
+
+# Supabase: Postgres mirror of the track history, and Storage for the
+# precomputed dashboard JSON. Replaces the old git-push data path.
+supabase>=2.31.0
+
+# generate_data.py has always imported these — they were simply never declared,
+# so a fresh clone could not actually run the pipeline.
+numpy>=1.26
+scikit-learn>=1.4          # sklearn.manifold.MDS — the song-cluster embedding
+tzdata                     # zoneinfo needs it for Asia/Jerusalem on some systems

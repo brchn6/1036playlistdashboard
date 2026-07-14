@@ -304,12 +304,25 @@
     <a href=https://1036kh.com target=_blank>קול הגליל העליון</a>
     <a href=https://www.radiodarom.co.il/ target=_blank>רדיו דרום 97FM</a>
   </div>
-  <div style="font-size:.65rem;color:rgba(152,152,176,.35);margin-top:6px">הדף מתעדכן כל כ־2 דקות · נתונים נשמרים 45 יום · <span id=collectRangeFooter></span></div>
+  <div style="font-size:.65rem;color:rgba(152,152,176,.35);margin-top:6px">הדף מתעדכן כל 30 שניות · נתונים נשמרים 45 יום · <span id=collectRangeFooter></span></div>
 </footer>
 </div>
 
 <script>
-const POLL=30000,BASE='data/';
+/* ── Supabase ──────────────────────────────────────────────────────────
+   The dashboard data used to be static JSON committed into docs/data/ and
+   git-pushed every 2 minutes. It now lives in a public Supabase Storage
+   bucket; GitHub Pages serves only this page.
+
+   Set SUPABASE_URL to your project URL (Supabase -> Project Settings -> API).
+
+   There is deliberately NO API KEY here. The bucket is public, so reads need
+   no key at all. The service_role key writes the data and must never appear in
+   this file — if you find yourself pasting a key below, something is wrong. */
+const SUPABASE_URL='https://ktewdeaegtukbosrgxmw.supabase.co';
+const BASE=SUPABASE_URL+'/storage/v1/object/public/dashboard/';
+
+const POLL=30000;
 const SURFACE='#151829',ACCENT='#5ddbb5',MUTED='#9898b0',GRID='#252940';
 let stations=[],activeStation=null;
 let charts={};       // chart.js instances by id
@@ -338,7 +351,27 @@ const DOW_NAMES=['ראשון','שני','שלישי','רביעי','חמישי','�
 
 /* ── helpers ── */
 function esc(s){if(!s)return'';const d=document.createElement('div');d.textContent=s;return d.innerHTML}
-function loadJSON(u){return fetch(u+'?_='+Date.now()).then(r=>r.ok?r.json():null).catch(()=>null)}
+/* No cache-buster. The old '?_='+Date.now() forced a full re-download of every
+   file on every 30s poll (~750 KB/tab). Supabase serves these gzipped with an
+   ETag, so a plain fetch revalidates and gets a cheap 304 when nothing changed. */
+function loadJSON(u){return fetch(BASE+u).then(r=>r.ok?r.json():null).catch(()=>null)}
+
+/* Manifest-gated fetching.
+   publish.py uploads a manifest.json of per-file content hashes and only
+   re-uploads files whose contents actually changed. We poll that (~1 KB) and
+   refetch a file only when its hash moves, serving the cached copy otherwise.
+   Idle cost per poll is ~3 KB instead of ~750 KB. */
+let manifest={};            // filename -> hash, as last fetched
+const fileCache={};         // filename -> parsed JSON, for unchanged files
+
+async function loadTracked(name){
+  const h=manifest[name];
+  // Unchanged since last poll and already parsed: skip the network entirely.
+  if(h!==undefined && fileCache[name] && fileCache[name].hash===h) return fileCache[name].data;
+  const data=await loadJSON(name);
+  if(data!==null) fileCache[name]={hash:h,data};
+  return data;
+}
 function stationBySlug(slug){return stations.find(s=>s.slug===slug)}
 function color(slug){const s=stationBySlug(slug);return s?s.color:ACCENT}
 function name(slug){const s=stationBySlug(slug);return s?s.name:slug}
@@ -969,7 +1002,9 @@ function renderHistory(){
 }
 async function loadStationHistory(){
   if(!activeStation)return;
-  const j=await loadJSON(BASE+'stations/'+activeStation+'/history.json');
+  // Tracked too: re-clicking a station pill costs nothing if its history hasn't
+  // changed. These files are 27-126 KB each, so it is worth the check.
+  const j=await loadTracked('stations/'+activeStation+'/history.json');
   if(j&&j.history)D.stationHistory={slug:activeStation,data:j.history};
   renderHistory();
 }
@@ -1207,11 +1242,15 @@ async function fetchLive(){
 
 async function fetchAll(){
   try{
+    // Cheap first: one small request tells us which of the 11 files actually
+    // moved. Everything unchanged is served from fileCache without a request.
+    manifest=(await loadJSON('manifest.json')||{}).files||{};
+
     const[st,cur,stats,timeline,heatmap,trends,top,cross,hist,nonMusic,clusters]=await Promise.all([
-      loadJSON(BASE+'stations.json'),loadJSON(BASE+'current.json'),loadJSON(BASE+'stats.json'),
-      loadJSON(BASE+'timeline.json'),loadJSON(BASE+'heatmap.json'),loadJSON(BASE+'trends.json'),
-      loadJSON(BASE+'top.json'),loadJSON(BASE+'cross_station.json'),loadJSON(BASE+'history.json'),
-      loadJSON(BASE+'non_music.json'),loadJSON(BASE+'clusters.json'),
+      loadTracked('stations.json'),loadTracked('current.json'),loadTracked('stats.json'),
+      loadTracked('timeline.json'),loadTracked('heatmap.json'),loadTracked('trends.json'),
+      loadTracked('top.json'),loadTracked('cross_station.json'),loadTracked('history.json'),
+      loadTracked('non_music.json'),loadTracked('clusters.json'),
     ]);
     if(st)stations=st;
     Object.assign(D,{current:cur,stats,timeline,heatmap,trends,top,cross,history:hist,nonMusic,clusters});
