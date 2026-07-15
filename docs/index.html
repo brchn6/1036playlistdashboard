@@ -310,7 +310,7 @@
       <label class=hist-toggle><input type=checkbox id=histDedup checked onchange=onHistFilterChange()> ייחודי</label>
       <button class=ctrl-btn onclick="copySelectedAsText()" title="העתקת שירים נבחרים כטקסט">📋 העתק טקסט</button>
       <button class=ctrl-btn id=histSpotifyBtn onclick="openAllInSpotify()" title="פתיחת כל השירים הנבחרים בספוטיפיי">🎵 פתח בספוטיפיי</button>
-      <span id=spotifyAuthStatus style="font-size:.72rem;color:var(--muted);display:none"></span>
+      <span id=spotifyAuthStatus style="font-size:.72rem;color:var(--muted)"><a href="javascript:void(0)" onclick="initSpotifyAuth();return false" style="color:#1DB954;text-decoration:none">🎵 Connect to Spotify</a></span>
     </div>
     <div class=controls>
       <input class=search id=historySearch placeholder="חיפוש אמן או שיר..." oninput=onHistFilterChange() style="flex:1;min-width:160px" />
@@ -1408,13 +1408,17 @@ async function initSpotifyAuth(){
     if(tokenRes.ok){
       const data=await tokenRes.json();
       if(data.authenticated){updateSpotifyStatus(true);return}
+      // Not authenticated — open Spotify OAuth
+      window.open(SPOTIFY_API+'/auth','spotify-auth','width=600,height=700');
+      return;
     }
-  }catch(e){/* service not running */}
-  window.open(SPOTIFY_API+'/auth','spotify-auth','width=600,height=700');
+  }catch(e){/* service not running on this machine */}
+  const el=document.getElementById('spotifyAuthStatus');
+  if(el)el.style.display='none';
 }
 
 // Check if the Spotify API service is reachable and authenticated.
-// Shows the appropriate status; keeps hidden if service is offline.
+// Shows the appropriate status; call this only on user interaction.
 async function checkSpotifyAuth(){
   try{
     const r=await fetch(SPOTIFY_API+'/token',{cache:'no-store'});
@@ -1424,7 +1428,6 @@ async function checkSpotifyAuth(){
       return !!data.authenticated;
     }
   }catch(e){
-    // Service not reachable — keep status hidden
     const el=document.getElementById('spotifyAuthStatus');
     if(el)el.style.display='none';
     return false;
@@ -1762,18 +1765,10 @@ function renderAll(){
 }
 
 async function fetchLive(){
-  // "Now Playing" straight from local proxies (works on the collector machine;
-  // silently falls back to Pages data everywhere else)
-  if(!stations.length){D.live=null;return}
-  const results=await Promise.allSettled(stations.map(s=>
-    fetch('http://127.0.0.1:'+s.proxy_port+'/current?_='+Date.now()).then(r=>r.json()).then(d=>{
-      const r=(d.last_result||{});
-      if(!r.found)return null;
-      return{station_id:s.id,station_slug:s.slug,station_name:s.name,station_color:s.color,
-        artist:r.artist||'',title:r.title||'',url:r.url||'',recognized_at:r.recognized_at||''};
-    }).catch(()=>null)));
-  const live=results.filter(r=>r.status==='fulfilled'&&r.value).map(r=>r.value);
-  D.live=live.length?live:null;
+  // Now Playing data comes from current.json via Supabase. No localhost fetches
+  // from an HTTPS page — those trigger Chrome Private Network Access prompts.
+  // On the collector machine, access the proxies directly.
+  D.live=null;
 }
 
 async function fetchAll(){
@@ -1794,8 +1789,8 @@ async function fetchAll(){
     await fetchLive();
     if(!document.getElementById('pills').innerHTML)renderPills();
     renderAll();
-    // Check Spotify auth status (fires and forgets — updates the UI)
-    checkSpotifyAuth();
+    // Spotify auth is checked on user click only — no auto-fetch to localhost
+    // which triggers Chrome Private Network Access prompts on HTTPS pages.
   }catch(e){
     console.warn(e);
     document.getElementById('statusDot').className='dot off';
