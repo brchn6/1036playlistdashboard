@@ -9,4 +9,6 @@ supabase>=2.31.0
 # so a fresh clone could not actually run the pipeline.
 numpy>=1.26
 scikit-learn>=1.4          # sklearn.manifold.MDS — the song-cluster embedding
+networkx>=3.0               # graph for Louvain community detection
+python-louvain>=0.16        # community detection algorithm
 tzdata                     # zoneinfo needs it for Asia/Jerusalem on some systems

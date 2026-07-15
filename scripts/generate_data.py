@@ -40,7 +40,8 @@ DB_PATH = PROJECT_ROOT / "data" / "playlist.db"
 IL_TZ = ZoneInfo("Asia/Jerusalem")
 
 TIMELINE_HOURS = 48
-CLUSTER_HOURS = 24
+CLUSTER_HOURS = 48        # how far back the cluster graph looks
+CLUSTER_REFRESH_HOURS = 24  # regenerate clusters only this often (meta-analysis)
 TOP_LIMIT = 50                # per window; client re-ranks for station filter
 TOP_WINDOWS = [("1h", 1), ("24h", 24), ("7d", 168), ("30d", 720), ("all", None)]
 HEATMAP_STATION_DAYS = 7
@@ -203,17 +204,20 @@ def build_non_music(db: PlaylistDB, slugs: list[str], now: datetime) -> dict[str
 
 
 def build_song_clusters(tracks: list[dict[str, Any]], now: datetime) -> dict[str, Any]:
-    """Song co-occurrence graph — which songs play together?
+    """Community detection on song co-occurrence graph.
 
     Two songs co-occur if they:
     1. Play within 30 min on the same station (sequential programming)
     2. Play at the same time on different stations (simultaneous)
 
-    Songs are grouped by their primary station (the station where they
-    play most often). Songs that play on multiple stations appear under
-    "cross-station". Each song carries its top co-occurring partners.
+    Uses Louvain community detection to find natural song clusters.
+    Bridge edges (connecting different communities) and bridge nodes
+    (connecting to multiple communities) are identified so the frontend
+    can highlight cross-cluster connections.
     """
     from collections import defaultdict
+    import networkx as nx
+    import community as community_louvain
 
     cutoff = now - timedelta(hours=CLUSTER_HOURS)
     recent = [t for t in tracks if t["_dt"] >= cutoff]
@@ -276,82 +280,138 @@ def build_song_clusters(tracks: list[dict[str, Any]], now: datetime) -> dict[str
 
     # Filter to songs with >= 2 plays
     min_plays = 2
-    filtered = [(i, s) for i, s in enumerate(songs) if s["plays"] >= min_plays]
-    if len(filtered) < 5:
-        return {"groups": [], "ready": False, "total_songs": len(songs)}
+    filtered_orig = [(i, s) for i, s in enumerate(songs) if s["plays"] >= min_plays]
+    if len(filtered_orig) < 5:
+        return {"communities": [], "songs": [], "edges": [],
+                "ready": False, "total_songs": len(songs)}
 
-    # Build per-song result with top co-occurrences
+    # Build networkx graph for community detection using ALL co-occurrence
+    # weights. Louvain naturally handles weak vs strong edges via weighting.
+    MIN_COMMUNITY_WEIGHT = 2  # minimum weight for an edge to count as "bridge"
+    G = nx.Graph()
+    for orig_i, s in filtered_orig:
+        G.add_node(orig_i)
+    for orig_i, s in filtered_orig:
+        for other_j, _ in filtered_orig:
+            if orig_i >= other_j:
+                continue
+            c = cooccur[orig_i].get(other_j, 0)
+            if c > 0:
+                G.add_edge(orig_i, other_j, weight=c)
+
+    # Louvain with weighted graph
+    if G.number_of_nodes() > 1 and G.number_of_edges() > 0:
+        partition = community_louvain.best_partition(G, weight="weight")
+    else:
+        partition = {oi: 0 for oi, _ in filtered_orig}
+
+    misc_cid = None
+
+    # Map community id -> list of song indices
+    community_songs: dict[int, list[int]] = defaultdict(list)
+    for orig_i, _ in filtered_orig:
+        community_songs[partition[orig_i]].append(orig_i)
+
+    # Label communities by dominant station
     def primary_station(s):
-        """Return the station slug where this song plays most."""
         sts = s["stations"]
         return max(sts, key=sts.get)
 
     def station_count(s):
         return len(s["stations"])
 
-    result_songs = []
-    for orig_idx, s in filtered:
-        # Top co-occurring songs
+    community_info: dict[int, dict[str, Any]] = {}
+    for cid, members in community_songs.items():
+        station_plays: dict[str, int] = defaultdict(int)
+        cross_count = 0
+        for oi in members:
+            for slug, cnt in songs[oi]["stations"].items():
+                station_plays[slug] += cnt
+            if station_count(songs[oi]) > 1:
+                cross_count += 1
+        dominant = max(station_plays, key=station_plays.get) if station_plays else "unknown"
+        cross_pct = round(cross_count / len(members) * 100) if members else 0
+        community_info[cid] = {
+            "id": cid,
+            "label": dominant,
+            "size": len(members),
+            "dominant_station": dominant,
+            "cross_pct": cross_pct,
+        }
+
+    # Build flat result with community assignments
+    sort_key = {orig_i: idx for idx, (orig_i, _) in enumerate(filtered_orig)}
+    sorted_orig = sorted((oi for oi, _ in filtered_orig),
+                         key=lambda oi: -songs[oi]["plays"])
+    orig_to_result: dict[int, int] = {}  # original idx -> result idx
+    result_songs: list[dict[str, Any]] = []
+    for ri, orig_i in enumerate(sorted_orig):
+        s = songs[orig_i]
+        cid = partition[orig_i]
+        # Top co-occurring neighbors
         neighbors = sorted([
-            (cooccur[orig_idx].get(fi, 0), fs)
-            for fi, fs in filtered if fi != orig_idx
+            (cooccur[orig_i].get(oj, 0), songs[oj])
+            for oj, _ in filtered_orig if oj != orig_i and cooccur[orig_i].get(oj, 0) > 0
         ], key=lambda x: -x[0])
         top = [{"artist": ns["artist"], "title": ns["title"], "count": c}
-               for c, ns in neighbors[:5] if c > 0]
+               for c, ns in neighbors[:8] if c > 0]
 
-        sts = dict(s["stations"])
-        primary = primary_station(s)
-        group = "cross-station" if station_count(s) > 1 else primary
+        # Bridge detection: does this node strongly connect to other communities?
+        # Only count connections with weight >= MIN_COMMUNITY_WEIGHT.
+        bridge_to: set[int] = set()
+        for oj, _ in filtered_orig:
+            if oj == orig_i:
+                continue
+            c = cooccur[orig_i].get(oj, 0)
+            if c >= MIN_COMMUNITY_WEIGHT and partition[oj] != cid:
+                bridge_to.add(partition[oj])
 
+        is_bridge = len(bridge_to) > 0
+
+        orig_to_result[orig_i] = ri
         result_songs.append({
             "artist": s["artist"],
             "title": s["title"],
             "plays": s["plays"],
-            "stations": sts,
-            "primary_station": primary,
-            "group": group,
+            "stations": dict(s["stations"]),
+            "primary_station": primary_station(s),
+            "community": cid,
+            "is_bridge": is_bridge,
+            "bridge_communities": sorted(bridge_to),
             "top": top,
         })
 
-    # Sort by plays descending
-    result_songs.sort(key=lambda x: -x["plays"])
-
-    # Group by station (or cross-station)
-    groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for s in result_songs:
-        groups[s["group"]].append(s)
-
-    # Build edges from co-occurrence (deduplicated)
+    # Build edges with numeric indices and bridge flag.
+    # An edge is a "bridge" only if its communities differ AND it has
+    # at least 2 co-occurrences (strong enough to be meaningful).
+    edges: list[list] = []
     seen_edges: set[tuple[int, int]] = set()
-    edges = []
-    for a_idx, (orig_a, sa) in enumerate(filtered):
-        for b_idx, (orig_b, sb) in enumerate(filtered):
-            if a_idx >= b_idx:
+    for orig_i, s in filtered_orig:
+        ri = orig_to_result[orig_i]
+        for oj, _ in filtered_orig:
+            if orig_i >= oj:
                 continue
-            pair = (min(orig_a, orig_b), max(orig_a, orig_b))
+            pair = (orig_i, oj)
             if pair in seen_edges:
                 continue
             seen_edges.add(pair)
-            c = cooccur[orig_a].get(orig_b, 0)
+            c = cooccur[orig_i].get(oj, 0)
             if c > 0:
-                edges.append({
-                    "source": result_songs[a_idx]["artist"] + "||" + result_songs[a_idx]["title"].lower(),
-                    "target": result_songs[b_idx]["artist"] + "||" + result_songs[b_idx]["title"].lower(),
-                    "count": c,
-                })
+                rj = orig_to_result[oj]
+                bridges = partition.get(orig_i, 0) != partition.get(oj, 0) and c >= 2
+                # [source_idx, target_idx, count, is_bridge]
+                edges.append([ri, rj, c, bridges])
 
-    # Sort edges by count desc, keep top connections for visual clarity
-    edges.sort(key=lambda e: -e["count"])
+    # Sort edges: strongest first
+    edges.sort(key=lambda e: -e[2])
 
-    # Sort groups: cross-station first, then by size descending
-    group_order = sorted(groups.keys(), key=lambda g: (
-        0 if g == "cross-station" else 1, -len(groups[g])))
+    # Build communities output (sorted by size desc)
+    sorted_communities = sorted(community_info.values(),
+                                key=lambda c: -c["size"])
 
     return {
-        "groups": [
-            {"slug": g, "songs": groups[g]}
-            for g in group_order
-        ],
+        "communities": sorted_communities,
+        "songs": result_songs,
         "edges": edges,
         "ready": True,
         "total_songs": len(result_songs),
@@ -634,7 +694,19 @@ def generate_all(output_dir: Path = DATA_DIR) -> dict[str, int]:
     write_json(output_dir / "trends.json", trends, sizes, "trends.json")
     write_json(output_dir / "cross_station.json",
                {"tracks": db.get_cross_station_tracks()}, sizes, "cross_station.json")
-    write_json(output_dir / "clusters.json", build_song_clusters(tracks, now), sizes, "clusters.json")
+    # Cluster graph is a meta-analysis: only regenerate every CLUSTER_REFRESH_HOURS.
+    # The 30-second poll shouldn't shuffle the force graph — it's confusing and wasteful.
+    cluster_path = output_dir / "clusters.json"
+    if cluster_path.exists():
+        mtime = datetime.fromtimestamp(cluster_path.stat().st_mtime, tz=timezone.utc)
+        age_h = (now - mtime).total_seconds() / 3600
+        if age_h < CLUSTER_REFRESH_HOURS:
+            sizes["clusters.json"] = cluster_path.stat().st_size
+            print(f"  [cluster] skipped — {age_h:.1f}h old (< {CLUSTER_REFRESH_HOURS}h refresh)", flush=True)
+        else:
+            write_json(cluster_path, build_song_clusters(tracks, now), sizes, "clusters.json")
+    else:
+        write_json(cluster_path, build_song_clusters(tracks, now), sizes, "clusters.json")
     write_json(output_dir / "bpm_key.json", build_bpm_key(tracks, slugs), sizes, "bpm_key.json")
 
     # headline stats — the only file that always changes (updated_at heartbeat)

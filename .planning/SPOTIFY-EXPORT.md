@@ -334,6 +334,48 @@ backend's `meta` table with an expiry timestamp and auto-refresh.
 - [x] Error handling: unmatched tracks, token expiry with auto-refresh
 - [x] `SPOTIFY_CLIENT_SECRET` added to `.env`
 
+### Milestone 3.5: 🎯 Resolve + Play — auto-play first Spotify result
+
+Instead of opening `https://open.spotify.com/search/QUERY` (shows results, user
+must click), resolve the track ID via the Spotify API and open it directly so it
+starts playing immediately.
+
+#### Flow
+
+```
+User clicks 🎧 button on a track
+        │
+        ▼
+Dashboard calls GET /resolve?artist=X&title=Y (local Spotify API service)
+        │
+        ▼
+spotify_api.py searches Spotify → returns first track URI
+  or null if no match
+        │
+        ▼
+Dashboard opens:
+  ✅ Resolved → https://open.spotify.com/track/TRACK_ID (auto-plays)
+  ❌ Not found → fallback to https://open.spotify.com/search/QUERY
+```
+
+#### Prerequisites
+- Spotify API service (`scripts/spotify_api.py`) must be running on port 9900
+- That requires `SPOTIFY_CLIENT_ID` + `SPOTIFY_CLIENT_SECRET` in `.env`
+- The service only runs on the collector machine (head1)
+- External visitors always get the fallback search URL
+
+#### Why not do this in the frontend alone?
+Spotify's search API requires `client_id` + `client_secret` (server-side only)
+and blocks CORS from browsers. The resolve call must go through the local
+backend service.
+
+#### Implementation
+- [ ] Add `GET /resolve?artist=X&title=Y` endpoint to `scripts/spotify_api.py`
+- [ ] Update `spotifySearchUrl()` in dashboard JS to try resolve first, fallback to search
+- [ ] The resolve fetch only runs on user click (no auto-polling to avoid PNA prompt)
+
+---
+
 ### Milestone 4: 🧠 Smart curation
 - [ ] Cross-station mix option (already works via "All" station pill)
 - [ ] Auto-playlist by time-of-day pattern

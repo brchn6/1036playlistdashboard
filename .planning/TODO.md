@@ -84,6 +84,13 @@ See full plan: `.planning/SPOTIFY-EXPORT.md`
 - [x] Dashboard JS connected to local API
 - [x] `SPOTIFY_CLIENT_SECRET` added to `.env`
 
+### Milestone 3.5: 🎯 Resolve + Play — auto-play first Spotify result
+- [ ] Add `GET /resolve?artist=X&title=Y` to `scripts/spotify_api.py` (returns first track URI)
+- [ ] Update `spotifySearchUrl()` in dashboard JS to try resolve first, fallback to search
+- [ ] Only works when Spotify service is running locally; external visitors get fallback
+
+See full plan: `.planning/SPOTIFY-EXPORT.md` → Milestone 3.5
+
 ### Milestone 4: 🧠 Smart curation (Phase 4)
 - [ ] Cross-station mix option
 - [ ] Auto-playlist by time-of-day pattern

@@ -34,14 +34,14 @@
 
     /* Station pills */
     .station-pills{display:flex;gap:5px;margin-top:14px;flex-wrap:wrap;justify-content:center}
-    .pill{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:.78rem;font-weight:600;transition:all .2s;font-family:var(--font);display:flex;align-items:center;gap:5px}
+    .pill{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:.78rem;font-weight:600;transition:all .2s;font-family:var(--font);display:flex;align-items:center;gap:5px;touch-action:manipulation}
     .pill:hover{background:var(--card-hover);border-color:var(--muted)}
     .pill.active{background:var(--tab-active);color:var(--fg);border-color:transparent;box-shadow:0 0 0 1px rgba(93,219,181,.3)}
     .pill .dot-sm{width:7px;height:7px;border-radius:50%;display:inline-block}
 
     /* Tabs */
     .tabs{display:flex;gap:2px;margin-top:14px;background:var(--tab-bg);border-radius:var(--radius);padding:3px;overflow-x:auto}
-    .tab-btn{flex:1;padding:9px 10px;border:none;background:transparent;color:var(--muted);font-size:.8rem;font-weight:600;cursor:pointer;border-radius:var(--radius-sm);transition:all .18s;white-space:nowrap;font-family:var(--font);min-width:0}
+    .tab-btn{flex:1;padding:9px 10px;border:none;background:transparent;color:var(--muted);font-size:.8rem;font-weight:600;cursor:pointer;border-radius:var(--radius-sm);transition:all .18s;white-space:nowrap;font-family:var(--font);min-width:0;touch-action:manipulation}
     .tab-btn:hover{background:var(--card-hover);color:var(--fg)}
     .tab-btn.active{background:var(--tab-active);color:var(--accent)}
     .tab-content{display:none;margin-top:14px;animation:fadeIn .25s}
@@ -102,7 +102,7 @@
     .controls .lbl{font-size:.78rem;color:var(--muted)}
     select,.ctrl-btn,input.search{font-size:.78rem;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--fg);font-family:var(--font)}
     select,.ctrl-btn{cursor:pointer}
-    .ctrl-btn.active{color:var(--accent);box-shadow:0 0 0 1px rgba(93,219,181,.3)}
+    .ctrl-btn.active{color:var(--accent);box-shadow:0 0 0 1px rgba(93,219,181,.3)}.ctrl-btn,.pill,.tab-btn,.np-btn,.spotify-link{user-select:none;-webkit-tap-highlight-color:transparent}
     input.search{min-width:200px;flex:1;max-width:320px}
 
     /* Charts */
@@ -130,16 +130,74 @@
     footer .tag{font-size:.6rem;padding:1px 6px;border-radius:4px;background:rgba(93,219,181,.08);color:var(--accent);margin:0 2px}
 
     @media(max-width:640px){
-      .container{padding:12px 10px}
-      header h1{font-size:1.2rem}
-      .np-grid{grid-template-columns:1fr 1fr}
-      .tab-btn{font-size:.72rem;padding:7px 6px}
-      .chart-wrap{height:280px}
-      .chart-wrap.tall{height:360px}
+      .container{padding:10px 8px}
+      header{padding:14px 0 10px}
+      header h1{font-size:1.1rem}
+      header p{font-size:.7rem}
+      .status-bar{font-size:.68rem;margin-top:4px}
+      .station-pills{flex-wrap:nowrap;overflow-x:auto;gap:4px;padding-bottom:4px;justify-content:flex-start;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
+      .station-pills::-webkit-scrollbar{display:none}
+      .pill{flex-shrink:0;scroll-snap-align:start;font-size:.7rem;padding:5px 10px}
+      .tabs{scroll-snap-type:x mandatory;gap:1px}
+      .tab-btn{font-size:.65rem;padding:8px 5px;flex:0 0 auto;scroll-snap-align:start;min-width:0}
+      .np-grid{grid-template-columns:1fr 1fr;gap:6px}
+      .np-card{padding:12px 10px}
+      .np-card .ar{font-size:.9rem}
+      .np-card .tl{font-size:.78rem}
+      .np-card .np-btn{font-size:.65rem;padding:3px 10px}
+      .chart-wrap{height:260px}
+      .chart-wrap.tall{height:320px}
+      .history-item{font-size:.78rem;gap:6px;padding:6px 6px}
+      .history-item .hs{width:60px;font-size:.6rem}
+      .history-item .hi .ht{font-size:.7rem}
+      .history-item .hago{font-size:.6rem}
+      .controls{gap:5px}
+      .controls .lbl{font-size:.7rem}
+      select,.ctrl-btn,input.search{font-size:.7rem;padding:5px 8px}
+      input.search{min-width:120px;max-width:none}
+      .stat-row{grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:5px}
+      .stat-card{padding:8px}
+      .stat-card .v{font-size:1.1rem}
+      .stat-card .l{font-size:.6rem}
+      .hm-scroll{font-size:.65rem}
+      table.hm td{min-width:20px;padding:3px 1px}
+      footer{padding:14px 0 10px}
+      footer .credits{gap:3px 10px;font-size:.65rem}
+      footer .stations-attr{gap:2px 8px;font-size:.6rem}
+      .card{padding:12px}
+      .card-title{font-size:.82rem}
+      .card-sub{font-size:.68rem}
+      .grid2{grid-template-columns:1fr}
     }
     @media(max-width:400px){
+      .container{padding:6px 6px}
+      header{padding:10px 0 8px}
+      header h1{font-size:1rem}
+      header p{display:none}
+      .status-bar{font-size:.62rem}
+      .station-pills{gap:3px}
+      .pill{font-size:.65rem;padding:4px 8px}
+      .tab-btn{font-size:.6rem;padding:6px 4px}
       .np-grid{grid-template-columns:1fr}
-      .pill{font-size:.7rem;padding:4px 10px}
+      .np-card{padding:10px 8px}
+      .np-card .ar{font-size:.82rem}
+      .np-card .tl{font-size:.72rem}
+      .chart-wrap{height:220px}
+      .chart-wrap.tall{height:280px}
+      .history-item{font-size:.72rem;gap:4px;padding:5px 4px}
+      .history-item .hs{width:50px;font-size:.55rem}
+      .history-item .hi .ht{font-size:.64rem}
+      .rank{width:20px;font-size:.7rem}
+      .cnt{font-size:.72rem}
+      .trend{font-size:.62rem;width:34px}
+      select,.ctrl-btn,input.search{font-size:.65rem;padding:4px 6px}
+      input.search{min-width:80px}
+      .stat-row{grid-template-columns:repeat(2,1fr)}
+      .stat-card .v{font-size:1rem}
+      .controls{flex-direction:column;align-items:stretch;gap:4px}
+      .controls .lbl{min-width:auto}
+      .card{padding:10px}
+      .card-title{font-size:.78rem}
     }
   </style>
 </head>
@@ -326,8 +384,12 @@
   <div class=card>
     <div class=card-title>🔗 מה מתנגן עם מה?</div>
     <div class=card-sub>שירים שמתנגנים בסמיכות — אותה תחנה בתוך 30 דקות, או במקביל בתחנות שונות. גרור שירים לחקירת הקשרים. <strong id=clusterWindowLabel></strong></div>
+    <div class=controls style=margin-bottom:8px;gap:4px>
+      <button class="ctrl-btn" id=clusterModeBtn onclick=toggleClusterMode() style=font-size:.72rem>🔀 צביעה: לפי קהילה</button>
+      <span style=font-size:.65rem;color:var(--muted)>קווים כתומים = גשרים בין קהילות</span>
+    </div>
     <div style=position:relative id=clusterGraphWrap>
-      <svg id=clusterGraph style=width:100%;height:500px;border-radius:8px;background:var(--card)></svg>
+      <svg id=clusterGraph style=width:100%;height:500px;border-radius:8px;background:var(--card);touch-action:none;overscroll-behavior:none></svg>
       <div id=clusterLoading style=position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--muted)>טוען...</div>
     </div>
     <div class=chart-legend id=clusterLegend style=margin-bottom:6px></div>
@@ -1474,9 +1536,27 @@ async function exportToSpotify(){
     alert('שגיאה בחיבור לשרת ספוטיפיי: '+e.message);
   }
 }
-/* ── Clusters (force-directed knowledge graph) ── */
+/* ── Clusters — community detection force graph ── */
 let clusterSim=null;
 let clusterSelectedNode=null;
+let clusterDataKey=null;      // tracks data version to skip re-render on 30s poll
+let clusterMode='community';  // 'community' | 'station'
+
+function toggleClusterMode(){
+  clusterMode=clusterMode==='community'?'station':'community';
+  clusterDataKey=null;  // force re-render
+  document.getElementById('clusterModeBtn').textContent=
+    '🔀 צביעה: '+(clusterMode==='community'?'לפי קהילה':'לפי תחנה');
+  renderClusters();
+}
+
+// Community color palette (distinct, colorblind-friendly)
+const CLUSTER_COLORS=[
+  '#5ddbb5','#f6a623','#7b68ee','#e87461','#4ecdc4',
+  '#ff6b9d','#45b7d1','#f7dc6f','#bb8fce','#85c1e9',
+  '#f0b27a','#82e0aa','#f1948a','#a3e4d7','#d7bde2',
+  '#aeb6bf','#f9e79f','#a9cce3','#d4ac0d','#7dcea0',
+];
 
 function renderClusters(){
   const cl=D.clusters;
@@ -1485,204 +1565,276 @@ function renderClusters(){
   const svg=document.getElementById('clusterGraph');
   const detail=document.getElementById('clusterDetail');
 
-  if(!cl||!cl.groups||!cl.groups.length||!cl.ready){
+  if(!cl||!cl.songs||!cl.songs.length||!cl.ready){
     wrap.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">צריך עוד נתונים — בדוק שוב מאוחר יותר</div>';
     detail.innerHTML='';return
   }
 
+  // ⛔ Don't re-render on every 30s poll — only if the actual data changed.
+  // The force simulation restart jiggles the graph and is confusing.
+  const newKey=cl.window_hours+':'+cl.total_songs+':'+cl.communities.length+':'+cl.edges.length+':'+clusterMode;
+  if(newKey===clusterDataKey && clusterSim){
+    // Data unchanged — just update the label and skip the expensive render
+    document.getElementById('clusterWindowLabel').textContent=
+      'חלון: '+cl.window_hours+' שעות · '+cl.total_songs+' שירים · '+cl.communities.length+' קהילות'+
+      (cl.edges?(' · '+cl.edges.filter(e=>e[3]).length+' גשרים'):'');
+    if(loading)loading.style.display='none';
+    return;
+  }
+  clusterDataKey=newKey;
+
   document.getElementById('clusterWindowLabel').textContent=
-    'חלון: '+cl.window_hours+' שעות אחרונות · '+cl.total_songs+' שירים';
+    'חלון: '+cl.window_hours+' שעות · '+cl.total_songs+' שירים · '+cl.communities.length+' קהילות'+
+    (cl.edges?(' · '+cl.edges.filter(e=>e[3]).length+' גשרים'):'');
 
   if(loading)loading.style.display='none';
 
-  // Build nodes + links from groups and edges
-  const nodes=[];
-  const nodeMap={};
-  const edgeMap={};
+  // Build community lookup
+  const commMap={};
+  (cl.communities||[]).forEach((c,i)=>{
+    commMap[c.id]=CLUSTER_COLORS[i%CLUSTER_COLORS.length];
+  });
 
-  cl.groups.forEach(g=>{
-    g.songs.forEach((s,i)=>{
-      const id=songMatchKey(s.artist,s.title);
-      const st=stationBySlug(s.primary_station);
-      const isCross=g.slug==='cross-station';
-      nodes.push({
-        id, artist:s.artist, title:s.title,
-        plays:s.plays, group:g.slug,
-        primary_station:s.primary_station,
-        stations:s.stations,
-        color:isCross?'#5ddbb5':(st?st.color:'#5ddbb5'),
-        r:Math.max(5,Math.min(18,3+Math.sqrt(s.plays)*3)),
-        top:s.top||[],
-      });
-      nodeMap[id]=nodes.length-1;
+  // Build nodes from flat songs array
+  const nodes=[];
+  cl.songs.forEach((s,i)=>{
+    const cid=s.community;
+    const commColor=commMap[cid]||'#5ddbb5';
+    const st=stationBySlug(s.primary_station);
+    const stationColor=st?st.color:'#5ddbb5';
+    nodes.push({
+      id:i, artist:s.artist, title:s.title,
+      plays:s.plays, community:cid,
+      community_color:commColor,
+      station_color:stationColor,
+      primary_station:s.primary_station,
+      stations:s.stations,
+      is_bridge:!!s.is_bridge,
+      bridge_communities:s.bridge_communities||[],
+      r:Math.max(5,Math.min(18,3+Math.sqrt(s.plays)*3)),
+      top:s.top||[],
     });
   });
 
-  // Build links from edges array in data
+  // Build links from numeric-index edges
+  // In station mode: only show edges between songs on the same station
+  // In community mode: show all edges
   const links=[];
   (cl.edges||[]).forEach(e=>{
-    const si=nodeMap[e.source];
-    const ti=nodeMap[e.target];
-    if(si===undefined||ti===undefined)return;
-    links.push({source:si,target:ti,count:e.count});
+    const si=e[0], ti=e[1], cnt=e[2], bridge=!!e[3];
+    if(si>=nodes.length||ti>=nodes.length)return;
+    // Station mode: skip cross-station edges
+    if(clusterMode==='station' && nodes[si].primary_station!==nodes[ti].primary_station) return;
+    links.push({source:si,target:ti,count:cnt,bridge:bridge});
   });
-
-  // Limit to strongest edges for visual clarity (top 3 per node)
-  // Group links by source and keep top 3
-  const linkBySource={};
-  links.forEach((l,i)=>{
-    if(!linkBySource[l.source])linkBySource[l.source]=[];
-    linkBySource[l.source].push(i);
-    if(!linkBySource[l.target])linkBySource[l.target]=[];
-    linkBySource[l.target].push(i);
-  });
-  // Actually keep all edges for now, let D3 handle it
 
   if(clusterSim)clusterSim.stop();
 
   const width=svg.clientWidth||800;
   const height=500;
 
-  // Clear
   svg.innerHTML='';
-
   const g=document.createElementNS('http://www.w3.org/2000/svg','g');
   svg.appendChild(g);
 
-  // Zoom behavior
+  // Zoom
   let zoomTransform=d3.zoomIdentity;
-  const zoomBehavior=d3.zoom()
+  d3.select(svg).call(d3.zoom()
     .scaleExtent([0.2,4])
+    .filter(event=>!event.target.closest('circle'))  // don't zoom when starting on a node
     .on('zoom',(event)=>{
       zoomTransform=event.transform;
       g.setAttribute('transform',event.transform);
-    });
-  d3.select(svg).call(zoomBehavior);
+    }));
 
-  // Simulation
+  // Force simulation
   const sim=d3.forceSimulation(nodes)
-    .force('link',d3.forceLink(links).id(d=>d.id).distance(d=>60+20*Math.log(1+d.count)).strength(d=>Math.min(1,d.count/10)))
-    .force('charge',d3.forceManyBody().strength(-120))
+    .force('link',d3.forceLink(links).id(d=>d.id)
+      .distance(d=>60+20*Math.log(1+d.count))
+      .strength(d=>d.bridge?0.02:Math.min(1,d.count/10)))
+    .force('charge',d3.forceManyBody().strength(-150))
     .force('center',d3.forceCenter(width/2,height/2))
-    .force('collision',d3.forceCollide().radius(d=>d.r+5));
-
+    .force('collision',d3.forceCollide().radius(d=>d.r+6));
   clusterSim=sim;
 
-  // Draw edges
-  const linkG=g.appendChild(document.createElementNS('http://www.w3.org/2000/svg','g'));
-  const linkEls=linkG.querySelectorAll('line')||[];
-  // We'll use D3 data join
-  // Actually, let's use D3 selection API properly
+  // ── Edges layer (behind nodes) ──
+  const linkGroup=d3.select(g).append('g');
 
-  // Define arrow markers
-  // No arrows for undirected graph
+  const regularLinks=links.filter(l=>!l.bridge);
+  const bridgeLinks=links.filter(l=>l.bridge);
 
-  // Edge elements
-  const linkSelection=d3.select(g).append('g').selectAll('line')
-    .data(links).join('line')
-    .attr('stroke',d=>{
-      const maxCount=Math.max(...links.map(l=>l.count),1);
-      const t=d.count/maxCount;
-      const a=40+Math.round(60*t);
-      return 'rgba(93,219,181,'+(0.1+0.3*t)+')';
-    })
-    .attr('stroke-width',d=>Math.max(0.5,Math.min(4,1+Math.log(1+d.count))))
-    .attr('stroke-opacity',0.4);
+  const linkSelection=linkGroup.selectAll('line.regular')
+    .data(regularLinks).join('line')
+    .attr('class','regular')
+    .attr('stroke','rgba(93,219,181,0.12)')
+    .attr('stroke-width',d=>Math.max(0.5,Math.min(2.5,0.5+Math.log(1+d.count)*0.8)));
 
-  // Node group
+  const bridgeSelection=linkGroup.selectAll('line.bridge')
+    .data(bridgeLinks).join('line')
+    .attr('class','bridge')
+    .attr('stroke','#f6a623')
+    .attr('stroke-width',d=>Math.max(1.5,Math.min(5,1+Math.log(1+d.count)*1.2)))
+    .attr('stroke-dasharray','5,3')
+    .attr('stroke-opacity',0.7)
+    .attr('cursor','pointer');
+
+  // ── Nodes layer ──
   const nodeGroup=d3.select(g).append('g');
 
-  // Outer glow for selected
-  const glowGroup=nodeGroup.append('g');
+  // Bridge glow ring
+  const bridgeGlow=nodeGroup.append('g').selectAll('circle.glow')
+    .data(nodes.filter(n=>n.is_bridge)).join('circle')
+    .attr('class','glow')
+    .attr('r',d=>d.r+4)
+    .attr('fill','none')
+    .attr('stroke','#f6a623')
+    .attr('stroke-width',2)
+    .attr('stroke-dasharray','3,2')
+    .attr('opacity',0.6)
+    .attr('pointer-events','none');
 
-  const nodeSelection=nodeGroup.selectAll('circle')
+  const nodeSelection=nodeGroup.selectAll('circle.node')
     .data(nodes).join('circle')
+    .attr('class','node')
     .attr('r',d=>d.r)
-    .attr('fill',d=>d.color)
+    .attr('fill',d=>clusterMode==='station'?d.station_color:d.community_color)
     .attr('stroke','#0b0e1a')
     .attr('stroke-width',1.5)
     .attr('cursor','pointer')
     .attr('opacity',0.85)
     .call(d3.drag()
       .on('start',(event,d)=>{
-        if(!event.active)sim.alphaTarget(0.3).restart();
-        d.fx=d.x;
-        d.fy=d.y;
+        // Pin immediately so the first drag frame snaps to cursor.
+        // But DON'T restart the sim — the drag handler will do that on actual movement.
+        d.fx=d.x;d.fy=d.y;
       })
       .on('drag',(event,d)=>{
-        d.fx=event.x;
-        d.fy=event.y;
+        if(!event.active)sim.alphaTarget(0.3).restart();  // kickstart on first move
+        d.fx=event.x;d.fy=event.y;
       })
       .on('end',(event,d)=>{
         if(!event.active)sim.alphaTarget(0);
-        d.fx=null;
-        d.fy=null;
+        d.fx=null;d.fy=null;
       })
     )
     .on('click',(event,d)=>{
       event.stopPropagation();
       selectClusterNode(d);
+      // Stop residual jiggle after click
+      sim.alphaTarget(0).alpha(0);
     })
     .on('mouseenter',function(event,d){
       d3.select(this).attr('stroke','#fff').attr('stroke-width',2.5).attr('opacity',1);
-      highlightConnections(d,linkSelection,nodeSelection,true);
+      highlightConnections(d,linkSelection,nodeSelection,bridgeSelection,true);
     })
     .on('mouseleave',function(event,d){
       d3.select(this).attr('stroke','#0b0e1a').attr('stroke-width',1.5).attr('opacity',0.85);
-      highlightConnections(d,linkSelection,nodeSelection,false);
+      highlightConnections(d,linkSelection,nodeSelection,bridgeSelection,false);
     });
 
-  // Labels (only for nodes with enough plays or when hovered)
+  // Labels
   const labelGroup=nodeGroup.append('g');
   const labels=labelGroup.selectAll('text')
     .data(nodes).join('text')
-    .text(d=>d.artist.length>20?d.artist.slice(0,18)+'...':d.artist)
-    .attr('font-size','9px')
+    .text(d=>{
+      const txt=d.artist+(d.title?' — '+d.title:'');
+      return txt.length>25?txt.slice(0,23)+'...':txt;
+    })
+    .attr('font-size','8px')
     .attr('fill','#e8e8f0')
     .attr('text-anchor','middle')
-    .attr('dy',d=>d.r+13)
+    .attr('dy',d=>d.r+12)
     .attr('pointer-events','none')
-    .attr('opacity',0.7);
+    .attr('opacity',0.6);
 
   // Tick
   sim.on('tick',()=>{
     linkSelection
-      .attr('x1',d=>d.source.x)
-      .attr('y1',d=>d.source.y)
-      .attr('x2',d=>d.target.x)
-      .attr('y2',d=>d.target.y);
+      .attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+      .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    bridgeSelection
+      .attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+      .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
     nodeSelection
-      .attr('cx',d=>d.x)
-      .attr('cy',d=>d.y);
+      .attr('cx',d=>d.x).attr('cy',d=>d.y);
+    bridgeGlow
+      .attr('cx',d=>d.x).attr('cy',d=>d.y);
     labels
-      .attr('x',d=>d.x)
-      .attr('y',d=>d.y);
+      .attr('x',d=>d.x).attr('y',d=>d.y);
   });
 
-  // Legend
+  // Legend — adapts to mode
   const legendItems=[];
-  const seenLeg={};
-  cl.groups.forEach(g=>{
-    const isCross=g.slug==='cross-station';
-    const st=isCross?null:stationBySlug(g.slug);
-    const col=isCross?'#5ddbb5':(st?st.color:'#5ddbb5');
-    if(seenLeg[col])return;
-    seenLeg[col]=true;
-    const label=isCross?'חוצה תחנות ('+g.songs.length+')':(st?st.name:g.slug)+' ('+g.songs.length+')';
-    legendItems.push({color:col,label});
-  });
+  const seenColors=new Set();
+  if(clusterMode==='station'){
+    // By station: group nodes by their primary station
+    const stGroups={};
+    nodes.forEach(n=>{
+      const s=n.primary_station;
+      if(!stGroups[s])stGroups[s]={count:0,color:n.station_color};
+      stGroups[s].count++;
+    });
+    Object.entries(stGroups).forEach(([slug,g]) => {
+      if(seenColors.has(g.color))return;
+      seenColors.add(g.color);
+      const st=stationBySlug(slug);
+      legendItems.push({color:g.color,label:(st?st.name:slug)+' — '+g.count});
+    });
+  }else{
+    (cl.communities||[]).forEach((c,i)=>{
+      const col=CLUSTER_COLORS[i%CLUSTER_COLORS.length];
+      if(seenColors.has(col))return;
+      seenColors.add(col);
+      const st=stationBySlug(c.label);
+      const label=(st?st.name:c.label)+' — '+c.size;
+      legendItems.push({color:col,label:label});
+    });
+  }
+  const bridgeEdgeCount=(cl.edges||[]).filter(e=>e[3]).length;
+  if(bridgeEdgeCount>0 && clusterMode!=='station'){
+    legendItems.push({color:'#f6a623',label:'🔗 גשר — '+bridgeEdgeCount+' קישורים'});
+  }
   document.getElementById('clusterLegend').innerHTML=legendHtml(legendItems);
 
-  // Default detail
-  detail.innerHTML='<div style="text-align:center;padding:12px;color:var(--muted);font-size:.82rem">👆 גרור שירים לחקירת הקשרים, או לחץ לפרטים</div>';
+  detail.innerHTML='<div style="text-align:center;padding:12px;color:var(--muted);font-size:.82rem">👆 גרור צמתים · לחץ לפרטים · קווים כתומים = גשרים בין קהילות</div>';
 
-  // Click on background to deselect
+  // Click background to deselect
   d3.select(svg).on('click',()=>{
     clusterSelectedNode=null;
     nodeSelection.attr('opacity',0.85).attr('stroke','#0b0e1a').attr('stroke-width',1.5);
-    linkSelection.attr('stroke-opacity',0.4);
-    labels.attr('opacity',0.7);
-    detail.innerHTML='<div style="text-align:center;padding:12px;color:var(--muted);font-size:.82rem">👆 גרור שירים לחקירת הקשרים, או לחץ לפרטים</div>';
+    linkSelection.attr('opacity',1);
+    bridgeSelection.attr('stroke-opacity',0.7);
+    bridgeGlow.attr('opacity',0.6);
+    labels.attr('opacity',0.6);
+    detail.innerHTML='<div style="text-align:center;padding:12px;color:var(--muted);font-size:.82rem">👆 גרור צמתים · לחץ לפרטים · קווים כתומים = גשרים בין קהילות</div>';
+  });
+}
+
+function highlightConnections(d,linkSel,nodeSel,bridgeSel,show){
+  const connectedIds=new Set();
+  linkSel.each(function(l){
+    const sid=typeof l.source==='object'?l.source.id:l.source;
+    const tid=typeof l.target==='object'?l.target.id:l.target;
+    if(sid===d.id||tid===d.id){connectedIds.add(sid);connectedIds.add(tid);}
+  });
+  bridgeSel.each(function(l){
+    const sid=typeof l.source==='object'?l.source.id:l.source;
+    const tid=typeof l.target==='object'?l.target.id:l.target;
+    if(sid===d.id||tid===d.id){connectedIds.add(sid);connectedIds.add(tid);}
+  });
+
+  nodeSel.attr('opacity',n=>show?(connectedIds.has(n.id)||n.id===d.id?1:0.12):0.85);
+  linkSel.attr('opacity',l=>{
+    if(!show)return 1;
+    const sid=typeof l.source==='object'?l.source.id:l.source;
+    const tid=typeof l.target==='object'?l.target.id:l.target;
+    return (sid===d.id||tid===d.id)?1:0.08;
+  });
+  bridgeSel.attr('stroke-opacity',l=>{
+    if(!show)return 0.7;
+    const sid=typeof l.source==='object'?l.source.id:l.source;
+    const tid=typeof l.target==='object'?l.target.id:l.target;
+    return (sid===d.id||tid===d.id)?1:0.08;
   });
 }
 
@@ -1709,26 +1861,73 @@ function highlightConnections(d,linkSel,nodeSel,show){
 function selectClusterNode(d){
   clusterSelectedNode=d;
   const detail=document.getElementById('clusterDetail');
-  const top=d.top||[];
+  const cl=D.clusters;
+  if(!cl||!cl.songs)return;
+
   const sts=Object.keys(d.stations||{});
   const stNames=sts.map(slug=>name(slug)).join(', ');
+  const stCount=sts.length;
+  const bridgeInfo=d.is_bridge&&d.bridge_communities.length?' · 🔗 גשר ל'+d.bridge_communities.length+' קהילות':'';
+  const commInfo=(cl.communities||[]).find(c=>c.id===d.community);
+  const commLabel=commInfo?(stationBySlug(commInfo.label)?stationBySlug(commInfo.label).name:commInfo.label):'?';
+
+  // All songs in same community (declare before use)
+  const sameComm=cl.songs.filter(s=>s.community===d.community);
 
   let html='<div class=card style="margin-bottom:0;padding:12px">'+
-    '<div style="margin-bottom:6px">'+
-      '<div style="font-size:.85rem;font-weight:600">'+esc(d.artist)+' — '+esc(d.title)+'</div>'+
-      '<div style="font-size:.7rem;color:var(--muted)">'+esc(stNames)+' · '+d.plays+' ניגונים</div>'+
+    // Selected song header
+    '<div style="margin-bottom:8px">'+
+      '<div style="font-size:.9rem;font-weight:600">'+esc(d.artist)+' — '+esc(d.title)+'</div>'+
+      '<div style="font-size:.7rem;color:var(--muted);margin-top:2px">'+
+        esc(stNames)+' · '+d.plays+' ניגונים'+
+        (stCount>1?' · <span style=color:var(--accent)>🌐 '+stCount+' תחנות</span>':'')+
+        bridgeInfo+
+      '</div>'+
+    '</div>'+
+    // Community header
+    '<div style="font-size:.72rem;color:var(--muted);margin-bottom:4px">'+
+      '🎯 קהילת <strong>'+esc(commLabel)+'</strong> — '+sameComm.length+' שירים'+
     '</div>';
+  const byStation={};
+  sameComm.forEach(s=>{
+    const stSlug=s.primary_station||'unknown';
+    if(!byStation[stSlug])byStation[stSlug]=[];
+    byStation[stSlug].push(s);
+  });
 
+  Object.entries(byStation).forEach(([slug, songs]) => {
+    const st=stationBySlug(slug);
+    const stColor=st?st.color:'#666';
+    const stName=st?st.name:slug;
+    const multiCount=songs.filter(s=>Object.keys(s.stations||{}).length>1).length;
+    html+='<div style="font-size:.7rem;color:'+stColor+';font-weight:600;margin:4px 0 2px 0">'+
+      '▸ '+esc(stName)+' ('+songs.length+' שירים'+
+      (multiCount?', '+multiCount+' חוצי תחנות':'')+')</div>';
+    songs.forEach(s=>{
+      const sts2=Object.keys(s.stations||{});
+      const isSelected=s.artist===d.artist&&s.title===d.title;
+      const crossTag=sts2.length>1?'<span style=color:var(--accent);font-size:.6rem> 🌐</span>':'';
+      html+='<div style="display:flex;justify-content:space-between;align-items:center;font-size:.76rem;padding:2px 8px;'+
+        'border-radius:4px'+(isSelected?';background:var(--tab-active)':'')+'"'+
+        ' onmouseenter="this.style.background=\'var(--card-hover)\';"'+
+        ' onmouseleave="this.style.background='+(isSelected?'\'var(--tab-active)\'':'\'transparent\'')+'"'+
+        '>'+
+        '<span>'+(isSelected?'👉 ':'')+esc(s.artist)+' — '+esc(s.title)+crossTag+'</span>'+
+        '<span style=color:var(--muted);font-size:.65rem>'+s.plays+'×</span>'+
+      '</div>';
+    });
+  });
+
+  // Top co-occurring
+  const top=d.top||[];
   if(top.length){
-    html+='<div style="font-size:.72rem;color:var(--muted);margin-bottom:4px">מתנגן יחד עם:</div>'+
-      top.map(t=>'<div style="display:flex;justify-content:space-between;align-items:center;font-size:.78rem;padding:3px 8px;border-radius:4px;cursor:pointer;transition:background .1s"'+
-        ' onmouseenter="this.style.background=\'var(--card-hover)\';" onmouseleave="this.style.background=\'transparent\'">'+
+    html+='<div style="margin-top:8px;font-size:.72rem;color:var(--muted);margin-bottom:4px">🔗 מתנגן יחד עם:</div>'+
+      top.map(t=>'<div style="display:flex;justify-content:space-between;align-items:center;font-size:.74rem;padding:2px 8px;border-radius:4px">'+
         '<span>'+esc(t.artist)+' — '+esc(t.title)+'</span>'+
-        '<span style=color:var(--accent);font-weight:600;white-space:nowrap>'+t.count+'× ביחד</span></div>'
+        '<span style=color:var(--accent);font-weight:600;white-space:nowrap>'+t.count+'×</span></div>'
       ).join('');
-  }else{
-    html+='<div style="font-size:.75rem;color:var(--muted)">אין קשרים חזקים עדיין</div>';
   }
+
   html+='</div>';
   detail.innerHTML=html;
 }
