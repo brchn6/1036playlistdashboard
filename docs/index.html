@@ -770,7 +770,7 @@ function tlDrill(slug,hour){
       ' onclick="tlClickSong(\''+sg.matchKey+'\')">'+
       '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:hsla('+hue+',60%,55%,0.8);flex-shrink:0"></span>'+
       '<span style="font-size:.78rem;flex:1"><strong>'+esc(sg.artist)+'</strong> — '+esc(sg.title)+'</span>'+
-      '<span style="font-size:.65rem;color:var(--muted)">'+(sg.totalAcross>1?'🔄 ×'+sg.totalAcross:'')+'</span>'+
+      '<span style="font-size:.62rem;color:var(--accent)">'+(sg.totalAcross>1?'+'+sg.totalAcross:'')+'</span>'+
     '</div>';
   });
   html+='</div>';
