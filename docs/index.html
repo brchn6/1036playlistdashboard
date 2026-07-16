@@ -654,7 +654,7 @@ function renderTimeline(){
 
   // Always 24 hours, 60-min buckets
   const buckets={};
-  stations.forEach(s=>{buckets[s.slug]=Array.from({length:24},()=>({count:0,songs:[],uniq:new Set()}))});
+  stations.forEach(s=>{buckets[s.slug]=Array.from({length:24},()=>({count:0,songs:[]}))});
 
   pts.forEach(p=>{
     const d=parseTs(p.ts);if(!d)return;
@@ -662,13 +662,9 @@ function renderTimeline(){
     if(timelineDay&&il.date!==timelineDay)return;
     if(!buckets[p.s])return;
     const h=il.h;
+    buckets[p.s][h].count++;
     const mk=songMatchKey(p.a,p.t);
-    // Only count unique songs per hour — repeating the same song 3x in an hour just means 1
-    if(!buckets[p.s][h].uniq.has(mk)){
-      buckets[p.s][h].uniq.add(mk);
-      buckets[p.s][h].count++;
-      buckets[p.s][h].songs.push({artist:p.a,title:p.t,matchKey:mk});
-    }
+    buckets[p.s][h].songs.push({artist:p.a,title:p.t,matchKey:mk});
   });
 
   // Station order by total activity
