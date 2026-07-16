@@ -791,11 +791,8 @@ function tlClickSong(matchKey){
     }
   });
 
-  if(matchingCells.length){
-    tlDrill(matchingCells[0].slug,
-      document.querySelector('.tl-cell[style*="outline"]')?.dataset?.hour||
-      matchingCells[0].hour||0);
-  }
+  // Don't re-navigate — clicking a song just highlights across the grid,
+  // staying on the same station+hour drill-down that's already shown.
 }
 
 // Add a global click-away listener to deselect
