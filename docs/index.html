@@ -258,7 +258,7 @@
   </div>
   <div class=card id=nonMusicCard style=display:none>
     <div class=card-title>🗣️ דיבור / פרסומות / לא זוהה</div>
-    <div class=card-sub>דקות ללא מוזיקה מזוהה לפי תחנה ושעה (שעון ישראל), 7 הימים האחרונים</div>
+    <div class=card-sub>ממוצע דקות ללא מוזיקה לשעה, 7 הימים האחרונים · ערך מעל 60 = בעיה בזיהוי</div>
     <div class=hm-scroll id=nonMusicHm></div>
   </div>
   <div class=card>
@@ -835,8 +835,9 @@ function renderNonMusic(hours){
   const card=document.getElementById('nonMusicCard');
   const nm=D.nonMusic;
   const m=nm&&nm.station_hour_minutes;
+  const nonMusicDays=nm.days||7;
   const rows=m?stations.filter(s=>m[s.slug]&&(!activeStation||s.slug===activeStation))
-    .map(s=>({label:s.name,dot:s.color,cells:m[s.slug].map(v=>Math.round(v))})):[];
+    .map(s=>({label:s.name,dot:s.color,cells:m[s.slug].map(v=>Math.round(v/nonMusicDays))})):[];
   if(!rows.length||!rows.some(r=>r.cells.some(c=>c))){card.style.display='none';return}
   card.style.display='';
   document.getElementById('nonMusicHm').innerHTML=hmTable(rows,hours);
