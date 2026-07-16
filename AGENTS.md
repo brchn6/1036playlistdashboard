@@ -201,3 +201,84 @@ Full analysis, failed attempts, and final solution documented in `.planning/DEPL
 
 ## Spotify Export Feature
 Planned feature to export station track history to Spotify playlists. Full planning session at `.planning/SPOTIFY-EXPORT.md` — covers 4 phases from basic "Open in Spotify" links to full API playlist creation.
+
+## ⚙️ Development Workflow — Every Agent Must Follow This
+
+### 1. Local Development
+- All changes happen in the **working directory** (`/home/barc/dev/radio-playlist-dashboard/`)
+- **Edit files directly** — `docs/index.html` (frontend), `scripts/generate_data.py` (backend),
+  `.planning/*.md` (planning)
+- **Test locally** before committing: serve `docs/` with Python and check the results
+
+### 2. Validate Before Push
+- **Always run the JS syntax check** before every push:
+
+  ```bash
+  node -e '
+  const fs=require("fs");
+  const html=fs.readFileSync("docs/index.html","utf-8");
+  const m=html.match(/<script>([\\s\\S]*?)<\\/script>/);
+  if(m)try{new Function(m[1]);console.log("✅ JS syntax OK")}catch(e){console.error("❌ JS SYNTAX ERROR:",e.message);process.exit(1)}
+  '
+  ```
+- If this fails, **do not push** — the site goes down entirely.
+
+### 3. Git Push → Deploys Frontend
+- `git add` + `git commit` + `git push` to `main`
+- The **GitHub Actions** workflow (`.github/workflows/deploy.yml`) auto-deploys:  
+  validates JS syntax → deploys `docs/` folder to GitHub Pages
+- The site updates in ~1-2 minutes at:
+  `https://brchn6.github.io/radio-playlist-dashboard/`
+- 🚫 **This deploys the frontend only.** Data does NOT go through git.
+
+### 4. Data Publish to Supabase — MUST run on head1
+- Data (JSON aggregates in `site-data/`) is published to **Supabase Storage** via `publish.py`
+- The collector machine **head1** (100.93.8.110) runs the updater, which periodically
+  calls `publish.py`
+- **Whenever the backend changes** (especially `generate_data.py`), you must:
+
+  ```bash
+  # SSH into head1
+  ssh 100.93.8.110
+  cd ~/dev/radio-playlist-dashboard
+  
+  # Pull the latest code
+  git pull
+  
+  # Regenerate + publish all data (--force re-uploads everything)
+  .venv/bin/python scripts/publish.py --force
+  ```
+
+- The `--force` flag is needed when the JSON format changes (new fields, different
+  structure). Without it, only files whose hash changed are uploaded.
+
+### 5. Full Development Cycle
+```
+1. Edit code locally (frontend + backend)
+2. Test: serve docs/ with python3 -m http.server 9999
+3. Validate JS syntax
+4. git commit + git push  (deploys frontend)
+5. SSH head1 → git pull → publish.py --force  (updates data on Supabase)
+```
+
+### 6. Critical Rules
+- 🚫 **Never git push data** — the collector must never call `git push` (ToS risk)
+- 🚫 **Never restart all proxies simultaneously** (Shazam rate limiting)
+- 🚫 **Never run two collectors** (duplicate plays)
+- 🚫 **Never delete user data** without explicit confirmation
+- ✅ **Always check JS syntax** before every push
+- ✅ **Always git pull + publish on head1** when backend changes
+
+### 7. Key Files & What They Do
+
+| File | Purpose |
+|------|---------|
+| `docs/index.html` | **Frontend** — single-page dashboard (JS + CSS + HTML) |
+| `scripts/generate_data.py` | **Backend** — builds all JSON aggregates (timeline, heatmap, clusters, etc.) |
+| `scripts/publish.py` | **Publisher** — generates data + uploads to Supabase Storage |
+| `scripts/supabase_client.py` | **Supabase client** — handles uploads, idempotent |
+| `scripts/updater.py` | **Collector daemon** — runs on head1, polls proxies → SQLite → Supabase |
+| `scripts/proxy_manager.py` | **Proxy manager** — starts/stops ShazamIO proxies |
+| `.github/workflows/deploy.yml` | CI — validates JS + deploys to Pages on push |
+| `AGENTS.md` | **This file** — agent instructions & project rules |
+| `.planning/*.md` | Planning docs for features |
