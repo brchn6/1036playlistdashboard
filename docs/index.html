@@ -836,8 +836,10 @@ function renderNonMusic(hours){
   const nm=D.nonMusic;
   const m=nm&&nm.station_hour_minutes;
   const nonMusicDays=nm.days||7;
+  // Data from older generations has raw totals (not per-day); divide to normalize.
+  const nmDiv=nm.per_day?1:nonMusicDays;
   const rows=m?stations.filter(s=>m[s.slug]&&(!activeStation||s.slug===activeStation))
-    .map(s=>({label:s.name,dot:s.color,cells:m[s.slug].map(v=>Math.round(v/nonMusicDays))})):[];
+    .map(s=>({label:s.name,dot:s.color,cells:m[s.slug].map(v=>Math.round(v/nmDiv))})):[];
   if(!rows.length||!rows.some(r=>r.cells.some(c=>c))){card.style.display='none';return}
   card.style.display='';
   document.getElementById('nonMusicHm').innerHTML=hmTable(rows,hours);

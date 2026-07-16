@@ -198,8 +198,9 @@ def build_non_music(db: PlaylistDB, slugs: list[str], now: datetime) -> dict[str
     return {
         "tz": "Asia/Jerusalem",
         "days": HEATMAP_STATION_DAYS,
-        "station_hour_minutes": {s: [round(v, 1) for v in station_hour[s]] for s in slugs},
-        "total_minutes": {s: round(v, 1) for s, v in totals.items()},
+        "station_hour_minutes": {s: [round(v / HEATMAP_STATION_DAYS, 1) for v in station_hour[s]] for s in slugs},
+        "total_minutes": {s: round(v / HEATMAP_STATION_DAYS, 1) for s, v in totals.items()},
+        "per_day": True,
     }
 
 
