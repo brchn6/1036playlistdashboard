@@ -23,15 +23,6 @@
         return window._analyticsSessionId;
     }
 
-    // Hash IP address for privacy (we don't store raw IPs)
-    async function hashIP(ip) {
-        const encoder = new TextEncoder();
-        const data = encoder.encode(ip + 'radio-dashboard-salt-2026');
-        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substr(0, 16);
-    }
-
     // Send analytics event to Supabase
     async function sendEvent(eventType, eventData = {}) {
         try {
@@ -48,20 +39,7 @@
                 language: navigator.language
             };
 
-            // Try to get country/city from IP (using a free service)
-            try {
-                const ipResponse = await fetch('https://ipapi.co/json/');
-                if (ipResponse.ok) {
-                    const ipData = await ipResponse.json();
-                    payload.country = ipData.country_code;
-                    payload.city = ipData.city;
-                    payload.ip_hash = await hashIP(ipData.ip);
-                }
-            } catch (e) {
-                // IP lookup failed, continue without it
-            }
-
-            // Send to Supabase
+            // Send to Supabase directly (no external IP lookup - privacy first)
             const response = await fetch(`${SUPABASE_URL}/rest/v1/analytics_events`, {
                 method: 'POST',
                 headers: {
@@ -74,11 +52,11 @@
             });
 
             if (!response.ok) {
-                console.warn('Analytics send failed:', response.status);
+                console.warn('[analytics] send failed:', response.status);
             }
         } catch (error) {
             // Silently fail - don't break the site
-            console.warn('Analytics error:', error);
+            console.warn('[analytics] error:', error);
         }
     }
 
