@@ -51,17 +51,35 @@ def ensure_dirs() -> None:
 
 
 def is_running(slug: str) -> tuple[bool, int]:
-    """Check if a proxy is running. Returns (running, pid)."""
+    """Check if a proxy is running. Returns (running, pid).
+    
+    Verifies both that the PID exists AND that it's actually a shazamio
+    proxy (not a recycled PID that got grabbed by another process).
+    """
     pid_file = _pid_file(slug)
     if not pid_file.exists():
         return False, 0
     pid = int(pid_file.read_text().strip())
     try:
         os.kill(pid, 0)  # signal 0 = test existence
-        return True, pid
     except (OSError, ProcessLookupError):
         pid_file.unlink(missing_ok=True)
         return False, 0
+
+    # Guard against PID reuse: confirm the process at this PID really is
+    # our shazamio proxy, not a recycled PID grabbed by Dropbox or anything
+    # else. If the cmdline doesn't mention shazamio_proxy.py, treat it as
+    # stale and clean up.
+    try:
+        cmdline = Path(f"/proc/{pid}/cmdline").read_text()
+        if "shazamio_proxy.py" not in cmdline:
+            pid_file.unlink(missing_ok=True)
+            return False, 0
+    except (OSError, FileNotFoundError):
+        pid_file.unlink(missing_ok=True)
+        return False, 0
+
+    return True, pid
 
 
 def start_one(slug: str) -> dict[str, Any]:

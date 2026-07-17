@@ -25,6 +25,7 @@
 
     // Send analytics event to Supabase
     async function sendEvent(eventType, eventData = {}) {
+        console.log('[analytics] sending event:', eventType);
         try {
             const sessionId = getSessionId();
             
@@ -39,6 +40,8 @@
                 language: navigator.language
             };
 
+            console.log('[analytics] payload:', payload);
+
             // Send to Supabase directly (no external IP lookup - privacy first)
             const response = await fetch(`${SUPABASE_URL}/rest/v1/analytics_events`, {
                 method: 'POST',
@@ -51,8 +54,12 @@
                 body: JSON.stringify(payload)
             });
 
+            console.log('[analytics] response status:', response.status);
             if (!response.ok) {
-                console.warn('[analytics] send failed:', response.status);
+                const errorText = await response.text();
+                console.warn('[analytics] send failed:', response.status, errorText);
+            } else {
+                console.log('[analytics] event sent successfully');
             }
         } catch (error) {
             // Silently fail - don't break the site

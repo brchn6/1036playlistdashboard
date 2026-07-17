@@ -3,30 +3,26 @@
 Radio Playlist Dashboard — Watchdog Agent
 
 Checks all 8 ShazamIO proxies and the updater daemon.
-- If a proxy is stale (>5 min since last_finished_at), restart it.
-- If the updater is dead, log an alert.
-- If everything is healthy, stays silent (no output = no news = good news).
-- If something is wrong, outputs a clear report.
+- If everything is healthy: SILENT (no output)
+- If a proxy is stale/down but fixed automatically: SILENT (no output)
+- If a proxy is down and CANNOT be fixed: ALERT (outputs to stdout)
 
 Designed for cron with no_agent=True — stdout is delivered verbatim only when
-there's something to report. Silent when healthy.
+there's an unfixable problem. Silent otherwise.
 
 Usage:
     python scripts/watchdog.py
 """
 
 import json
-import os
 import subprocess
 import sys
-import time
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-LOG_DIR = PROJECT_ROOT / "logs"
 
 STATIONS = [
     {"slug": "kol-hashfela", "port": 8761, "name": "קול השפלה 103.6FM"},
@@ -41,10 +37,6 @@ STATIONS = [
 
 NOW = datetime.now(timezone.utc)
 STALE_THRESHOLD_MINUTES = 5
-
-
-def log(msg: str) -> None:
-    print(f"[{NOW.strftime('%H:%M:%S')}] {msg}", flush=True)
 
 
 def check_proxy(slug: str, port: int, name: str) -> dict:
@@ -67,7 +59,6 @@ def check_proxy(slug: str, port: int, name: str) -> dict:
     result["running"] = state.get("running", False)
     last_finished = state.get("last_finished_at")
     last_error = state.get("last_error")
-    last_result = state.get("last_result")
 
     if last_finished:
         try:
@@ -83,9 +74,6 @@ def check_proxy(slug: str, port: int, name: str) -> dict:
     if last_error:
         result["error"] = last_error
         result["needs_restart"] = True
-
-    if last_result and isinstance(last_result, dict):
-        result["last_song"] = f"{last_result.get('artist', '?')} — {last_result.get('title', '?')}"
 
     return result
 
@@ -113,63 +101,68 @@ def check_updater() -> dict:
 
 def restart_proxy(slug: str) -> bool:
     """Restart a single proxy using proxy_manager.py."""
-    log(f"🔄 Restarting {slug}...")
     try:
         proc = subprocess.run(
             [sys.executable, str(PROJECT_ROOT / "scripts" / "proxy_manager.py"), "restart", slug],
             capture_output=True, text=True, timeout=30
         )
-        if proc.returncode == 0:
-            log(f"✅ {slug} restarted successfully")
-            return True
-        else:
-            log(f"❌ {slug} restart failed: {proc.stderr[:200]}")
+        return proc.returncode == 0
+    except Exception:
+        return False
+
+
+def verify_proxy(slug: str, port: int) -> bool:
+    """Verify proxy is healthy after restart."""
+    try:
+        url = f"http://127.0.0.1:{port}/current"
+        req = urllib.request.Request(url)
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            state = json.loads(resp.read().decode("utf-8"))
+            last_finished = state.get("last_finished_at")
+            if last_finished:
+                finished_dt = datetime.fromisoformat(last_finished.replace("Z", "+00:00"))
+                minutes_ago = (NOW - finished_dt).total_seconds() / 60
+                return minutes_ago < STALE_THRESHOLD_MINUTES
             return False
-    except Exception as e:
-        log(f"❌ {slug} restart exception: {e}")
+    except Exception:
         return False
 
 
 def main() -> None:
-    issues = []
-    restarted = []
+    unfixable_issues = []
 
     # 1. Check all proxies
     for station in STATIONS:
         status = check_proxy(station["slug"], station["port"], station["name"])
-        if not status["ok"]:
-            issues.append(f"🔴 {status['name']} ({status['slug']}): {status['error']}")
-            if status["needs_restart"]:
-                if restart_proxy(status["slug"]):
-                    restarted.append(status["slug"])
-        elif status.get("stale"):
-            issues.append(f"🟡 {status['name']} ({status['slug']}): stale — {status.get('minutes_since_last', '?')}m since last song")
-            if status["needs_restart"]:
-                if restart_proxy(status["slug"]):
-                    restarted.append(status["slug"])
-        else:
-            last = status.get("last_song", "no data")
-            minutes = status.get("minutes_since_last", "?")
-            log(f"✅ {status['name']}: {last} ({minutes}m ago)")
+        
+        if status["needs_restart"]:
+            # Try to restart
+            if restart_proxy(status["slug"]):
+                # Verify it's actually working now
+                if verify_proxy(status["slug"], station["port"]):
+                    continue  # Fixed, stay silent
+                else:
+                    # Restarted but still not working
+                    unfixable_issues.append(f"🔴 {status['name']} ({status['slug']}): restarted but still not responding")
+            else:
+                # Could not restart
+                unfixable_issues.append(f"🔴 {status['name']} ({status['slug']}): {status['error']} — restart failed")
 
     # 2. Check updater
     updater = check_updater()
     if not updater["ok"]:
-        issues.append(f"🔴 Updater: {updater.get('error', 'dead')}")
-    else:
-        log(f"✅ Updater: running (PID {updater['pid']})")
+        unfixable_issues.append(f"🔴 Updater: {updater.get('error', 'dead')}")
 
-    # 3. Report
-    if issues:
-        print("\n⚠️  ISSUES FOUND:")
-        for issue in issues:
+    # 3. Report ONLY if there are unfixable issues
+    if unfixable_issues:
+        print("⚠️  RADIO PROXY ALERT — unfixable issues detected:\n")
+        for issue in unfixable_issues:
             print(f"  {issue}")
-        if restarted:
-            print(f"\n🔄 Restarted: {', '.join(restarted)}")
-        print(f"\n🔍 Run: .venv/bin/python scripts/proxy_manager.py health")
-        print(f"📋 Logs: tail -f logs/updater.log")
-    else:
-        log("✅ All proxies healthy, updater running. Nothing to report.")
+        print(f"\n🔍 Manual intervention required on head1")
+        print(f"📋 Logs: tail -f ~/dev/radio-playlist-dashboard/logs/updater.log")
+        # Exit with error code so cron knows something is wrong
+        sys.exit(1)
+    # Otherwise: silent exit (no output = no notification)
 
 
 if __name__ == "__main__":
